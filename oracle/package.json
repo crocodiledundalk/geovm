@@ -1,0 +1,21 @@
+{
+  "name": "geovm-csv-importer",
+  "version": "1.0.0",
+  "description": "Import CSV data into GeoVM trixels",
+  "main": "import-csv-to-geovm.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node import-csv-to-geovm.ts",
+    "import:csv": "ts-node import-csv-to-geovm.ts",
+    "import:sample": "ts-node import-csv-to-geovm.ts ./sample-data.csv \"GeoVM World\" 5 AggregateOverwrite"
+  },
+  "dependencies": {
+    "@project-serum/anchor": "^0.26.0",
+    "@solana/web3.js": "^1.77.3"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}

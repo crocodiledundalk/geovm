@@ -17,17 +17,26 @@ import {
   TabsTrigger,
 } from '@/components/ui/tabs';
 import { useWorldTrixels } from '@/hooks/useTrixels';
+import { IdlAccounts } from '@coral-xyz/anchor';
+import { Geovm } from '@/idl/geovm';
+import { useQueryClient } from '@tanstack/react-query';
+
+// Define the type for the World account data based on the IDL
+type WorldAccountData = IdlAccounts<Geovm>['world'];
 
 interface ResolutionTabsProps {
   worldPubkey: PublicKey;
   canonicalResolution: number;
+  worldAccount: WorldAccountData;
 }
 
-export function ResolutionTabs({ worldPubkey, canonicalResolution }: ResolutionTabsProps) {
+export function ResolutionTabs({ worldPubkey, canonicalResolution, worldAccount }: ResolutionTabsProps) {
   const [selectedResolution, setSelectedResolution] = useState(canonicalResolution);
   const resolutions = [0, ...Array.from({ length: canonicalResolution }, (_, i) => i + 1)];
+  const queryClient = useQueryClient();
 
   // DEBUG LOGS START
+  console.log("[ResolutionTabs] Props received - canonicalResolution:", canonicalResolution);
   console.log("[ResolutionTabs] Generated resolutions array:", JSON.stringify(resolutions));
   console.log("[ResolutionTabs] Initial selectedResolution:", selectedResolution);
 
@@ -40,7 +49,7 @@ export function ResolutionTabs({ worldPubkey, canonicalResolution }: ResolutionT
     onChainTrixels, 
     isLoadingOnChain, 
     trixelStats, 
-    prefetchResolutionTrixels 
+    prefetchResolutionTrixels
   } = useWorldTrixels(worldPubkey, {
     canonicalResolution
   });
@@ -51,11 +60,21 @@ export function ResolutionTabs({ worldPubkey, canonicalResolution }: ResolutionT
     }
   }, [canonicalResolution, isLoadingOnChain, prefetchResolutionTrixels]);
 
+  const handleTrixelUpdate = () => {
+    console.log(`[ResolutionTabs] Invalidating queries for world ${worldPubkey.toBase58()} and resolution ${selectedResolution}`);
+    queryClient.invalidateQueries({
+      queryKey: ['trixels', worldPubkey.toBase58(), selectedResolution]
+    });
+    queryClient.invalidateQueries({
+        queryKey: ['worldAccount', worldPubkey.toBase58()]
+    });
+  };
+
   const handleResolutionChange = (value: string) => {
     const newResolution = Number(value);
     console.log("[ResolutionTabs] handleResolutionChange - newResolution:", newResolution);
     setSelectedResolution(newResolution);
-    prefetchResolutionTrixels(newResolution);
+    prefetchResolutionTrixels(newResolution); // Keep prefetching on resolution change
   };
 
   return (
@@ -110,6 +129,8 @@ export function ResolutionTabs({ worldPubkey, canonicalResolution }: ResolutionT
               worldPubkey={worldPubkey}
               resolution={selectedResolution}
               canonicalResolution={canonicalResolution}
+              worldAccount={worldAccount}
+              onTrixelUpdate={handleTrixelUpdate}
             />
           </TabsContent>
         </Tabs>
@@ -121,15 +142,15 @@ export function ResolutionTabs({ worldPubkey, canonicalResolution }: ResolutionT
           value={selectedResolution.toString()}
           onValueChange={handleResolutionChange}
         >
-          <TabsList className="flex flex-wrap w-full gap-1 p-1 h-auto">
+          <TabsList className="grid w-full" style={{ gridTemplateColumns: `repeat(${resolutions.length > 0 ? resolutions.length : 1}, minmax(0, 1fr))` }}>
             {resolutions.map((resolution) => (
               <TabsTrigger
                 key={resolution}
                 value={resolution.toString()}
-                className="relative px-3 py-1.5 text-sm font-medium rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=inactive]:hover:bg-muted"
+                className="relative"
               >
                 {resolution}
-                {resolution === canonicalResolution && (
+                {/* {resolution === canonicalResolution && (
                   <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-primary" />
                 )}
                 {resolution > 0 && trixelStats.byResolution[resolution - 1]?.onChainCount > 0 && (
@@ -137,7 +158,7 @@ export function ResolutionTabs({ worldPubkey, canonicalResolution }: ResolutionT
                 )}
                 {resolution === 0 && trixelStats.byResolution[0]?.onChainCount > 0 && (
                   <span className="absolute -bottom-1 -right-1 h-2 w-2 rounded-full bg-green-500" />
-                )}
+                )} */}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -146,6 +167,8 @@ export function ResolutionTabs({ worldPubkey, canonicalResolution }: ResolutionT
               worldPubkey={worldPubkey}
               resolution={selectedResolution}
               canonicalResolution={canonicalResolution}
+              worldAccount={worldAccount}
+              onTrixelUpdate={handleTrixelUpdate}
             />
           </TabsContent>
         </Tabs>

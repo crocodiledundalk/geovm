@@ -398,7 +398,7 @@ export function getAllTrixelsAtResolution(resolution: number, pageSize: number, 
         }
         
         for (let i = 1; i <= 4; i++) {
-            generateTrixelIds(currentId * 10 + i, depth + 1);
+            generateTrixelIds(currentId + (10**(depth+1) * i), depth + 1);
             if (results.length >= pageSize) return;
         }
     };

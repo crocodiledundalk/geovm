@@ -25,6 +25,7 @@
     "@types/maplibre-gl": "^1.14.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "htm-trixel": "^0.1.1",
     "lucide-react": "^0.508.0",
     "maplibre-gl": "^5.5.0",

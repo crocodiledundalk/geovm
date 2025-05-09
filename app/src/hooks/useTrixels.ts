@@ -8,9 +8,10 @@ import {
   Vector3D,
   cartesianToSpherical,
   getTrixelCountAtResolution,
-  getAllTrixelsAtResolution
+  getAllTrixelsAtResolution,
+  getTrixelAncestors
 } from '@/sdk/utils';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 
 // Cache for memoized spherical coordinates
 const sphericalCoordsCache = new Map<string, SphericalCoords>();
@@ -31,8 +32,9 @@ export interface TrixelData {
   exists: boolean;
   pda: PublicKey;
   hash?: string;
-  data?: string;
+  data?: any;
   resolution: number;
+  lastUpdate: number
 }
 
 interface UseWorldTrixelsOptions {
@@ -74,10 +76,11 @@ export function useWorldTrixels(
           pda: account.publicKey,
           exists: true,
           hash: Buffer.from(account.account.hash).toString('hex'),
-          data: account.account.data ? account.account.data.toString() : undefined,
+          data: account.account.data,
           vertices,
           sphericalCoords,
           resolution,
+          lastUpdate: Number(account.account.lastUpdate)
         };
       });
     },
@@ -196,8 +199,9 @@ export function useWorldTrixels(
                 exists: false,
                 pda,
                 hash: "0".repeat(64),
-                resolution,
-                invalid: true
+                resolution: calculateResolutionFromId(id),
+                invalid: true,
+                lastUpdate: 0
               } as TrixelData;
             }
           });
@@ -214,6 +218,89 @@ export function useWorldTrixels(
     }
   };
 
+  // Function to refresh specific trixels by their IDs
+  const refreshTrixels = useCallback(async (trixelIds: number[]) => {
+    if (!program) throw new Error("Program not initialized");
+
+    // Create a unique set of trixel IDs to refresh
+    const uniqueTrixelIds = [...new Set(trixelIds)];
+    
+    try {
+      // Fetch the specific trixels from the chain
+      const updatedTrixels = await Promise.all(
+        uniqueTrixelIds.map(async (trixelId) => {
+          const [pda] = getTrixelPDA(worldPubkey, trixelId, program.programId);
+          try {
+            const account = await program.account.trixel.fetch(pda);
+            const resolution = calculateResolutionFromId(trixelId);
+            const vertices = getTrixelVerticesFromId(trixelId);
+            const sphericalCoords = vertices.map(vertex => getSphericalCoords(vertex));
+            
+            return {
+              id: trixelId,
+              pda,
+              exists: true,
+              hash: Buffer.from(account.hash).toString('hex'),
+              data: account.data,
+              vertices,
+              sphericalCoords,
+              resolution,
+              lastUpdate: Number(account.lastUpdate)
+            };
+          } catch (err) {
+            // If the trixel doesn't exist on chain, return the calculated version
+            console.warn(`Trixel ${trixelId} not found on chain:`, err);
+            const vertices = getTrixelVerticesFromId(trixelId);
+            const sphericalCoords = vertices.map(vertex => getSphericalCoords(vertex));
+            
+            return {
+              id: trixelId,
+              vertices,
+              sphericalCoords,
+              exists: false,
+              pda,
+              hash: "0".repeat(64),
+              resolution: calculateResolutionFromId(trixelId),
+              lastUpdate: 0
+            } as TrixelData;
+          }
+        })
+      );
+      
+      // Update the cache with the updated trixels
+      const currentData = queryClient.getQueryData(['onChainTrixels', worldPubkey.toString()]) as TrixelData[] || [];
+      
+      // Remove the old versions of the refreshed trixels
+      const filteredData = currentData.filter(trixel => !uniqueTrixelIds.includes(trixel.id));
+      
+      // Add the updated trixels
+      const newData = [...filteredData, ...updatedTrixels.filter(t => t.exists)];
+      
+      // Update the cache
+      queryClient.setQueryData(['onChainTrixels', worldPubkey.toString()], newData);
+      
+      // Also invalidate the calculated trixels queries for any affected resolutions
+      const resolutions = [...new Set(updatedTrixels.map(t => t.resolution))];
+      resolutions.forEach(resolution => {
+        queryClient.invalidateQueries({
+          queryKey: ['calculatedTrixels', worldPubkey.toString(), resolution]
+        });
+      });
+      
+      return updatedTrixels;
+    } catch (error) {
+      console.error("Failed to refresh trixels:", error);
+      throw error;
+    }
+  }, [program, worldPubkey, queryClient, calculateResolutionFromId]);
+
+  // Function to refresh a trixel and all its ancestors
+  const refreshTrixelWithAncestors = useCallback(async (trixelId: number) => {
+    const ancestors = getTrixelAncestors(trixelId);
+    const allTrixelsToRefresh = [trixelId, ...ancestors];
+    return refreshTrixels(allTrixelsToRefresh);
+  }, [refreshTrixels]);
+
   return {
     // All on-chain trixels
     onChainTrixels: onChainTrixelsQuery.data || [],
@@ -225,10 +312,14 @@ export function useWorldTrixels(
     // Prefetching utility
     prefetchResolutionTrixels,
     
+    // Refresh utilities
+    refreshTrixels,
+    refreshTrixelWithAncestors,
+    
     // Stats
     trixelStats,
     
-    // Refetch
+    // Refetch all
     refetchOnChainTrixels: onChainTrixelsQuery.refetch,
   };
 } 

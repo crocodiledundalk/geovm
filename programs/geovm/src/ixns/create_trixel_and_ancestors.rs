@@ -21,7 +21,7 @@ pub struct CreateTrixelAndAncestorsCtx<'info> {
     pub world: Account<'info, World>,
 
     #[account(
-        init,
+        init_if_needed,
         payer = payer,
         space = Trixel::bytes(),
         seeds = [b"trixel", world.key().as_ref(), args.id.to_le_bytes().as_ref()],

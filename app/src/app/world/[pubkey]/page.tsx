@@ -115,6 +115,7 @@ export default function WorldPage() {
               <ResolutionTabs
                 worldPubkey={worldPubkey} // Now guaranteed to be PublicKey
                 canonicalResolution={Number(world.canonicalResolution)}
+                worldAccount={world}
               />
             </div>
           </div>
