@@ -9,7 +9,7 @@ pub struct Vector3D {
     pub z: f64,
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, Copy, Debug)]
 pub struct SphericalCoords {
     pub ra: f64,  // Right Ascension or Longitude in degrees
     pub dec: f64, // Declination or Latitude in degrees
@@ -215,7 +215,7 @@ pub fn get_htm_id(spherical_coords: SphericalCoords, depth: u32) -> Result<u64> 
     };
 
     // 2. Recursive subdivision up to the desired depth
-    for r in 0..depth {
+    for _r in 0..depth {
         let [p0, p1, p2] = current_triangle_vertices;
 
         // Calculate midpoints of edges

@@ -1,6 +1,8 @@
 use crate::errors::ErrorCode;
 use anchor_lang::prelude::*;
 
+use super::trixel_data::{TrixelDataType, TrixelData};
+
 const ABSOLUTE_MAX_RESOLUTION: u8 = 10;
 
 
@@ -8,34 +10,32 @@ const ABSOLUTE_MAX_RESOLUTION: u8 = 10;
 #[account]
 pub struct World {
     pub authority: Pubkey,
-    pub max_resolution: u8,
+    pub name: [u8; 32],
     pub canonical_resolution: u8,
+    pub permissioned_updates: bool,
+    pub updates: u64,
     pub root_hash: [u8;32],
-    pub child_hashes: [[u8;32]; 8]
+    pub child_hashes: [[u8;32]; 8],
+    pub data: TrixelData
 }
 
 impl World {
 
     pub fn bytes() -> usize {
-        8 + std::mem::size_of::<World>()
+        8 + std::mem::size_of::<World>() + 50
     }
 
     pub fn init(
         &mut self,
         authority: Pubkey,
-        max_resolution: u8,
+        name: [u8;32],
         canonical_resolution: u8,
+        permissioned_updates: bool,
+        data_type: TrixelDataType
     ) -> Result<()> {
+        
         require!(
-            max_resolution <= ABSOLUTE_MAX_RESOLUTION,
-            ErrorCode::InvalidArgument
-        );
-        require!(
-            max_resolution >= 1,
-            ErrorCode::InvalidArgument
-        );
-        require!(
-            canonical_resolution <= max_resolution,
+            canonical_resolution <= ABSOLUTE_MAX_RESOLUTION,
             ErrorCode::InvalidArgument
         );
         require!(
@@ -43,10 +43,22 @@ impl World {
             ErrorCode::InvalidArgument
         );
         self.authority = authority;
-        self.max_resolution = max_resolution;
+        self.name = name;
         self.canonical_resolution = canonical_resolution;
+        self.permissioned_updates = permissioned_updates;
         self.child_hashes = [[0; 32]; 8];
         self.root_hash = self.compute_root_hash().unwrap();
+        self.updates = 0;
+        
+        // Initialize the appropriate TrixelData based on the data_type
+        self.data = match data_type {
+            TrixelDataType::Count => TrixelData::Count { count: 0 },
+            TrixelDataType::AggregateOverwrite => TrixelData::AggregateOverwrite { metric: 0 },
+            TrixelDataType::AggregateAccumulate => TrixelData::AggregateAccumulate { metric: 0 },
+            TrixelDataType::MeanOverwrite => TrixelData::MeanOverwrite { numerator: 0, denominator: 0 },
+            TrixelDataType::MeanAccumulate => TrixelData::MeanAccumulate { numerator: 0, denominator: 0 },
+        };
+        
         Ok(())
     }
 
@@ -98,6 +110,7 @@ impl World {
         let new_root_hash = self.update_child_hash(child_idx, new_hash)?;
         
         // Update the stored root hash
+        self.updates = self.updates.checked_add(1).ok_or(ErrorCode::ArithmeticOverflow)?;
         self.root_hash = new_root_hash;
         
         Ok(())

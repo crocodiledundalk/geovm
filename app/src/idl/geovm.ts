@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/geovm.json`.
  */
 export type Geovm = {
-  "address": "BawuFogvRfLuifvArNbtHyfGUQxjgKPftYA89tLCs9Qq",
+  "address": "2v5V4aVkQnFHojUoY4td6X7E7e5NQ78mKzAjAoA6JBrJ",
   "metadata": {
     "name": "geovm",
     "version": "0.1.0",
@@ -141,7 +141,10 @@ export type Geovm = {
         },
         {
           "name": "world",
-          "writable": true
+          "writable": true,
+          "relations": [
+            "trixel"
+          ]
         },
         {
           "name": "trixel",
@@ -276,12 +279,45 @@ export type Geovm = {
         "kind": "struct",
         "fields": [
           {
-            "name": "maxResolution",
+            "name": "canonicalResolution",
             "type": "u8"
           },
           {
-            "name": "canonicalResolution",
-            "type": "u8"
+            "name": "dataType",
+            "type": {
+              "defined": {
+                "name": "trixelDataType"
+              }
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "permissionedUpdates",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "sphericalCoords",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "ra",
+            "type": "f64"
+          },
+          {
+            "name": "dec",
+            "type": "f64"
           }
         ]
       }
@@ -300,8 +336,16 @@ export type Geovm = {
             "type": "u64"
           },
           {
-            "name": "data",
+            "name": "resolution",
+            "type": "u8"
+          },
+          {
+            "name": "updates",
             "type": "u64"
+          },
+          {
+            "name": "lastUpdate",
+            "type": "i64"
           },
           {
             "name": "hash",
@@ -325,6 +369,104 @@ export type Geovm = {
                 4
               ]
             }
+          },
+          {
+            "name": "data",
+            "type": {
+              "defined": {
+                "name": "trixelData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "trixelData",
+      "docs": [
+        "Represents different types of data that can be stored in a trixel"
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "count",
+            "fields": [
+              {
+                "name": "count",
+                "type": "u32"
+              }
+            ]
+          },
+          {
+            "name": "aggregateOverwrite",
+            "fields": [
+              {
+                "name": "metric",
+                "type": "u64"
+              }
+            ]
+          },
+          {
+            "name": "aggregateAccumulate",
+            "fields": [
+              {
+                "name": "metric",
+                "type": "u64"
+              }
+            ]
+          },
+          {
+            "name": "meanOverwrite",
+            "fields": [
+              {
+                "name": "numerator",
+                "type": "u64"
+              },
+              {
+                "name": "denominator",
+                "type": "u64"
+              }
+            ]
+          },
+          {
+            "name": "meanAccumulate",
+            "fields": [
+              {
+                "name": "numerator",
+                "type": "u64"
+              },
+              {
+                "name": "denominator",
+                "type": "u64"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "trixelDataType",
+      "docs": [
+        "Represents different types of data that can be stored in a trixel"
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "count"
+          },
+          {
+            "name": "aggregateOverwrite"
+          },
+          {
+            "name": "aggregateAccumulate"
+          },
+          {
+            "name": "meanOverwrite"
+          },
+          {
+            "name": "meanAccumulate"
           }
         ]
       }
@@ -341,6 +483,16 @@ export type Geovm = {
           {
             "name": "value",
             "type": "i32"
+          },
+          {
+            "name": "coords",
+            "type": {
+              "option": {
+                "defined": {
+                  "name": "sphericalCoords"
+                }
+              }
+            }
           }
         ]
       }
@@ -355,12 +507,25 @@ export type Geovm = {
             "type": "pubkey"
           },
           {
-            "name": "maxResolution",
-            "type": "u8"
+            "name": "name",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
           },
           {
             "name": "canonicalResolution",
             "type": "u8"
+          },
+          {
+            "name": "permissionedUpdates",
+            "type": "bool"
+          },
+          {
+            "name": "updates",
+            "type": "u64"
           },
           {
             "name": "rootHash",
@@ -383,6 +548,14 @@ export type Geovm = {
                 },
                 8
               ]
+            }
+          },
+          {
+            "name": "data",
+            "type": {
+              "defined": {
+                "name": "trixelData"
+              }
             }
           }
         ]

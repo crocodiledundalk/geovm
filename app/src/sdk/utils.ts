@@ -283,6 +283,135 @@ export function getResolutionFromTrixelId(id: number): number {
     return count;
 }
 
+// Get trixel vertices from trixel ID
+export function getTrixelVerticesFromId(id: number): Vector3D[] {
+    // Validate ID format
+    const idStr = id.toString();
+    
+    // Check all digits except last are 1-4
+    for (let i = 0; i < idStr.length - 1; i++) {
+        const digit = parseInt(idStr[i]);
+        if (digit < 1 || digit > 4) {
+            throw new Error("Invalid trixel ID");
+        }
+    }
+    
+    // Check last digit is 1-8
+    const lastDigit = parseInt(idStr[idStr.length - 1]);
+    if (lastDigit < 1 || lastDigit > 8) {
+        throw new Error("Invalid trixel ID");
+    }
+
+    // Get base triangle vertices
+    const baseTriangle = INITIAL_TRIANGLES[lastDigit - 1];
+    if (!baseTriangle) {
+        throw new Error("Invalid trixel ID");
+    }
+
+    // If this is a level 0 trixel (1-8), return its vertices
+    if (id <= 8) {
+        return baseTriangle.v;
+    }
+
+    // Start with the base triangle's vertices
+    let currentVertices = [...baseTriangle.v];
+    
+    // Process each digit in the ID (except the last one which is the base triangle)
+    // We process from right to left (least significant to most significant)
+    const digits = idStr.split('').map(d => parseInt(d));
+    
+    // For each level of subdivision
+    for (let level = 1; level < digits.length; level++) {
+        // Get the child index (1-4) for this level
+        const childIndex = digits[digits.length - 1 - level];
+        
+        // Get the current triangle vertices
+        const [p0, p1, p2] = currentVertices;
+        
+        // Calculate midpoints of edges
+        const w0 = vNormalize(vAdd(p1, p2)); // Midpoint of (p1, p2)
+        const w1 = vNormalize(vAdd(p0, p2)); // Midpoint of (p0, p2)
+        const w2 = vNormalize(vAdd(p0, p1)); // Midpoint of (p0, p1)
+        
+        // Select the child triangle vertices based on the child index
+        switch (childIndex) {
+            case 1:
+                currentVertices = [p0, w2, w1];
+                break;
+            case 2:
+                currentVertices = [p1, w0, w2];
+                break;
+            case 3:
+                currentVertices = [p2, w1, w0];
+                break;
+            case 4:
+                currentVertices = [w0, w1, w2];
+                break;
+            default:
+                throw new Error("Invalid trixel ID");
+        }
+    }
+    
+    return currentVertices;
+}
+
+// Helper to convert 3D vector to spherical coordinates
+export function cartesianToSpherical(v: Vector3D): SphericalCoords {
+    const x = v.x;
+    const y = v.y;
+    const z = v.z;
+    
+    // Calculate declination (latitude)
+    const dec = Math.asin(z) * 180.0 / PI;
+    
+    // Calculate right ascension (longitude)
+    let ra = Math.atan2(y, x) * 180.0 / PI;
+    if (ra < 0) {
+        ra += 360.0;
+    }
+    
+    return { ra, dec };
+}
+
+// Helper to get all trixels at a specific resolution
+export function getAllTrixelsAtResolution(resolution: number, pageSize: number, page: number): number[] {
+    if (resolution === 0) {
+        return [1, 2, 3, 4, 5, 6, 7, 8];
+    }
+    
+    const totalCount = getTrixelCountAtResolution(resolution);
+    const results: number[] = [];
+    
+    // Calculate starting and ending indices for pagination
+    const start = page * pageSize;
+    const end = Math.min(start + pageSize, totalCount);
+    
+    // Generate all possible trixel IDs at this resolution systematically
+    let counter = 0;
+    const generateTrixelIds = (currentId: number, depth: number) => {
+        if (depth === resolution) {
+            counter++;
+            if (counter > start && counter <= end) {
+                results.push(currentId);
+            }
+            return;
+        }
+        
+        for (let i = 1; i <= 4; i++) {
+            generateTrixelIds(currentId * 10 + i, depth + 1);
+            if (results.length >= pageSize) return;
+        }
+    };
+    
+    // Start with each base triangle (1-8)
+    for (let i = 1; i <= 8; i++) {
+        generateTrixelIds(i, 0);
+        if (results.length >= pageSize) break;
+    }
+    
+    return results;
+}
+
 // Helper to convert coordinates to trixel ID and get all PDAs
 export function getTrixelAndAncestorPDAs(
     coords: SphericalCoords,

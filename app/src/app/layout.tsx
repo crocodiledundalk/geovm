@@ -1,9 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { WalletProvider } from "@/components/providers/WalletProvider";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { ProgramProvider } from "@/contexts/ProgramContext";
-import { Toaster } from '@/components/ui/sonner';
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,21 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          <WalletProvider>
-            <ProgramProvider>
-              <div suppressHydrationWarning>
-                {children}
-              </div>
-              <Toaster />
-            </ProgramProvider>
-          </WalletProvider>
-        </ThemeProvider>
+        <Providers>
+          <div suppressHydrationWarning>
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   );

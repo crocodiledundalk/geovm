@@ -1,11 +1,13 @@
 use anchor_lang::prelude::*;
+use crate::state::trixel_data::TrixelDataType;
 use crate::state::World;
-use crate::errors::ErrorCode;
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug)]
 pub struct CreateWorldArgs {
-    pub max_resolution: u8,
-    pub canonical_resolution: u8
+    pub canonical_resolution: u8,
+    pub data_type: TrixelDataType,
+    pub name: [u8;32],
+    pub permissioned_updates: bool,
 }
 
 #[derive(Accounts)]
@@ -28,10 +30,13 @@ pub struct CreateWorldCtx<'info> {
 }
 
 pub fn handle_create_world(ctx: Context<CreateWorldCtx>, args: CreateWorldArgs) -> Result<()> {
-    ctx.accounts.world.init(
+    let world = &mut ctx.accounts.world;
+    world.init(
         ctx.accounts.authority.key(),
-        args.max_resolution,
-        args.canonical_resolution
+        args.name,
+        args.canonical_resolution,
+        args.permissioned_updates,
+        args.data_type
     );
     Ok(())
 }

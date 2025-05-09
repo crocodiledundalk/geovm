@@ -4,11 +4,10 @@ mod errors;
 mod ixns;
 mod state;
 mod helpers;
-use helpers::htm::{get_htm_id, SphericalCoords};
 
 pub use ixns::*;
 
-declare_id!("BawuFogvRfLuifvArNbtHyfGUQxjgKPftYA89tLCs9Qq");
+declare_id!("2v5V4aVkQnFHojUoY4td6X7E7e5NQ78mKzAjAoA6JBrJ");
 
 #[program]
 pub mod geovm {

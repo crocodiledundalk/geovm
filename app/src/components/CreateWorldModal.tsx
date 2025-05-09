@@ -12,6 +12,18 @@ import { getTrixelStats } from '@/sdk/utils';
 
 const ABSOLUTE_MAX_RESOLUTION = 10;
 
+// Define TrixelDataType enum as expected by your program
+// This should ideally be auto-generated or defined in a shared types file
+const TRIXEL_DATA_TYPES = {
+  COUNT: { count: {} },
+  AGGREGATE_OVERWRITE: { aggregateOverwrite: {} },
+  AGGREGATE_ACCUMULATE: { aggregateAccumulate: {} },
+  MEAN_OVERWRITE: { meanOverwrite: {} },
+  MEAN_ACCUMULATE: { meanAccumulate: {} },
+} as const;
+
+type TrixelDataTypeKeys = keyof typeof TRIXEL_DATA_TYPES;
+
 interface CreateWorldModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -21,27 +33,31 @@ export function CreateWorldModal({ isOpen, onClose }: CreateWorldModalProps) {
   const router = useRouter();
   const { program, provider } = useProgram();
   const { publicKey } = useWallet();
+
+  const [worldName, setWorldName] = useState<string>('');
   const [resolution, setResolution] = useState<number>(5);
+  const [selectedDataTypeKey, setSelectedDataTypeKey] = useState<TrixelDataTypeKeys>('COUNT');
+  const [permissionedUpdates, setPermissionedUpdates] = useState<boolean>(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Reset form when modal opens/closes
   useEffect(() => {
     if (isOpen) {
+      setWorldName('');
       setResolution(5);
+      setSelectedDataTypeKey('COUNT');
+      setPermissionedUpdates(false);
       setError(null);
     }
   }, [isOpen]);
 
-  // Get trixel stats for the current resolution
   const stats = getTrixelStats(resolution);
 
-  // Format large numbers with commas
   const formatNumber = (num: number) => {
     return new Intl.NumberFormat().format(Math.round(num));
   };
 
-  // Format area in appropriate units
   const formatArea = (area: number) => {
     if (area >= 1_000_000) {
       return `${(area / 1_000_000).toFixed(1)} million km²`;
@@ -58,6 +74,10 @@ export function CreateWorldModal({ isOpen, onClose }: CreateWorldModalProps) {
       setError('Please connect your wallet to create a world');
       return;
     }
+    if (!worldName.trim()) {
+        setError('World name cannot be empty');
+        return;
+    }
 
     setIsLoading(true);
     setError(null);
@@ -65,13 +85,17 @@ export function CreateWorldModal({ isOpen, onClose }: CreateWorldModalProps) {
     try {
       const worldKeypair = Keypair.generate();
       const worldPubkey = worldKeypair.publicKey;
+      const nameBuffer = Buffer.from(worldName.trim().padEnd(32, "\0"));
+      const nameArray = Array.from(nameBuffer);
+      const dataType = TRIXEL_DATA_TYPES[selectedDataTypeKey];
 
-      // Show initial toast
       toast.promise(
         program.methods
           .createWorld({
-            maxResolution: resolution,
-            canonicalResolution: resolution
+            name: nameArray,
+            canonicalResolution: resolution,
+            dataType: dataType,
+            permissionedUpdates: permissionedUpdates,
           })
           .accountsStrict({
             payer: publicKey,
@@ -84,7 +108,6 @@ export function CreateWorldModal({ isOpen, onClose }: CreateWorldModalProps) {
         {
           loading: 'Creating your world...',
           success: (tx: string) => {
-            // Wait for confirmation
             provider.connection.confirmTransaction(tx, 'confirmed')
               .then(() => {
                 toast.success('World created successfully!');
@@ -144,8 +167,41 @@ export function CreateWorldModal({ isOpen, onClose }: CreateWorldModalProps) {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4">
             <div>
+              <label htmlFor="worldName" className="block text-sm font-medium mb-1">
+                World Name (up to 32 chars)
+              </label>
+              <input 
+                id="worldName"
+                type="text"
+                value={worldName}
+                onChange={(e) => setWorldName(e.target.value)}
+                maxLength={32}
+                className="w-full p-2 border rounded-md bg-input text-foreground"
+                placeholder="e.g., My Awesome World"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="dataType" className="block text-sm font-medium mb-1">
+                Data Aggregation Type
+              </label>
+              <select 
+                id="dataType"
+                value={selectedDataTypeKey}
+                onChange={(e) => setSelectedDataTypeKey(e.target.value as TrixelDataTypeKeys)}
+                className="w-full p-2 border rounded-md bg-input text-foreground"
+              >
+                {Object.keys(TRIXEL_DATA_TYPES).map((key) => (
+                  <option key={key} value={key}>
+                    {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
               <label className="block text-sm font-medium mb-2">
-                Resolution Level ({resolution})
+                Canonical Resolution ({resolution})
               </label>
               <input
                 type="range"
@@ -159,6 +215,19 @@ export function CreateWorldModal({ isOpen, onClose }: CreateWorldModalProps) {
                 <span>1</span>
                 <span>{ABSOLUTE_MAX_RESOLUTION}</span>
               </div>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input 
+                type="checkbox"
+                id="permissionedUpdates"
+                checked={permissionedUpdates}
+                onChange={(e) => setPermissionedUpdates(e.target.checked)}
+                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+              />
+              <label htmlFor="permissionedUpdates" className="text-sm font-medium text-foreground">
+                Permissioned Updates (Only authority can update trixels)
+              </label>
             </div>
 
             <div className="rounded-lg border p-4 space-y-2">

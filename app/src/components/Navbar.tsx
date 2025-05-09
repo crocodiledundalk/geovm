@@ -12,7 +12,7 @@ export function Navbar() {
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+        <div className="container mx-auto flex h-16 max-w-8xl items-center justify-between px-4">
           <Link href="/" className="flex items-center space-x-2">
             <span className="text-xl font-bold">GeoVM</span>
           </Link>

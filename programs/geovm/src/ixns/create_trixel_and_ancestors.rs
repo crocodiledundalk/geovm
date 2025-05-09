@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 use crate::helpers::get_child_index;
-use crate::state::{world, Trixel, World};
+use crate::state::{Trixel, World};
 use crate::errors::ErrorCode;
 use crate::helpers::htm::{get_trixel_ancestors, resolution_from_trixel_id};
 
@@ -41,12 +41,16 @@ pub fn handle_create_trixel_and_ancestors<'info>(ctx: Context<'_, '_, 'info, 'in
         trixel_resolution == ctx.accounts.world.canonical_resolution,
         ErrorCode::InvalidResolution
     );
+    let world_data_type = ctx.accounts.world.data.to_data_type();
 
 
     // Initialize the main trixel
-    ctx.accounts.trixel.init(
+    let trixel = &mut ctx.accounts.trixel;
+    trixel.init(
         ctx.accounts.world.key(),
-        args.id
+        args.id,
+        trixel_resolution,
+        world_data_type
     )?;
     // Get the child index of this trixel within its parent
     let (mut prev_child_idx, mut prev_resolution) = get_child_index(args.id)?;
@@ -65,6 +69,7 @@ pub fn handle_create_trixel_and_ancestors<'info>(ctx: Context<'_, '_, 'info, 'in
     for (i, rem_acc) in ctx.remaining_accounts.iter().enumerate() {
         let ancestor_id = ancestors[i];
         let ancestor_id_bytes = ancestor_id.to_le_bytes();
+        let trixel_resolution = resolution_from_trixel_id(ancestor_id)?;
 
         // Derive the PDA for this ancestor
         let (ancestor_pda, ancestor_bump) = Pubkey::find_program_address(
@@ -84,7 +89,6 @@ pub fn handle_create_trixel_and_ancestors<'info>(ctx: Context<'_, '_, 'info, 'in
 
         // Check if the ancestor account exists
         if rem_acc.data_is_empty() {
-            // Create the ancestor account
             // Create the ancestor account
             let rent = Rent::get()?;
             let space = Trixel::bytes();
@@ -114,18 +118,20 @@ pub fn handle_create_trixel_and_ancestors<'info>(ctx: Context<'_, '_, 'info, 'in
                     &[ancestor_bump],
                 ]],
             )?;
-            let mut ancestor = Account::<'info, Trixel>::try_from_unchecked(rem_acc)?;
-            ancestor.init(
+            let mut ancestor_account_data = Account::<'info, Trixel>::try_from_unchecked(rem_acc)?;
+            ancestor_account_data.init(
                 ctx.accounts.world.key(),
                 ancestor_id,
+                trixel_resolution,
+                world_data_type
             )?;
             // Give it the child hash for the previous
-            ancestor.update_child_hash(prev_child_idx, prev_hash)?;
+            ancestor_account_data.update_child_hash(prev_child_idx, prev_hash)?;
             // Get the updated hash for this ancestor
-            (prev_child_idx, prev_resolution) = get_child_index(ancestor.id)?;
-            prev_hash = ancestor.hash;
+            (prev_child_idx, prev_resolution) = get_child_index(ancestor_account_data.id)?;
+            prev_hash = ancestor_account_data.hash;
             // Exit the account so it's saved
-            ancestor.exit(&*ctx.program_id)?;
+            ancestor_account_data.exit(&*ctx.program_id)?;
         } else {
             let mut ancestor = Account::<'info, Trixel>::try_from(rem_acc)?;
             // Give it the child hash for the previous
