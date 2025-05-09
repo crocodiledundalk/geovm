@@ -1,12 +1,13 @@
 use anchor_lang::prelude::*;
 use crate::state::{Trixel, World};
 use crate::errors::ErrorCode;
-use crate::helpers::htm::{get_trixel_ancestors, resolution_from_trixel_id, get_child_index};
+use crate::helpers::htm::{get_trixel_ancestors, resolution_from_trixel_id, get_child_index, SphericalCoords, get_trixel_id};
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug)]
 pub struct UpdateTrixelArgs {
     pub id: u64,
     pub value: i32,  // The value to add to the trixel and its ancestors
+    pub coords: Option<SphericalCoords>,  // Optional coordinates to verify the trixel ID
 }
 
 #[derive(Accounts)]
@@ -35,6 +36,15 @@ pub fn handle_update_trixel<'info>(
     ctx: Context<'_, '_, 'info, 'info, UpdateTrixelCtx<'info>>, 
     args: UpdateTrixelArgs
 ) -> Result<()> {
+    // If coordinates are provided, verify they match the trixel ID
+    if let Some(coords) = args.coords {
+        let expected_id = get_trixel_id(coords, ctx.accounts.world.canonical_resolution)?;
+        require!(
+            expected_id == args.id,
+            ErrorCode::InvalidTrixelId
+        );
+    }
+
     // Check that the resolution of the trixel is the world's canonical resolution
     let trixel_resolution = resolution_from_trixel_id(args.id)?;
     require!(

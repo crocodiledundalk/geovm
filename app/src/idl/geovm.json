@@ -1,0 +1,386 @@
+{
+  "address": "BawuFogvRfLuifvArNbtHyfGUQxjgKPftYA89tLCs9Qq",
+  "metadata": {
+    "name": "geovm",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "create_trixel_and_ancestors",
+      "discriminator": [
+        101,
+        175,
+        234,
+        43,
+        17,
+        76,
+        49,
+        255
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "world",
+          "writable": true
+        },
+        {
+          "name": "trixel",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  105,
+                  120,
+                  101,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "world"
+              },
+              {
+                "kind": "arg",
+                "path": "args.id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CreateTrixelAndAncestorsArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "create_world",
+      "discriminator": [
+        117,
+        96,
+        81,
+        112,
+        15,
+        209,
+        71,
+        63
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "authority",
+          "writable": true
+        },
+        {
+          "name": "world",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CreateWorldArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_trixel",
+      "discriminator": [
+        229,
+        207,
+        215,
+        209,
+        72,
+        78,
+        135,
+        15
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "world",
+          "writable": true
+        },
+        {
+          "name": "trixel",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  105,
+                  120,
+                  101,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "world"
+              },
+              {
+                "kind": "arg",
+                "path": "args.id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "UpdateTrixelArgs"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Trixel",
+      "discriminator": [
+        13,
+        30,
+        39,
+        148,
+        167,
+        117,
+        147,
+        155
+      ]
+    },
+    {
+      "name": "World",
+      "discriminator": [
+        145,
+        45,
+        170,
+        174,
+        122,
+        32,
+        155,
+        124
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "UnspecifiedError"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidArgument"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidAccount"
+    },
+    {
+      "code": 6003,
+      "name": "AccountMismatch"
+    },
+    {
+      "code": 6004,
+      "name": "UnauthorizedAction"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidResolution"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidCoordinates"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidTrixelAccount"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidTrixelId"
+    },
+    {
+      "code": 6009,
+      "name": "ArithmeticOverflow"
+    }
+  ],
+  "types": [
+    {
+      "name": "CreateTrixelAndAncestorsArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreateWorldArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "max_resolution",
+            "type": "u8"
+          },
+          {
+            "name": "canonical_resolution",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Trixel",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "world",
+            "type": "pubkey"
+          },
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "data",
+            "type": "u64"
+          },
+          {
+            "name": "hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "child_hashes",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u8",
+                    32
+                  ]
+                },
+                4
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateTrixelArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "value",
+            "type": "i32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "World",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "max_resolution",
+            "type": "u8"
+          },
+          {
+            "name": "canonical_resolution",
+            "type": "u8"
+          },
+          {
+            "name": "root_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "child_hashes",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u8",
+                    32
+                  ]
+                },
+                8
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
