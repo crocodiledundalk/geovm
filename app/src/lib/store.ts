@@ -1,20 +1,17 @@
-// Example: @/lib/store.ts (or wherever useMapStore is defined)
 import { create } from 'zustand';
 
+// Define the map store state
 interface MapState {
-  resolution: number | undefined;
+  resolution: number;
   setResolution: (res: number) => void;
-  popupInfo: { trixel: number; coords: [number, number] | undefined } | null;
-  setPopupInfo: (info: { trixel: number; coords: [number, number] | undefined } | null) => void;
-  showTrixels: boolean;
-  toggleTrixels: () => void;
+  popupInfo: { trixel: string, coords: number[][] } | null;
+  setPopupInfo: (info: { trixel: string, coords: number[][] } | null) => void;
 }
 
+// Create the store
 export const useMapStore = create<MapState>((set) => ({
-  resolution: undefined,
-  setResolution: (res) => set({ resolution: res }),
+  resolution: 0,
+  setResolution: (res: number) => set({ resolution: res }),
   popupInfo: null,
-  setPopupInfo: (info) => set({ popupInfo: info }),
-  showTrixels: true,
-  toggleTrixels: () => set((state) => ({ showTrixels: !state.showTrixels })),
-}));
+  setPopupInfo: (info: { trixel: string, coords: number[][] } | null) => set({ popupInfo: info }),
+})); 

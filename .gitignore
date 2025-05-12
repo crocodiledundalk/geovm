@@ -5,3 +5,6 @@ target
 node_modules
 test-ledger
 .yarn
+
+/app/public/globe1.mov
+/app/public/globe2.mov
