@@ -186,7 +186,7 @@
   ],
   "accounts": [
     {
-      "name": "trixel",
+      "name": "Trixel",
       "discriminator": [
         13,
         30,
@@ -199,7 +199,7 @@
       ]
     },
     {
-      "name": "world",
+      "name": "World",
       "discriminator": [
         145,
         45,
@@ -556,4 +556,4 @@
       }
     }
   ]
-} 
+}

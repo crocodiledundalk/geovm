@@ -32,10 +32,6 @@ export function useNotification() {
 export function NotificationProvider({ children }: { children: React.ReactNode }) {
   const [notifications, setNotifications] = useState<Notification[]>([])
 
-  const removeNotification = useCallback((id: string) => {
-    setNotifications((prev) => prev.filter((notification) => notification.id !== id))
-  }, [])
-
   const addNotification = useCallback((message: string, type: NotificationType = "success", duration = 5000) => {
     const id = Math.random().toString(36).substring(2, 9)
     const notification = { id, message, type, duration }
@@ -47,7 +43,11 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         removeNotification(id)
       }, duration)
     }
-  }, [removeNotification])
+  }, [])
+
+  const removeNotification = useCallback((id: string) => {
+    setNotifications((prev) => prev.filter((notification) => notification.id !== id))
+  }, [])
 
   return (
     <NotificationContext.Provider value={{ notifications, addNotification, removeNotification }}>

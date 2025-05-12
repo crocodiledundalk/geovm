@@ -562,4 +562,4 @@ export type Geovm = {
       }
     }
   ]
-}; 
+};
