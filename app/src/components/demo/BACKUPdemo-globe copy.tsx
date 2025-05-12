@@ -6,7 +6,7 @@ import { MapboxOverlay } from '@deck.gl/mapbox';
 import { GeoJsonLayer } from 'deck.gl';
 import {trixelsToFC, getTriResolutionForZoom, getTrixelsForView} from '@my-scope/my-htm-fork';
 import {useMapStore} from '@/lib/store';
-import {globeStyle} from '../map/map-style';
+import {globeStyle} from '../app/map/map-style';
 
 export default function DemoGlobe() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ThemeToggle } from './ThemeToggle';
 import { WalletButton } from './WalletButton';
-import { CreateWorldModal } from './CreateWorldModal';
+import { CreateWorldModal } from './app/modals/CreateWorldModal';
 
 export function Navbar() {
   const [isCreateWorldOpen, setIsCreateWorldOpen] = useState(false);

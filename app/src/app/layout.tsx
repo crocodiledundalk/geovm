@@ -6,8 +6,12 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "GeoVM",
-  description: "A Solana-based virtual machine for geospatial data",
+  description: "Unlock geospatial data and capital markets",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
+
 
 export default function RootLayout({
   children,

@@ -4,9 +4,9 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState, useMemo } from 'react';
 import { useProgram } from '@/contexts/ProgramContext';
 import { PublicKey } from '@solana/web3.js';
-import { ResolutionTabs } from '@/components/ResolutionTabs';
+import { ResolutionTabs } from '@/components/app/ResolutionTabs';
 import { Navbar } from '@/components/Navbar';
-import { WorldGlobe } from '@/components/WorldGlobe';
+import { WorldGlobe } from '@/components/app/globe/WorldGlobe';
 import DemoGlobe from '@/components/demo/demo-globe';
 import { Copy, Check } from 'lucide-react';
 

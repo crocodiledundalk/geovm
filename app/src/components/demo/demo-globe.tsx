@@ -7,10 +7,10 @@ import {trixelsToFC, getTriResolutionForZoom, getTrixelsForView, getTrixelBounda
 import { point as turfPoint, polygon as turfPolygon } from '@turf/helpers';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 
-import {globeStyle} from '../map/map-style';
+import {globeStyle} from '../app/map/map-style';
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { startRippleAnimation } from '../map/ripple-effect';
+import { startRippleAnimation } from '../app/map/ripple-effect';
 
 const HTM_SOURCE_ID = 'htm-trixels-source';
 const HTM_INTERACTIVE_FILL_LAYER_ID = 'htm-interactive-fill-layer';
