@@ -3,7 +3,8 @@ import {useEffect, useRef, useMemo, useState} from 'react';
 import maplibregl, {Map as MaplibreMap, StyleSpecification} from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { MapboxOverlay } from '@deck.gl/mapbox';
-import { GeoJsonLayer } from 'deck.gl';
+import { GeoJsonLayer, PickingInfo } from 'deck.gl';
+import { Feature, Geometry } from 'geojson';
 import {trixelsToFC, getTriResolutionForZoom, getTrixelsForView} from '@/utils/htm/htm-utils';
 import {useMapStore} from '@/lib/store';
 import {globeStyle} from './map-style';
@@ -121,7 +122,7 @@ export default function TriangleGlobe() {
   }, [resolution, isMapLoaded]);
 
   // Define colors for base trixels
-  const baseTrixelColors: { [key: string]: [number, number, number, number] } = {
+  const baseTrixelColors: { [key: string]: [number, number, number, number] } = useMemo(() => ({
     'N0': [255, 0, 0, 100],   // Red
     'N1': [0, 255, 0, 100],   // Green
     'N2': [0, 0, 255, 100],   // Blue
@@ -130,17 +131,9 @@ export default function TriangleGlobe() {
     'S1': [0, 255, 255, 100], // Cyan
     'S2': [128, 0, 128, 100], // Purple
     'S3': [255, 165, 0, 100], // Orange
-  };
-  const defaultTrixelColor: [number,number,number,number] = [100, 100, 100, 70]; // Default for non-base or deeper trixels
-  const selectedTrixelColor: [number,number,number,number] = [255, 99, 71, 180]; // For selected trixel
-
-  // Temporary colors for N0 children for this specific test
-  const n0ChildrenTestColors: { [key: string]: [number, number, number, number] } = {
-    'N000': [255, 150, 150, 120], // Light Reddish
-    'N001': [150, 255, 150, 120], // Light greenish
-    'N002': [150, 150, 255, 120], // Light bluish
-    'N003': [230, 230, 120, 120], // Light Yellowish
-  };
+  }), []);
+  const defaultTrixelColor: [number,number,number,number] = useMemo(() => [100, 100, 100, 70], []);
+  const selectedTrixelColor: [number,number,number,number] = useMemo(() => [255, 99, 71, 180], []);
 
   // Update Deck.gl layers when data or resolution changes
   useEffect(() => {
@@ -165,27 +158,43 @@ export default function TriangleGlobe() {
       getLineColor: [0,0,0,255], // Solid Black
       getLineWidth: 5, // 5 pixels wide
       lineWidthMinPixels: 2, // Ensure visibility
-      getFillColor: (f: any) => {
-        const trixelId = f.properties.id as string;
-        if (trixelId === popupInfo?.trixel) {
+      getFillColor: (f: Feature<Geometry, { id: string }>) => {
+        if (!f.properties) return defaultTrixelColor; // Null check
+        const trixelIdStr = f.properties.id;
+        let trixelIdNum: number | undefined = undefined;
+        if (trixelIdStr) {
+          const parsed = parseInt(trixelIdStr, 10);
+          if (!isNaN(parsed)) trixelIdNum = parsed;
+        }
+
+        // Compare with popupInfo.trixel (number)
+        if (popupInfo?.trixel !== undefined && trixelIdNum !== undefined && popupInfo.trixel === trixelIdNum) {
           return selectedTrixelColor;
         }
-        const rootTrixel = trixelId.substring(0, 2);
+        // Root trixel logic uses string form
+        const rootTrixel = trixelIdStr.substring(0, 2);
         if (baseTrixelColors[rootTrixel]) {
           return baseTrixelColors[rootTrixel];
         }
         return defaultTrixelColor;
       },
-      onClick: ({object}: any) =>
-        setPopupInfo({trixel: object?.properties.id, coords: object?.geometry?.coordinates}),
+      onClick: (info: PickingInfo<Feature<Geometry, { id: string }>>) => {
+        if (info.object && info.object.properties && info.object.properties.id) {
+          const clickedTrixelIdStr = info.object.properties.id;
+          const parsedId = parseInt(clickedTrixelIdStr, 10);
+          if (!isNaN(parsedId)) {
+            setPopupInfo({ trixel: parsedId, coords: info.coordinate as [number, number] | undefined });
+          }
+        }
+      },
       updateTriggers: {
-        getFillColor: [popupInfo?.trixel, resolution],
+        getFillColor: [popupInfo?.trixel, resolution, baseTrixelColors, defaultTrixelColor, selectedTrixelColor],
       },
     });
 
     deckOverlayRef.current.setProps({ layers: [trixelDisplayLayer] });
 
-  }, [triLayerData, resolution, isMapLoaded, popupInfo, setPopupInfo]); // Dependencies remain the same
+  }, [triLayerData, resolution, isMapLoaded, popupInfo, setPopupInfo, baseTrixelColors, defaultTrixelColor, selectedTrixelColor]);
 
   return (
     <div className="absolute inset-0">

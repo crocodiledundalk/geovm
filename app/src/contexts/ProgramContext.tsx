@@ -1,11 +1,12 @@
 'use client';
 
-import { createContext, useContext, useMemo } from 'react';
-import { useConnection } from '@solana/wallet-adapter-react';
-import { Program, AnchorProvider, web3, Idl } from '@coral-xyz/anchor';
-import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import idl from '@/idl/geovm.json';
+import React, { createContext, useContext, useMemo } from 'react';
+import { useConnection, useAnchorWallet } from '@solana/wallet-adapter-react';
+import { Program, AnchorProvider, Idl } from '@coral-xyz/anchor';
+import idlJson from '@/idl/geovm.json';
 import { Geovm } from '@/idl/geovm';
+
+export const PROGRAM_ID = idlJson.address;
 
 interface ProgramContextType {
   program: Program<Geovm> | null;
@@ -17,12 +18,12 @@ const ProgramContext = createContext<ProgramContextType>({
   provider: null,
 });
 
-export function ProgramProvider({ children }: { children: React.ReactNode }) {
+export function GeoVmProgramProvider({ children }: { children: React.ReactNode }) {
   const { connection } = useConnection();
   const wallet = useAnchorWallet();
 
   const provider = useMemo(() => {
-    if (!wallet) return null;
+    if (!wallet || !connection) return null;
     return new AnchorProvider(connection, wallet, {
       commitment: 'confirmed',
     });
@@ -31,10 +32,17 @@ export function ProgramProvider({ children }: { children: React.ReactNode }) {
   const program = useMemo(() => {
     if (!provider) return null;
     
-    return new Program(
-      idl as Idl,
-      provider
-    ) as Program<Geovm>;
+    if (!idlJson.address) {
+        console.error("Program address not found in IDL!");
+        return null;
+    }
+
+    try {
+      return new Program(idlJson as Idl, provider) as Program<Geovm>;
+    } catch (e) {
+      console.error("Failed to create Program instance:", e);
+      return null;
+    }
   }, [provider]);
 
   return (
@@ -44,10 +52,10 @@ export function ProgramProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useProgram() {
+export function useGeoVmProgram() {
   const context = useContext(ProgramContext);
   if (!context) {
-    throw new Error('useProgram must be used within a ProgramProvider');
+    throw new Error('useGeoVmProgram must be used within a GeoVmProgramProvider');
   }
   return context;
-} 
+}

@@ -158,7 +158,7 @@ export function GlobeSection() {
 
   return (
     <section className="py-20 bg-white dark:bg-gray-950">
-      <div className="container">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-[800px] text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
             Interactive <span className="text-teal-600 dark:text-teal-400">Globe</span>
@@ -187,7 +187,7 @@ export function GlobeSection() {
                 <div className="flex-1">
                   {currentFeature === 0 && (
                     <p className="text-gray-500 dark:text-gray-400">
-                      The Hierarchical Triangular Mesh (HTM) divides Earth's surface into triangular cells (trixels)
+                      The Hierarchical Triangular Mesh (HTM) divides Earth&apos;s surface into triangular cells (trixels)
                       that can be perfectly subdivided, creating a consistent geometric hierarchy.
                     </p>
                   )}

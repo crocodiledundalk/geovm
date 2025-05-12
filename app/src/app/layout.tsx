@@ -1,11 +1,14 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { Providers } from "./providers";
+import type { Metadata } from 'next'
+import './globals.css'
+import { Inter } from 'next/font/google'
+// import WalletConnectionProvider from '@/components/WalletConnectionProvider' // Old provider
+import WalletProviders from '@/components/WalletProviders.client'; // New provider
+import { GeoVmProgramProvider } from '@/contexts/ProgramContext'
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "GeoVM",
+  title: "GeoSVM",
   description: "Unlock geospatial data and capital markets",
   icons: {
     icon: '/favicon.ico',
@@ -15,18 +18,22 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <Providers>
-          <div suppressHydrationWarning>
-            {children}
-          </div>
-        </Providers>
+    <html lang="en" className="h-full">
+      <body className="min-h-screen bg-background font-sans antialiased">
+        {/* <WalletConnectionProvider> */}
+        <WalletProviders>  {/* Use new provider */}
+          <GeoVmProgramProvider>
+            <div className="flex min-h-screen flex-col max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+              {children}
+            </div>
+          </GeoVmProgramProvider>
+        {/* </WalletConnectionProvider> */}
+        </WalletProviders>
       </body>
     </html>
-  );
+  )
 }
