@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { Button } from "@/components/ui/button";
 
 export default function HoverBorderGradientDemo() {
   return (
     <div className="m-40 flex justify-center text-center">
       <HoverBorderGradient
         containerClassName="rounded-full"
-        as="button"
+        as={Button}
         className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
       >
         <AceternityLogo />

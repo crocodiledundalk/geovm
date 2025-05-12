@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Activity } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useGlobeStore } from "@/lib/demo/globe-store"
+import { useGlobeStore } from "@/utils/htm/globe-store"
 
 export function ActivityCounter() {
   const activityCount = useGlobeStore((state) => state.activityCount)

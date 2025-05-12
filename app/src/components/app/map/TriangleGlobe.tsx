@@ -7,6 +7,7 @@ import { GeoJsonLayer } from 'deck.gl';
 import {trixelsToFC, getTriResolutionForZoom, getTrixelsForView} from '@/utils/htm/htm-utils';
 import {useMapStore} from '@/lib/store';
 import {globeStyle} from './map-style';
+import type { BBox } from 'geojson';
 
 export default function TriangleGlobe() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
@@ -101,13 +102,19 @@ export default function TriangleGlobe() {
         console.warn("TriangleGlobe: map.getBounds() returned undefined or null");
         return null;
     }
-    const ids = getTrixelsForView(bounds, resolution);
+    const bbox: BBox = [
+        bounds.getWest(),
+        bounds.getSouth(),
+        bounds.getEast(),
+        bounds.getNorth()
+    ];
+    const ids = getTrixelsForView(bbox, resolution);
     
     console.log(`[TriangleGlobe] useMemo: resolution: ${resolution}, number of IDs: ${ids?.length}`);
     if (ids && ids.length > 0) {
         // Check length of first ID to infer its depth (name_length - 2 = depth)
         const sampleId = ids[0];
-        const sampleDepth = sampleId.length - 2;
+        const sampleDepth = sampleId.toString().length - 2;
         console.log(`[TriangleGlobe] Sample IDs (first 5):`, ids.slice(0, 5), `Sample ID depth: ${sampleDepth}`);
         if (sampleDepth !== resolution) {
             console.warn(`[TriangleGlobe] Mismatch! resolution state is ${resolution}, but sample ID depth is ${sampleDepth}`);

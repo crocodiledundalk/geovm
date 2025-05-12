@@ -6,7 +6,6 @@ import { useProgram } from '@/contexts/ProgramContext';
 import { PublicKey } from '@solana/web3.js';
 import { ResolutionTabs } from '@/components/app/ResolutionTabs';
 import { Navbar } from '@/components/Navbar';
-import { WorldGlobe } from '@/components/app/globe/WorldGlobe';
 import DemoGlobe from '@/components/demo/demo-globe';
 import { Copy, Check } from 'lucide-react';
 
@@ -128,7 +127,7 @@ export default function WorldPage() {
         <>
           {/* Full width globe component with theme-aware background */}
           <div className="relative w-full h-[70vh] bg-gray-100 dark:bg-gray-900">
-            <DemoGlobe maxResolution={Number(world.canonicalResolution)} />
+            <DemoGlobe  />
             
             {/* Overlay card with world details */}
             <div className="absolute top-4 right-4 w-80 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-4 rounded-lg shadow-lg border dark:border-gray-700">
