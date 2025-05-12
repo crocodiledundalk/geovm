@@ -3,7 +3,7 @@ import type { StyleSpecification } from 'maplibre-gl';
 export const globeStyle: StyleSpecification = {
   version: 8,
   // name: 'basic-globe', // Removed as not present in the working mission_control style
-  projection: { type: 'globe' } as any, // Reverting to mission_control style for initial projection
+  projection: { type: 'globe' }, // Original structure, but removed 'as any'
   sources: {
     osm: {
       type: 'raster',
