@@ -21,7 +21,7 @@ export const globeStyle: StyleSpecification = {
       id: 'background',
       type: 'background',
       paint: { 
-        'background-color': 'var(--background)' // Use CSS variable for theme support
+        'background-color': '#E5E7EB' // Default light gray, was var(--background)
       }
     },
     {
@@ -29,30 +29,10 @@ export const globeStyle: StyleSpecification = {
       type: 'raster',
       source: 'osm',
       paint: {
-        'raster-opacity': [
-          'case',
-          ['boolean', ['feature-state', 'dark-mode'], false],
-          0.7,  // Dark mode opacity
-          0.85  // Light mode opacity
-        ],
-        'raster-saturation': [
-          'case',
-          ['boolean', ['feature-state', 'dark-mode'], false],
-          0.2,  // Dark mode saturation
-          0.1   // Light mode saturation
-        ],
-        'raster-contrast': [
-          'case',
-          ['boolean', ['feature-state', 'dark-mode'], false],
-          0.1,  // Dark mode contrast
-          0.2   // Light mode contrast
-        ],
-        'raster-brightness-min': [
-          'case',
-          ['boolean', ['feature-state', 'dark-mode'], false],
-          0.1,  // Dark mode brightness
-          0.3   // Light mode brightness
-        ]
+        'raster-opacity': 0.85, // Default to light mode opacity
+        'raster-saturation': 0.1, // Default to light mode saturation
+        'raster-contrast': 0.2,   // Default to light mode contrast
+        'raster-brightness-min': 0.3 // Default to light mode brightness
       }
     }
   ]

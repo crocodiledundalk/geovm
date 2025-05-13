@@ -43,37 +43,48 @@ const INITIAL_TRIANGLES = [
 
 // Trixel Calculation Utilities
 export function getTrixelCountAtResolution(resolution: number): number {
+    if (resolution < 0) throw new Error("Resolution cannot be negative");
+    // Base level 0 has 8 trixels (octahedron faces)
     if (resolution === 0) return 8;
-    return 8 * Math.pow(4, resolution);
-}
-
-export function getTotalTrixelCount(maxResolution: number): number {
-    let total = 0;
-    for (let r = 0; r <= maxResolution; r++) {
-        total += getTrixelCountAtResolution(r);
-    }
-    return total;
+    // CORRECT FORMULA: 8 * 4^(resolution - 1)
+    return 8 * Math.pow(4, resolution - 1);
 }
 
 export function getTrixelAreaAtResolution(resolution: number): number {
-    return TOTAL_SURFACE_AREA_SQKM / getTrixelCountAtResolution(resolution);
+    // Uses the corrected count function now
+    const count = getTrixelCountAtResolution(resolution);
+    if (count === 0) return TOTAL_SURFACE_AREA_SQKM; // Avoid division by zero, although count should be > 0 for res >= 0
+    return TOTAL_SURFACE_AREA_SQKM / count;
 }
 
-export function getTrixelStats(maxResolution: number) {
-    const stats = {
-        totalTrixels: getTotalTrixelCount(maxResolution),
-        byResolution: [] as { resolution: number; count: number; area: number }[],
-        smallestTrixelArea: getTrixelAreaAtResolution(maxResolution),
-        largestTrixelArea: getTrixelAreaAtResolution(0),
-    };
+export function getTrixelStats(resolution: number) {
+    // Calculate stats AT the specified resolution, not cumulative
+    const countAtRes = getTrixelCountAtResolution(resolution);
+    const areaAtRes = getTrixelAreaAtResolution(resolution);
+    // The largest area is always at resolution 0
+    const largestArea = getTrixelAreaAtResolution(0); 
+    // The smallest area is at the selected resolution
+    const smallestArea = areaAtRes;
 
-    for (let r = 0; r <= maxResolution; r++) {
-        stats.byResolution.push({
-            resolution: r,
-            count: getTrixelCountAtResolution(r),
-            area: getTrixelAreaAtResolution(r),
-        });
-    }
+    const stats = {
+        // Display the count AT this resolution
+        totalTrixels: countAtRes, 
+        // Smallest area IS the area at this resolution
+        smallestTrixelArea: smallestArea, 
+        // Largest area is always the area at resolution 0
+        largestTrixelArea: largestArea, 
+        // (Optional: Keep byResolution if needed elsewhere, but remove for clarity if not)
+        // byResolution: [] // Simplified for now
+    };
+    
+    // (Optional: Populate byResolution if needed)
+    // for (let r = 0; r <= resolution; r++) {
+    //     stats.byResolution.push({
+    //         resolution: r,
+    //         count: getTrixelCountAtResolution(r),
+    //         area: getTrixelAreaAtResolution(r),
+    //     });
+    // }
 
     return stats;
 }
@@ -285,55 +296,49 @@ export function getResolutionFromTrixelId(id: number): number {
 
 // Get trixel vertices from trixel ID
 export function getTrixelVerticesFromId(id: number): Vector3D[] {
-    // Validate ID format
     const idStr = id.toString();
-    
-    // Check all digits except last are 1-4
-    for (let i = 0; i < idStr.length - 1; i++) {
-        const digit = parseInt(idStr[i]);
-        if (digit < 1 || digit > 4) {
-            throw new Error("Invalid trixel ID");
+    if (idStr.length === 0) {
+        throw new Error("Invalid trixel ID: empty");
+    }
+
+    // The first digit determines the base triangle (1-8)
+    const baseTriangleId = parseInt(idStr[0]);
+    if (baseTriangleId < 1 || baseTriangleId > 8) {
+        throw new Error(`Invalid trixel ID: base ID ${baseTriangleId} out of range 1-8`);
+    }
+
+    const baseTriangle = INITIAL_TRIANGLES[baseTriangleId - 1]; // Adjust for 0-indexed array
+    if (!baseTriangle) {
+        // This should not happen if baseTriangleId is validated correctly
+        throw new Error(`Invalid trixel ID: Could not find base triangle for ${baseTriangleId}`);
+    }
+
+    // If this is a level 0 trixel (single digit ID), return its vertices directly
+    if (idStr.length === 1) {
+        if (id >= 1 && id <= 8) {
+            return baseTriangle.v;
+        } else {
+            // Should be caught by earlier checks, but as a safeguard
+            throw new Error(`Invalid trixel ID: single digit ${id} not in range 1-8`);
         }
     }
-    
-    // Check last digit is 1-8
-    const lastDigit = parseInt(idStr[idStr.length - 1]);
-    if (lastDigit < 1 || lastDigit > 8) {
-        throw new Error("Invalid trixel ID");
-    }
 
-    // Get base triangle vertices
-    const baseTriangle = INITIAL_TRIANGLES[lastDigit - 1];
-    if (!baseTriangle) {
-        throw new Error("Invalid trixel ID");
-    }
-
-    // If this is a level 0 trixel (1-8), return its vertices
-    if (id <= 8) {
-        return baseTriangle.v;
-    }
-
-    // Start with the base triangle's vertices
     let currentVertices = [...baseTriangle.v];
     
-    // Process each digit in the ID (except the last one which is the base triangle)
-    // We process from right to left (least significant to most significant)
-    const digits = idStr.split('').map(d => parseInt(d));
-    
-    // For each level of subdivision
-    for (let level = 1; level < digits.length; level++) {
-        // Get the child index (1-4) for this level
-        const childIndex = digits[digits.length - 1 - level];
+    // Process subsequent digits for subdivision (1-4)
+    // Start from the second digit (index 1) of idStr
+    for (let i = 1; i < idStr.length; i++) {
+        const childIndex = parseInt(idStr[i]);
+        if (childIndex < 1 || childIndex > 4) {
+            throw new Error(`Invalid trixel ID: child index ${childIndex} at position ${i} out of range 1-4 for ID ${idStr}`);
+        }
         
-        // Get the current triangle vertices
         const [p0, p1, p2] = currentVertices;
         
-        // Calculate midpoints of edges
         const w0 = vNormalize(vAdd(p1, p2)); // Midpoint of (p1, p2)
         const w1 = vNormalize(vAdd(p0, p2)); // Midpoint of (p0, p2)
         const w2 = vNormalize(vAdd(p0, p1)); // Midpoint of (p0, p1)
         
-        // Select the child triangle vertices based on the child index
         switch (childIndex) {
             case 1:
                 currentVertices = [p0, w2, w1];
@@ -345,10 +350,9 @@ export function getTrixelVerticesFromId(id: number): Vector3D[] {
                 currentVertices = [p2, w1, w0];
                 break;
             case 4:
-                currentVertices = [w0, w1, w2];
+                currentVertices = [w0, w1, w2]; // Center triangle
                 break;
-            default:
-                throw new Error("Invalid trixel ID");
+            // No default needed due to validation above
         }
     }
     
@@ -374,42 +378,55 @@ export function cartesianToSpherical(v: Vector3D): SphericalCoords {
 }
 
 // Helper to get all trixels at a specific resolution
-export function getAllTrixelsAtResolution(resolution: number, pageSize: number, page: number): number[] {
+export function getAllTrixelsAtResolution(
+    resolution: number, 
+    pageSize?: number, // Make optional
+    page?: number     // Make optional
+): number[] {
+    if (resolution < 0) throw new Error("Resolution cannot be negative");
+    if (typeof pageSize === 'number' && pageSize <= 0) throw new Error("Page size must be positive");
+    if (typeof page === 'number' && page < 0) throw new Error("Page number cannot be negative");
+
+    const allTrixelIds: number[] = [];
+
     if (resolution === 0) {
-        return [1, 2, 3, 4, 5, 6, 7, 8];
-    }
-    
-    const totalCount = getTrixelCountAtResolution(resolution);
-    const results: number[] = [];
-    
-    // Calculate starting and ending indices for pagination
-    const start = page * pageSize;
-    const end = Math.min(start + pageSize, totalCount);
-    
-    // Generate all possible trixel IDs at this resolution systematically
-    let counter = 0;
-    const generateTrixelIds = (currentId: number, depth: number) => {
-        if (depth === resolution) {
-            counter++;
-            if (counter > start && counter <= end) {
-                results.push(currentId);
+        for (let i = 1; i <= 8; i++) {
+            allTrixelIds.push(i);
+        }
+    } else {
+        // Helper to recursively generate child IDs
+        const generateChildrenRecursive = (currentParentId: number, currentParentActualResolution: number, targetResolution: number) => {
+            // If the current parent's children will be at the target resolution
+            if (currentParentActualResolution + 1 === targetResolution) {
+                for (let i = 1; i <= 4; i++) { // Trixels always have 4 children (except the conceptual root)
+                    allTrixelIds.push(currentParentId * 10 + i);
+                }
+            } 
+            // If we need to go deeper
+            else if (currentParentActualResolution + 1 < targetResolution) {
+                for (let i = 1; i <= 4; i++) {
+                    const childId = currentParentId * 10 + i;
+                    generateChildrenRecursive(childId, currentParentActualResolution + 1, targetResolution);
+                }
             }
-            return;
+            // If currentParentActualResolution >= targetResolution, we stop (or have already collected)
+        };
+
+        // Start generation from each of the 8 base trixels (which are at resolution 0)
+        for (let baseTrixelId = 1; baseTrixelId <= 8; baseTrixelId++) {
+            generateChildrenRecursive(baseTrixelId, 0, resolution);
         }
-        
-        for (let i = 1; i <= 4; i++) {
-            generateTrixelIds(currentId + (10**(depth+1) * i), depth + 1);
-            if (results.length >= pageSize) return;
-        }
-    };
-    
-    // Start with each base triangle (1-8)
-    for (let i = 1; i <= 8; i++) {
-        generateTrixelIds(i, 0);
-        if (results.length >= pageSize) break;
+    }
+
+    allTrixelIds.sort((a, b) => a - b);
+
+    if (typeof pageSize === 'number' && typeof page === 'number') {
+        const startIndex = page * pageSize;
+        const endIndex = startIndex + pageSize;
+        return allTrixelIds.slice(startIndex, endIndex);
     }
     
-    return results;
+    return allTrixelIds;
 }
 
 // Helper to convert coordinates to trixel ID and get all PDAs

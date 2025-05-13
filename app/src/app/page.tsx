@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { FeatureSection } from '@/components/landing/FeatureSection';
 import { UseCasesSection } from '@/components/landing/UseCasesSection';
@@ -11,6 +12,12 @@ import VideoSection from '@/components/landing/VideoSection';
 import { HeroSectionVideo } from '@/components/landing/HeroSectionVideo';
 
 export default function Home() {
+  // State to control the modal
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const openCreateModal = () => setIsCreateModalOpen(true);
+  const closeCreateModal = () => setIsCreateModalOpen(false);
+
   return (
     <main className="min-h-screen bg-black">
       <HeroSectionVideo />

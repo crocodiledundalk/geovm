@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react"
 import { Activity } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useGlobeStore } from "@/utils/htm/globe-store"
+import { useGlobeStore } from "@/lib/demo/globe-store"
 
 export function ActivityCounter() {
-  const activityCount = useGlobeStore((state) => state.activityCount)
+  const activityCount = useGlobeStore((state) => state.clicksConfirmed)
   const [isAnimating, setIsAnimating] = useState(false)
 
   useEffect(() => {

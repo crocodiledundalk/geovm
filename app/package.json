@@ -38,6 +38,7 @@
     "deck.gl": "^9.1.11",
     "dotted-map": "^2.2.3",
     "framer-motion": "^12.11.0",
+    "embla-carousel-react": "8.5.1",
     "htm-trixel": "^0.1.1",
     "lucide-react": "^0.508.0",
     "maplibre-gl": "^5.5.0",
