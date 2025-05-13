@@ -119,8 +119,6 @@ export function TrixelTable({ worldPubkey, resolution, canonicalResolution, worl
     refetch: refetchTrixelsForCurrentResolution 
   } = useResolutionTrixels(resolution, currentPage);
 
-  const [filteredTrixels, setFilteredTrixels] = useState<HookTrixelData[]>([]);
-  
   const worldDataTypeKey = useMemo(() => getDataTypeEnumKeyFromWorld(worldAccount.data), [worldAccount.data]);
   
   useEffect(() => {
@@ -146,10 +144,6 @@ export function TrixelTable({ worldPubkey, resolution, canonicalResolution, worl
   }, [trixelsData, searchTerm, filterOptions]);
 
   useEffect(() => {
-    setFilteredTrixels(filteredData);
-  }, [filteredData]);
-
-  useEffect(() => {
     setLoading(isFetchingTrixels);
     if (isError && trixelError) {
       setError(trixelError.message);
@@ -159,11 +153,11 @@ export function TrixelTable({ worldPubkey, resolution, canonicalResolution, worl
   }, [isFetchingTrixels, isError, trixelError]);
 
   const { totalFilteredTrixels, totalPages, displayedTrixels } = useMemo(() => {
-    const count = filteredTrixels.length;
+    const count = filteredData.length;
     const pages = Math.ceil(count / pageSize);
-    const displayed = filteredTrixels.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
+    const displayed = filteredData.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
     return { totalFilteredTrixels: count, totalPages: pages, displayedTrixels: displayed };
-  }, [filteredTrixels, currentPage, pageSize]);
+  }, [filteredData, currentPage, pageSize]);
 
   const formatVector = (v: Vector3D) => {
     return `(${v.x.toFixed(3)}, ${v.y.toFixed(3)}, ${v.z.toFixed(3)})`;
@@ -372,7 +366,7 @@ export function TrixelTable({ worldPubkey, resolution, canonicalResolution, worl
           <Table className="min-w-full">
             <TableBody>
               {displayedTrixels.map((trixel) => {
-                const vertices = getTrixelVerticesFromId(trixel.id, canonicalResolution);
+                const vertices = getTrixelVerticesFromId(trixel.id);
                 const sphericalVertices = vertices.map(cartesianToSpherical);
                 const displayData = formatTrixelDisplayData(trixel.data, worldDataTypeKey);
 
@@ -468,10 +462,12 @@ export function TrixelTable({ worldPubkey, resolution, canonicalResolution, worl
           worldPubkey={worldPubkey}
           trixelId={selectedTrixelInfoForUpdate.id}
           trixelExists={selectedTrixelInfoForUpdate.exists}
-          worldAccount={worldAccount}
-          onTrixelUpdated={() => {
-            onTrixelUpdate();
-            refetchTrixelsForCurrentResolution();
+          world={worldAccount}
+          onUpdateSuccess={async (updatedTrixelId: number) => {
+            // updatedTrixelId is passed by the modal, we can use it if needed in future,
+            // for now, just calling the general update and refetch functions.
+            onTrixelUpdate(); 
+            await refetchTrixelsForCurrentResolution();
           }}
         />
       )}

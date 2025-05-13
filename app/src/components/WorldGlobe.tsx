@@ -6,7 +6,7 @@ import { useMapStore } from '@/lib/store';
 import { globeStyle } from './map/map-style';
 import { startRippleAnimation } from './map/ripple-effect';
 import { PublicKey } from '@solana/web3.js';
-import { getTriResolutionForZoom, getTrixelsForView, trixelsToFC } from '@/utils/htm/htm-utils';
+import { getTriResolutionForZoom, getTrixelsForView, trixelsToFC } from '@lib/htm';
 
 // Constants for HTM layer IDs
 const HTM_SOURCE_ID = 'htm-trixels-source';

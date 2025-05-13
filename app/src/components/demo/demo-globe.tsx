@@ -2,8 +2,8 @@
 import {useEffect, useRef, useState, useCallback} from 'react';
 import maplibregl, {Map as MaplibreMap, StyleSpecification, GeoJSONFeature} from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { Feature } from 'geojson';
-import {trixelsToFC, getTriResolutionForZoom, getTrixelsForView, getTrixelBoundaryLngLat } from 'htm-trixel';
+import { Feature, Polygon, MultiPolygon } from 'geojson';
+import {trixelsToFC, getTriResolutionForZoom, getTrixelsForView, getTrixelBoundaryLngLat } from '@lib/htm';
 import { point as turfPoint, polygon as turfPolygon } from '@turf/helpers';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import { useGeoVmProgram } from '@/contexts/ProgramContext';
@@ -37,7 +37,7 @@ const RIPPLE_CONTEXT_STROKE_DASHARRAY: [number, number] = [2, 2];
 const FLASH_COLOR = 'white';
 const FLASH_WIDTH = 3;
 const SELECTED_FILL_COLOR = '#FF8C00'; // DarkOrange
-const SELECTED_FILL_OPACITY = 0.5;
+const SELECTED_FILL_OPACITY = 0.5; // Revert to original 0.5
 const SELECTED_STROKE_COLOR = '#FF8C00'; // DarkOrange, same as fill for consistency
 const SELECTED_STROKE_WIDTH = 2;
 const DEFAULT_STROKE_COLOR = '#088';
@@ -131,21 +131,34 @@ const getTrixelIdForPoint = (map: MaplibreMap | null, clickLng: number, clickLat
     }
 
     try {
-      const boundaryCoords = getTrixelBoundaryLngLat(trixelIdNum); 
-      if (boundaryCoords && boundaryCoords.length > 2) { 
-        const closedBoundaryCoords = [...boundaryCoords];
-        if (closedBoundaryCoords.length > 0 && (closedBoundaryCoords[0][0] !== closedBoundaryCoords[closedBoundaryCoords.length - 1][0] || 
-            closedBoundaryCoords[0][1] !== closedBoundaryCoords[closedBoundaryCoords.length - 1][1])) {
-          closedBoundaryCoords.push([...closedBoundaryCoords[0]]); 
-        }
-        const trixelGeoJsonPolygon = turfPolygon([closedBoundaryCoords]);
-        if (booleanPointInPolygon(clickPoint, trixelGeoJsonPolygon)) {
-          // console.log(`[DemoGlobe] getTrixelIdForPoint: Click in trixel ID ${trixelIdNum}`);
+      if (feature.geometry && (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon')) {
+        const geojsonFeature = feature as Feature<Polygon | MultiPolygon>; // Type assertion for Turf
+
+        // Test original point
+        if (booleanPointInPolygon(clickPoint, geojsonFeature)) {
+          // console.log(`[DemoGlobe] Click in trixel ID ${trixelIdNum} (original)`);
           return trixelIdNum;
         }
+
+        // Test with click point longitude +360
+        const clickPointPlus360 = turfPoint([clickLng + 360, clickLat]);
+        if (booleanPointInPolygon(clickPointPlus360, geojsonFeature)) {
+          // console.log(`[DemoGlobe] Click in trixel ID ${trixelIdNum} (lng +360)`);
+          return trixelIdNum;
+        }
+
+        // Test with click point longitude -360
+        const clickPointMinus360 = turfPoint([clickLng - 360, clickLat]);
+        if (booleanPointInPolygon(clickPointMinus360, geojsonFeature)) {
+          // console.log(`[DemoGlobe] Click in trixel ID ${trixelIdNum} (lng -360)`);
+          return trixelIdNum;
+        }
+
+      } else {
+        console.warn(`[DemoGlobe] getTrixelIdForPoint: Feature ID ${trixelIdNum} does not have a suitable Polygon/MultiPolygon geometry. Feature:`, JSON.stringify(feature));
       }
     } catch (err) {
-      console.error(`[DemoGlobe] getTrixelIdForPoint: Error processing trixel ID ${trixelIdNum}:`, err);
+      console.error(`[DemoGlobe] getTrixelIdForPoint: Error processing trixel ID ${trixelIdNum} with its feature geometry:`, err);
     }
   }
   // console.log('[DemoGlobe] getTrixelIdForPoint: Click did not fall into any trixel in the current source.');
@@ -258,9 +271,11 @@ export default function DemoGlobe({
   
             const currentClickedInfo = clickedTrixelInfoRef.current;
             if (currentClickedInfo && currentClickedInfo.mapFeatureId !== mapFeatureId) {
+              console.log(`[DEBUG selectTrixelOnMap] Removing 'selected' state from previous trixel ID: ${currentClickedInfo.mapFeatureId}`);
               currentMap.removeFeatureState({ source: HTM_SOURCE_ID, id: currentClickedInfo.mapFeatureId }, 'selected');
             }
   
+            console.log(`[DEBUG selectTrixelOnMap] Setting 'selected: true' state for trixel ID: ${mapFeatureId}`);
             currentMap.setFeatureState(
               { source: HTM_SOURCE_ID, id: mapFeatureId },
               { selected: true }
@@ -397,9 +412,20 @@ export default function DemoGlobe({
       return;
     }
     const featureCollection = trixelsToFC(trixelIds);
-    // if (featureCollection.features.length > 0) {
-    //   console.log("[DemoGlobe Minimal] Sample feature from trixelsToFC:", JSON.parse(JSON.stringify(featureCollection.features[0])));
-    // }
+
+    // --- START TEMPORARY DEBUG LOG ---
+    if (trixelIds.includes(3) || trixelIds.includes(6)) { // Check if problematic trixels are in the current view
+      const featuresForId3 = featureCollection.features.filter(f => f.properties && f.properties.id === 3);
+      const featuresForId6 = featureCollection.features.filter(f => f.properties && f.properties.id === 6);
+      if (featuresForId3.length > 0) {
+        console.log(`[DEBUG DEMOGLOBE] For Trixel ID 3, found ${featuresForId3.length} features in FeatureCollection from trixelsToFC. Features:`, JSON.parse(JSON.stringify(featuresForId3)));
+      }
+      if (featuresForId6.length > 0) {
+        console.log(`[DEBUG DEMOGLOBE] For Trixel ID 6, found ${featuresForId6.length} features in FeatureCollection from trixelsToFC. Features:`, JSON.parse(JSON.stringify(featuresForId6)));
+      }
+    }
+    // --- END TEMPORARY DEBUG LOG ---
+
     featureCollection.features.forEach((f: Feature) => {
       if (!(f.properties && f.properties.id)) { 
         console.warn("[DemoGlobe Minimal] Feature created by trixelsToFC is missing properties.id for trixelId promotion.", f);
@@ -458,12 +484,17 @@ export default function DemoGlobe({
       center: [0, 0],
       zoom: 0.9,
       minZoom: 0,
-      maxZoom: 6,
+      maxZoom: 6
+      // renderWorldCopies: false // Option is ignored, will be set via method
     });
     mapRef.current = map;
+    map.setRenderWorldCopies(false); // <-- SET IT HERE
+    // console.log('[DEBUG] world copies after construction?', map.getRenderWorldCopies());
     // console.log("[DemoGlobe Minimal] Map object created");
 
     map.on('load', () => {
+      map.setRenderWorldCopies(false); // <-- AND SET IT HERE AGAIN FOR ROBUSTNESS
+      // console.log('[DEBUG] world copies on load?', map.getRenderWorldCopies());
       // console.log("[DemoGlobe Minimal] map.on('load') event fired");
       if (mapRef.current) {
         const initialRawZoom = mapRef.current.getZoom();
@@ -614,6 +645,7 @@ export default function DemoGlobe({
         if (!e.defaultPrevented && currentClickedTrixelInfoForClear) {
             // console.log("[DemoGlobe Minimal] General map click, clearing selection.");
             if (mapRef.current.getSource(HTM_SOURCE_ID) && mapRef.current.isStyleLoaded()){
+                console.log(`[DEBUG general map click] Setting 'selected: false, flash: false' state for trixel ID: ${currentClickedTrixelInfoForClear.mapFeatureId}`);
                 mapRef.current.setFeatureState(
                     { source: HTM_SOURCE_ID, id: currentClickedTrixelInfoForClear.mapFeatureId },
                     { selected: false, flash: false } 
