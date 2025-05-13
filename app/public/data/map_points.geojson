@@ -1,0 +1,6693 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.0032,
+          30.8235
+        ]
+      },
+      "properties": {
+        "name": "Three Gorges Dam",
+        "type": "power_plant",
+        "capacity_mw": 22500.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6484,
+          28.2606
+        ]
+      },
+      "properties": {
+        "name": "Baihetan Dam",
+        "type": "power_plant",
+        "capacity_mw": 13050.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.4889,
+          61.2794
+        ]
+      },
+      "properties": {
+        "name": "Surgutskaya GRES-2",
+        "type": "power_plant",
+        "capacity_mw": 8865.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.9982,
+          7.7659
+        ]
+      },
+      "properties": {
+        "name": "Simon Bolivar (Guri)",
+        "type": "power_plant",
+        "capacity_mw": 8851.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.6522,
+          -3.8322
+        ]
+      },
+      "properties": {
+        "name": "Tucuru\u00ed",
+        "type": "power_plant",
+        "capacity_mw": 8535.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.5941,
+          37.4259
+        ]
+      },
+      "properties": {
+        "name": "Kashiwazaki Kariwa",
+        "type": "power_plant",
+        "capacity_mw": 8212.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.5931,
+          -25.4269
+        ]
+      },
+      "properties": {
+        "name": "Itaipu (Parte Brasileira)",
+        "type": "power_plant",
+        "capacity_mw": 7000.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          89.1138,
+          44.6885
+        ]
+      },
+      "properties": {
+        "name": "East Hope Metals Wucaiwan power station",
+        "type": "power_plant",
+        "capacity_mw": 7000.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.9773,
+          47.9575
+        ]
+      },
+      "properties": {
+        "name": "Grand Coulee",
+        "type": "power_plant",
+        "capacity_mw": 6809.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.555,
+          20.63
+        ]
+      },
+      "properties": {
+        "name": "SHAIBA (SEC)",
+        "type": "power_plant",
+        "capacity_mw": 6794.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.3589,
+          40.1947
+        ]
+      },
+      "properties": {
+        "name": "Datang Tuoketuo power station",
+        "type": "power_plant",
+        "capacity_mw": 6720.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          92.2956,
+          55.9367
+        ]
+      },
+      "properties": {
+        "name": "Krasnoyarsk",
+        "type": "power_plant",
+        "capacity_mw": 6000.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.5863,
+          47.5119
+        ]
+      },
+      "properties": {
+        "name": "Zaporozhye",
+        "type": "power_plant",
+        "capacity_mw": 6000.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          95.7329,
+          40.6876
+        ]
+      },
+      "properties": {
+        "name": "Gansu Wind Farm",
+        "type": "power_plant",
+        "capacity_mw": 6000.0,
+        "primary_fuel": "Wind"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.4175,
+          35.4105
+        ]
+      },
+      "properties": {
+        "name": "Hanbit",
+        "type": "power_plant",
+        "capacity_mw": 5900.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.4287,
+          22.6409
+        ]
+      },
+      "properties": {
+        "name": "Nuozhadu",
+        "type": "power_plant",
+        "capacity_mw": 5850.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          48.3742,
+          28.7072
+        ]
+      },
+      "properties": {
+        "name": "Az Zour South CCGT",
+        "type": "power_plant",
+        "capacity_mw": 5805.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          37.6879,
+          55.9162
+        ]
+      },
+      "properties": {
+        "name": "CHP-23",
+        "type": "power_plant",
+        "capacity_mw": 5690.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.5305,
+          53.7818
+        ]
+      },
+      "properties": {
+        "name": "Robert-Bourassa",
+        "type": "power_plant",
+        "capacity_mw": 5616.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.485,
+          24.2131
+        ]
+      },
+      "properties": {
+        "name": "Taizhong Taichung",
+        "type": "power_plant",
+        "capacity_mw": 5500.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.3265,
+          51.2679
+        ]
+      },
+      "properties": {
+        "name": "Be\u0142chat\u00f3w",
+        "type": "power_plant",
+        "capacity_mw": 5472.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.1332,
+          51.0141
+        ]
+      },
+      "properties": {
+        "name": "GRAVELINES",
+        "type": "power_plant",
+        "capacity_mw": 5460.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.9651,
+          53.5294
+        ]
+      },
+      "properties": {
+        "name": "Churchill Falls",
+        "type": "power_plant",
+        "capacity_mw": 5428.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5827,
+          -7.7184
+        ]
+      },
+      "properties": {
+        "name": "PLTU Paiton I Unit 7 & 8",
+        "type": "power_plant",
+        "capacity_mw": 5355.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.6003,
+          31.3536
+        ]
+      },
+      "properties": {
+        "name": "Waigaoqiao power station",
+        "type": "power_plant",
+        "capacity_mw": 5240.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.9228,
+          21.8664
+        ]
+      },
+      "properties": {
+        "name": "Guohua Taishan power station",
+        "type": "power_plant",
+        "capacity_mw": 5000.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.568,
+          24.165
+        ]
+      },
+      "properties": {
+        "name": "Shuweihat S1",
+        "type": "power_plant",
+        "capacity_mw": 4889.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          82.6719,
+          24.0983
+        ]
+      },
+      "properties": {
+        "name": "VINDH_CHAL STPS",
+        "type": "power_plant",
+        "capacity_mw": 4760.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          69.5532,
+          22.823
+        ]
+      },
+      "properties": {
+        "name": "MUNDRA TPP",
+        "type": "power_plant",
+        "capacity_mw": 4620.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.9261,
+          35.3256
+        ]
+      },
+      "properties": {
+        "name": "Zouxian power station",
+        "type": "power_plant",
+        "capacity_mw": 4540.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.7842,
+          56.2861
+        ]
+      },
+      "properties": {
+        "name": "Bratsk HPP",
+        "type": "power_plant",
+        "capacity_mw": 4500.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.0253,
+          13.501
+        ]
+      },
+      "properties": {
+        "name": "Bang Pakong",
+        "type": "power_plant",
+        "capacity_mw": 4384.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.3747,
+          26.6986
+        ]
+      },
+      "properties": {
+        "name": "West County Energy Center",
+        "type": "power_plant",
+        "capacity_mw": 4263.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -112.8617,
+          33.3881
+        ]
+      },
+      "properties": {
+        "name": "Palo Verde",
+        "type": "power_plant",
+        "capacity_mw": 4209.6,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.1855,
+          36.0703
+        ]
+      },
+      "properties": {
+        "name": "Laxiwa",
+        "type": "power_plant",
+        "capacity_mw": 4200.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.48,
+          39.8
+        ]
+      },
+      "properties": {
+        "name": "Hongyanhe",
+        "type": "power_plant",
+        "capacity_mw": 4183.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.6423,
+          4.1586
+        ]
+      },
+      "properties": {
+        "name": "Manjung power station",
+        "type": "power_plant",
+        "capacity_mw": 4180.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.9689,
+          -26.088
+        ]
+      },
+      "properties": {
+        "name": "Kendal power station",
+        "type": "power_plant",
+        "capacity_mw": 4116.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -95.6311,
+          29.4828
+        ]
+      },
+      "properties": {
+        "name": "W A Parish",
+        "type": "power_plant",
+        "capacity_mw": 4008.4,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          29.0486,
+          59.8528
+        ]
+      },
+      "properties": {
+        "name": "Leningrad NPP",
+        "type": "power_plant",
+        "capacity_mw": 4000.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          47.9539,
+          52.0928
+        ]
+      },
+      "properties": {
+        "name": "Balakovo NPP",
+        "type": "power_plant",
+        "capacity_mw": 4000.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.3717,
+          47.5993
+        ]
+      },
+      "properties": {
+        "name": "Rostov NPP",
+        "type": "power_plant",
+        "capacity_mw": 4000.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.377,
+          51.888
+        ]
+      },
+      "properties": {
+        "name": "Ekibastuz-1 power station",
+        "type": "power_plant",
+        "capacity_mw": 4000.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.1087,
+          57.2574
+        ]
+      },
+      "properties": {
+        "name": "Ringhals",
+        "type": "power_plant",
+        "capacity_mw": 3932.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          61.7117,
+          57.1067
+        ]
+      },
+      "properties": {
+        "name": "Reftinskaya GRES",
+        "type": "power_plant",
+        "capacity_mw": 3800.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -64.6478,
+          -9.2664
+        ]
+      },
+      "properties": {
+        "name": "Jirau",
+        "type": "power_plant",
+        "capacity_mw": 3750.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.7239,
+          43.8697
+        ]
+      },
+      "properties": {
+        "name": "Darlington",
+        "type": "power_plant",
+        "capacity_mw": 3740.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.7311,
+          44.3311
+        ]
+      },
+      "properties": {
+        "name": "TRICASTIN 1",
+        "type": "power_plant",
+        "capacity_mw": 3660.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.8075,
+          33.0606
+        ]
+      },
+      "properties": {
+        "name": "Scherer",
+        "type": "power_plant",
+        "capacity_mw": 3564.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.6861,
+          34.0889
+        ]
+      },
+      "properties": {
+        "name": "Tarbela",
+        "type": "power_plant",
+        "capacity_mw": 3478.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.5373,
+          42.3572
+        ]
+      },
+      "properties": {
+        "name": "MONTALTO (Alessandro Volta)",
+        "type": "power_plant",
+        "capacity_mw": 3446.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.3636,
+          -20.3822
+        ]
+      },
+      "properties": {
+        "name": "Ilha Solteira",
+        "type": "power_plant",
+        "capacity_mw": 3444.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.7739,
+          48.5497
+        ]
+      },
+      "properties": {
+        "name": "Huaneng Yimin power station",
+        "type": "power_plant",
+        "capacity_mw": 3400.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.03,
+          -5.892
+        ]
+      },
+      "properties": {
+        "name": "PLTU Suralaya",
+        "type": "power_plant",
+        "capacity_mw": 3400.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.7658,
+          38.3722
+        ]
+      },
+      "properties": {
+        "name": "Gibson",
+        "type": "power_plant",
+        "capacity_mw": 3339.5,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -37.7924,
+          -9.6209
+        ]
+      },
+      "properties": {
+        "name": "Xing\u00f3",
+        "type": "power_plant",
+        "capacity_mw": 3162.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          69.3481,
+          38.3717
+        ]
+      },
+      "properties": {
+        "name": "Nurek",
+        "type": "power_plant",
+        "capacity_mw": 3015.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.8233,
+          38.4731
+        ]
+      },
+      "properties": {
+        "name": "John E Amos",
+        "type": "power_plant",
+        "capacity_mw": 2932.6,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.29,
+          20.0063
+        ]
+      },
+      "properties": {
+        "name": "CHANDRAPUR_Coal",
+        "type": "power_plant",
+        "capacity_mw": 2920.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.851,
+          35.4156
+        ]
+      },
+      "properties": {
+        "name": "Damavand C.C.",
+        "type": "power_plant",
+        "capacity_mw": 2800.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          36.981,
+          38.3537
+        ]
+      },
+      "properties": {
+        "name": "Af\u015fin Elbistan Termik Santrali",
+        "type": "power_plant",
+        "capacity_mw": 2795.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -102.1154,
+          17.9837
+        ]
+      },
+      "properties": {
+        "name": "Plutarco El\u00edas Calles (Petacalco)",
+        "type": "power_plant",
+        "capacity_mw": 2778.4,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.224,
+          29.2693
+        ]
+      },
+      "properties": {
+        "name": "Kuriemat 2",
+        "type": "power_plant",
+        "capacity_mw": 2754.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.1957,
+          56.0148
+        ]
+      },
+      "properties": {
+        "name": "G.M. Shrum",
+        "type": "power_plant",
+        "capacity_mw": 2730.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          150.9491,
+          -32.3953
+        ]
+      },
+      "properties": {
+        "name": "Bayswater",
+        "type": "power_plant",
+        "capacity_mw": 2640.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.0318,
+          40.5632
+        ]
+      },
+      "properties": {
+        "name": "Brindisi Sud power station",
+        "type": "power_plant",
+        "capacity_mw": 2640.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.4016,
+          48.515
+        ]
+      },
+      "properties": {
+        "name": "Kernkraft Gundremmingen",
+        "type": "power_plant",
+        "capacity_mw": 2572.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9461,
+          40.7592
+        ]
+      },
+      "properties": {
+        "name": "Ravenswood",
+        "type": "power_plant",
+        "capacity_mw": 2551.0000000000005,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7871,
+          35.5014
+        ]
+      },
+      "properties": {
+        "name": "Huaneng Pingliang power station",
+        "type": "power_plant",
+        "capacity_mw": 2520.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.8931,
+          45.3808
+        ]
+      },
+      "properties": {
+        "name": "Sherburne County",
+        "type": "power_plant",
+        "capacity_mw": 2469.3,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          29.1341,
+          54.6803
+        ]
+      },
+      "properties": {
+        "name": "Lukoml Thermal Power Plant Belarus",
+        "type": "power_plant",
+        "capacity_mw": 2460.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          58.8033,
+          51.754
+        ]
+      },
+      "properties": {
+        "name": "Iriklinskaya",
+        "type": "power_plant",
+        "capacity_mw": 2444.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -108.7875,
+          41.7378
+        ]
+      },
+      "properties": {
+        "name": "Jim Bridger",
+        "type": "power_plant",
+        "capacity_mw": 2441.9,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.1458,
+          29.9472
+        ]
+      },
+      "properties": {
+        "name": "Nine Mile Point",
+        "type": "power_plant",
+        "capacity_mw": 2439.7,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.1012,
+          16.9428
+        ]
+      },
+      "properties": {
+        "name": "Manuel Moreno Torres (Chicoas\u00e9n)",
+        "type": "power_plant",
+        "capacity_mw": 2400.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8349,
+          16.4994
+        ]
+      },
+      "properties": {
+        "name": "KUDGI",
+        "type": "power_plant",
+        "capacity_mw": 2400.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          46.9901,
+          40.78
+        ]
+      },
+      "properties": {
+        "name": "Azerbaijan TPP",
+        "type": "power_plant",
+        "capacity_mw": 2400.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.8555,
+          35.2115
+        ]
+      },
+      "properties": {
+        "name": "Diablo Canyon",
+        "type": "power_plant",
+        "capacity_mw": 2323.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.0357,
+          24.6217
+        ]
+      },
+      "properties": {
+        "name": "CHHABRA TPS",
+        "type": "power_plant",
+        "capacity_mw": 2320.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          131.7076,
+          33.2672
+        ]
+      },
+      "properties": {
+        "name": "Shin Oita",
+        "type": "power_plant",
+        "capacity_mw": 2295.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          146.5746,
+          -38.2536
+        ]
+      },
+      "properties": {
+        "name": "Loy Yang A",
+        "type": "power_plant",
+        "capacity_mw": 2180.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.99,
+          51.685
+        ]
+      },
+      "properties": {
+        "name": "Pembroke",
+        "type": "power_plant",
+        "capacity_mw": 2180.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.1172,
+          39.2865
+        ]
+      },
+      "properties": {
+        "name": "Jeffrey Energy Center",
+        "type": "power_plant",
+        "capacity_mw": 2160.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -114.5569,
+          53.5075
+        ]
+      },
+      "properties": {
+        "name": "Sundance",
+        "type": "power_plant",
+        "capacity_mw": 2141.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.376,
+          29.8266
+        ]
+      },
+      "properties": {
+        "name": "Shenhua Jiujiang power station",
+        "type": "power_plant",
+        "capacity_mw": 2104.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          87.894,
+          24.772
+        ]
+      },
+      "properties": {
+        "name": "FARAKKA STPS",
+        "type": "power_plant",
+        "capacity_mw": 2100.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.2961,
+          36.0547
+        ]
+      },
+      "properties": {
+        "name": "Al-Shemal",
+        "type": "power_plant",
+        "capacity_mw": 2100.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.8828,
+          23.9721
+        ]
+      },
+      "properties": {
+        "name": "High Dam",
+        "type": "power_plant",
+        "capacity_mw": 2100.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.3334,
+          21.0151
+        ]
+      },
+      "properties": {
+        "name": "Adolfo L\u00f3pez Mateos (Tuxpan)",
+        "type": "power_plant",
+        "capacity_mw": 2100.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.8875,
+          41.5035
+        ]
+      },
+      "properties": {
+        "name": "Zonguldak Eren (ZETES)",
+        "type": "power_plant",
+        "capacity_mw": 2090.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.7047,
+          -15.5859
+        ]
+      },
+      "properties": {
+        "name": "Cahora Bassa",
+        "type": "power_plant",
+        "capacity_mw": 2075.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.621,
+          24.79
+        ]
+      },
+      "properties": {
+        "name": "Riyadh 12",
+        "type": "power_plant",
+        "capacity_mw": 2055.6000000000004,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          131.6684,
+          46.5629
+        ]
+      },
+      "properties": {
+        "name": "Shuangyashan power station",
+        "type": "power_plant",
+        "capacity_mw": 2040.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.6378,
+          33.1041
+        ]
+      },
+      "properties": {
+        "name": "Centrale Thermique de Jorf Lasfar (JLEC)",
+        "type": "power_plant",
+        "capacity_mw": 2020.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.6986,
+          39.807
+        ]
+      },
+      "properties": {
+        "name": "CN ALMARAZ 1",
+        "type": "power_plant",
+        "capacity_mw": 2016.9,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.0114,
+          33.9597
+        ]
+      },
+      "properties": {
+        "name": "Brunswick Nuclear",
+        "type": "power_plant",
+        "capacity_mw": 2003.2,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.1327,
+          8.1691
+        ]
+      },
+      "properties": {
+        "name": "KUNDANKULAM",
+        "type": "power_plant",
+        "capacity_mw": 2000.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.5125,
+          43.0367
+        ]
+      },
+      "properties": {
+        "name": "Tomari",
+        "type": "power_plant",
+        "capacity_mw": 2000.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.1552,
+          10.4949
+        ]
+      },
+      "properties": {
+        "name": "Planta Centro",
+        "type": "power_plant",
+        "capacity_mw": 2000.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          23.7723,
+          43.7438
+        ]
+      },
+      "properties": {
+        "name": "KOZLODUY",
+        "type": "power_plant",
+        "capacity_mw": 2000.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.6473,
+          50.3024
+        ]
+      },
+      "properties": {
+        "name": "Khmelnytska",
+        "type": "power_plant",
+        "capacity_mw": 2000.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.3393,
+          -34.626
+        ]
+      },
+      "properties": {
+        "name": "COSTANERA",
+        "type": "power_plant",
+        "capacity_mw": 1982.2,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.2372,
+          29.924
+        ]
+      },
+      "properties": {
+        "name": "TALWANDI SABO",
+        "type": "power_plant",
+        "capacity_mw": 1980.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -86.4447,
+          43.8942
+        ]
+      },
+      "properties": {
+        "name": "Ludington",
+        "type": "power_plant",
+        "capacity_mw": 1978.8,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.3233,
+          20.8082
+        ]
+      },
+      "properties": {
+        "name": "Hoa Binh",
+        "type": "power_plant",
+        "capacity_mw": 1920.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          56.7932,
+          30.21
+        ]
+      },
+      "properties": {
+        "name": "Kerman",
+        "type": "power_plant",
+        "capacity_mw": 1912.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          37.3018,
+          6.8482
+        ]
+      },
+      "properties": {
+        "name": "Gilgel Gibe III",
+        "type": "power_plant",
+        "capacity_mw": 1870.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.2351,
+          35.311
+        ]
+      },
+      "properties": {
+        "name": "Arkansas Nuclear One",
+        "type": "power_plant",
+        "capacity_mw": 1845.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.7774,
+          -9.341
+        ]
+      },
+      "properties": {
+        "name": "Teles Pires",
+        "type": "power_plant",
+        "capacity_mw": 1819.8,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.4281,
+          -33.6737
+        ]
+      },
+      "properties": {
+        "name": "Koeberg",
+        "type": "power_plant",
+        "capacity_mw": 1800.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.6206,
+          -5.5267
+        ]
+      },
+      "properties": {
+        "name": "Inga II",
+        "type": "power_plant",
+        "capacity_mw": 1775.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.4667,
+          67.4667
+        ]
+      },
+      "properties": {
+        "name": "Kola NPP",
+        "type": "power_plant",
+        "capacity_mw": 1760.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          61.8417,
+          37.5
+        ]
+      },
+      "properties": {
+        "name": "Mary Thermal Power Plant Turkmenistan",
+        "type": "power_plant",
+        "capacity_mw": 1685.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.2187,
+          -23.8508
+        ]
+      },
+      "properties": {
+        "name": "Gladstone",
+        "type": "power_plant",
+        "capacity_mw": 1680.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -108.4814,
+          36.69
+        ]
+      },
+      "properties": {
+        "name": "Four Corners",
+        "type": "power_plant",
+        "capacity_mw": 1636.2,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          80.1264,
+          14.3444
+        ]
+      },
+      "properties": {
+        "name": "DAMODARAM SANJEEVAIAH",
+        "type": "power_plant",
+        "capacity_mw": 1600.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.06,
+          9.242
+        ]
+      },
+      "properties": {
+        "name": "Ca Mau 1",
+        "type": "power_plant",
+        "capacity_mw": 1542.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.633,
+          16.94
+        ]
+      },
+      "properties": {
+        "name": "JAZAN",
+        "type": "power_plant",
+        "capacity_mw": 1520.9000000000003,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.9563,
+          38.7467
+        ]
+      },
+      "properties": {
+        "name": "Enka \u0130zmir Do\u011falgaz Santrali",
+        "type": "power_plant",
+        "capacity_mw": 1520.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.617,
+          -0.1443
+        ]
+      },
+      "properties": {
+        "name": "Coca Coda Sinclair",
+        "type": "power_plant",
+        "capacity_mw": 1500.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.22,
+          42.73
+        ]
+      },
+      "properties": {
+        "name": "Baishan",
+        "type": "power_plant",
+        "capacity_mw": 1500.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.2308,
+          17.9519
+        ]
+      },
+      "properties": {
+        "name": "Aguirre",
+        "type": "power_plant",
+        "capacity_mw": 1492.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.674,
+          32.7882
+        ]
+      },
+      "properties": {
+        "name": "Az Zawiyah",
+        "type": "power_plant",
+        "capacity_mw": 1440.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -100.7003,
+          28.4682
+        ]
+      },
+      "properties": {
+        "name": "Carb\u00f3n II",
+        "type": "power_plant",
+        "capacity_mw": 1400.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.8314,
+          -31.6651
+        ]
+      },
+      "properties": {
+        "name": "PIEDRA DEL AGUILA (CPSA)",
+        "type": "power_plant",
+        "capacity_mw": 1400.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.8767,
+          47.2754
+        ]
+      },
+      "properties": {
+        "name": "CORDEMAIS",
+        "type": "power_plant",
+        "capacity_mw": 1370.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.1097,
+          56.5075
+        ]
+      },
+      "properties": {
+        "name": "Limestone",
+        "type": "power_plant",
+        "capacity_mw": 1350.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.4588,
+          -23.0072
+        ]
+      },
+      "properties": {
+        "name": "Almirante \u00c1lvaro Alberto - Unidade II (Antiga Angra II)",
+        "type": "power_plant",
+        "capacity_mw": 1350.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.3054,
+          53.7698
+        ]
+      },
+      "properties": {
+        "name": "Zeyskaya HPP",
+        "type": "power_plant",
+        "capacity_mw": 1330.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.5945,
+          49.7408
+        ]
+      },
+      "properties": {
+        "name": "Ren\u00e9-L\u00e9vesque (Manic-3)",
+        "type": "power_plant",
+        "capacity_mw": 1326.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.3011,
+          -13.835
+        ]
+      },
+      "properties": {
+        "name": "Serra da Mesa",
+        "type": "power_plant",
+        "capacity_mw": 1275.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0795,
+          13.622
+        ]
+      },
+      "properties": {
+        "name": "ILIJAN",
+        "type": "power_plant",
+        "capacity_mw": 1271.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.0431,
+          32.6172
+        ]
+      },
+      "properties": {
+        "name": "Hagit",
+        "type": "power_plant",
+        "capacity_mw": 1255.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.05,
+          18.6667
+        ]
+      },
+      "properties": {
+        "name": "Merowe",
+        "type": "power_plant",
+        "capacity_mw": 1250.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.8405,
+          6.2108
+        ]
+      },
+      "properties": {
+        "name": "San Carlos",
+        "type": "power_plant",
+        "capacity_mw": 1246.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          71.3667,
+          42.9
+        ]
+      },
+      "properties": {
+        "name": "OJSC Zhambyl GRES",
+        "type": "power_plant",
+        "capacity_mw": 1230.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -101.1571,
+          47.3777
+        ]
+      },
+      "properties": {
+        "name": "Coal Creek",
+        "type": "power_plant",
+        "capacity_mw": 1215.6,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.0778,
+          36.885
+        ]
+      },
+      "properties": {
+        "name": "Koudiet Eddraouch",
+        "type": "power_plant",
+        "capacity_mw": 1200.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.0797,
+          36.5767
+        ]
+      },
+      "properties": {
+        "name": "Hadjret Ennous",
+        "type": "power_plant",
+        "capacity_mw": 1200.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.7483,
+          -39.2577
+        ]
+      },
+      "properties": {
+        "name": "EL CHOCON",
+        "type": "power_plant",
+        "capacity_mw": 1200.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.0606,
+          55.0056
+        ]
+      },
+      "properties": {
+        "name": "Novosibirsk TPP-5",
+        "type": "power_plant",
+        "capacity_mw": 1200.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9392,
+          7.5732
+        ]
+      },
+      "properties": {
+        "name": "ESCOMBRERAS GRUPO 1",
+        "type": "power_plant",
+        "capacity_mw": 1199.25,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.4086,
+          55.9679
+        ]
+      },
+      "properties": {
+        "name": "Torness",
+        "type": "power_plant",
+        "capacity_mw": 1185.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.4833,
+          51.3008
+        ]
+      },
+      "properties": {
+        "name": "Gusinoozyorskaya",
+        "type": "power_plant",
+        "capacity_mw": 1160.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -102.57,
+          34.1865
+        ]
+      },
+      "properties": {
+        "name": "Tolk",
+        "type": "power_plant",
+        "capacity_mw": 1135.8,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.3216,
+          5.067
+        ]
+      },
+      "properties": {
+        "name": "Alaoji",
+        "type": "power_plant",
+        "capacity_mw": 1074.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          57.3156,
+          65.1344
+        ]
+      },
+      "properties": {
+        "name": "Pechorskaya",
+        "type": "power_plant",
+        "capacity_mw": 1060.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.133,
+          32.2027
+        ]
+      },
+      "properties": {
+        "name": "North Benghazi Station 1",
+        "type": "power_plant",
+        "capacity_mw": 1040.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.71,
+          18.35
+        ]
+      },
+      "properties": {
+        "name": "Miraah CSP",
+        "type": "power_plant",
+        "capacity_mw": 1021.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.859,
+          26.3851
+        ]
+      },
+      "properties": {
+        "name": "Leiyang power station",
+        "type": "power_plant",
+        "capacity_mw": 1020.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2126,
+          -22.091
+        ]
+      },
+      "properties": {
+        "name": "TERMOELECTRICA TOCOPILLA (U12)",
+        "type": "power_plant",
+        "capacity_mw": 1001.7,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          80.826,
+          43.992
+        ]
+      },
+      "properties": {
+        "name": "Ili Kazakh I",
+        "type": "power_plant",
+        "capacity_mw": 1000.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          78.0838,
+          66.035
+        ]
+      },
+      "properties": {
+        "name": "Urengoyskaya",
+        "type": "power_plant",
+        "capacity_mw": 979.7,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -66.2023,
+          45.1538
+        ]
+      },
+      "properties": {
+        "name": "Coleson Cove",
+        "type": "power_plant",
+        "capacity_mw": 972.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -104.8038,
+          21.8395
+        ]
+      },
+      "properties": {
+        "name": "Aguamilpa Solidaridad",
+        "type": "power_plant",
+        "capacity_mw": 960.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.7295,
+          -12.4976
+        ]
+      },
+      "properties": {
+        "name": "Kallpa",
+        "type": "power_plant",
+        "capacity_mw": 952.3,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.47,
+          -18.3835
+        ]
+      },
+      "properties": {
+        "name": "Hwange Coal Power Plant Zimbabwe",
+        "type": "power_plant",
+        "capacity_mw": 920.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.7643,
+          10.9368
+        ]
+      },
+      "properties": {
+        "name": "Termobarranquilla",
+        "type": "power_plant",
+        "capacity_mw": 918.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          150.4167,
+          62.0583
+        ]
+      },
+      "properties": {
+        "name": "Kolymskaya HPP",
+        "type": "power_plant",
+        "capacity_mw": 900.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.0498,
+          39.4812
+        ]
+      },
+      "properties": {
+        "name": "Huadian Kashi power station",
+        "type": "power_plant",
+        "capacity_mw": 900.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.3231,
+          -32.9366
+        ]
+      },
+      "properties": {
+        "name": "NEHUENCO",
+        "type": "power_plant",
+        "capacity_mw": 874.7,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8186,
+          66.8857
+        ]
+      },
+      "properties": {
+        "name": "Harspranget",
+        "type": "power_plant",
+        "capacity_mw": 871.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.0425,
+          -24.6894
+        ]
+      },
+      "properties": {
+        "name": "CENTRAL TERMOELECTRICA MANUEL BELGRANO",
+        "type": "power_plant",
+        "capacity_mw": 868.2,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          167.2778,
+          -45.5214
+        ]
+      },
+      "properties": {
+        "name": "Manapouri",
+        "type": "power_plant",
+        "capacity_mw": 800.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.5226,
+          -34.8052
+        ]
+      },
+      "properties": {
+        "name": "Torrens Island B",
+        "type": "power_plant",
+        "capacity_mw": 800.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.6124,
+          9.8641
+        ]
+      },
+      "properties": {
+        "name": "Kainji",
+        "type": "power_plant",
+        "capacity_mw": 760.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.7222,
+          -53.7862
+        ]
+      },
+      "properties": {
+        "name": "RIO GRANDE",
+        "type": "power_plant",
+        "capacity_mw": 750.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          59.5553,
+          42.3175
+        ]
+      },
+      "properties": {
+        "name": "Takhiatash",
+        "type": "power_plant",
+        "capacity_mw": 730.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.8294,
+          14.2274
+        ]
+      },
+      "properties": {
+        "name": "Ialy",
+        "type": "power_plant",
+        "capacity_mw": 720.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          57.9816,
+          23.707
+        ]
+      },
+      "properties": {
+        "name": "SMN Barka",
+        "type": "power_plant",
+        "capacity_mw": 716.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4223,
+          40.7175
+        ]
+      },
+      "properties": {
+        "name": "Shasta",
+        "type": "power_plant",
+        "capacity_mw": 714.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.4939,
+          28.0863
+        ]
+      },
+      "properties": {
+        "name": "GRANADILLA 1  GAS 1",
+        "type": "power_plant",
+        "capacity_mw": 693.34,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.7931,
+          64.9471
+        ]
+      },
+      "properties": {
+        "name": "Flj\u00f3tsdalsvirkjun (K\u00e1rahnj\u00fakar )",
+        "type": "power_plant",
+        "capacity_mw": 690.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          53.3404,
+          56.8936
+        ]
+      },
+      "properties": {
+        "name": "Izhevsk HPP-1",
+        "type": "power_plant",
+        "capacity_mw": 681.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.474,
+          63.0315
+        ]
+      },
+      "properties": {
+        "name": "Vilyuiskaya HPP (HPP-1  HPP-2)",
+        "type": "power_plant",
+        "capacity_mw": 680.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.347,
+          49.6588
+        ]
+      },
+      "properties": {
+        "name": "JSC Bukhtarminskaya",
+        "type": "power_plant",
+        "capacity_mw": 675.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.9905,
+          -29.7599
+        ]
+      },
+      "properties": {
+        "name": "Uruguaiana",
+        "type": "power_plant",
+        "capacity_mw": 639.9,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.705,
+          52.0944
+        ]
+      },
+      "properties": {
+        "name": "Queen Elizabeth",
+        "type": "power_plant",
+        "capacity_mw": 634.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -62.2536,
+          -38.7872
+        ]
+      },
+      "properties": {
+        "name": "CENTRAL BAHIA BLANCA (PIEDRA BUENA) SA",
+        "type": "power_plant",
+        "capacity_mw": 620.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -105.92,
+          28.4461
+        ]
+      },
+      "properties": {
+        "name": "Chihuahua II (El Encino)",
+        "type": "power_plant",
+        "capacity_mw": 619.4,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -158.1289,
+          21.3564
+        ]
+      },
+      "properties": {
+        "name": "Kahe",
+        "type": "power_plant",
+        "capacity_mw": 609.6999999999999,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.7997,
+          47.9901
+        ]
+      },
+      "properties": {
+        "name": "Bay D'espoir",
+        "type": "power_plant",
+        "capacity_mw": 604.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.7236,
+          53.1347
+        ]
+      },
+      "properties": {
+        "name": "Komsomolskiye CHPPs",
+        "type": "power_plant",
+        "capacity_mw": 600.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.1314,
+          43.9839
+        ]
+      },
+      "properties": {
+        "name": "Inner Mongolia Xilin power station",
+        "type": "power_plant",
+        "capacity_mw": 600.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.0531,
+          31.6703
+        ]
+      },
+      "properties": {
+        "name": "Hassi Messoud",
+        "type": "power_plant",
+        "capacity_mw": 600.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          52.9255,
+          40.0101
+        ]
+      },
+      "properties": {
+        "name": "Turkmenbashi Heat and Power Plant Turkmenistan",
+        "type": "power_plant",
+        "capacity_mw": 590.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          68.1782,
+          28.5828
+        ]
+      },
+      "properties": {
+        "name": "Uch Power Limited",
+        "type": "power_plant",
+        "capacity_mw": 586.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.8204,
+          -31.5568
+        ]
+      },
+      "properties": {
+        "name": "Pinjar",
+        "type": "power_plant",
+        "capacity_mw": 576.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.2502,
+          -2.6219
+        ]
+      },
+      "properties": {
+        "name": "Mau\u00e1",
+        "type": "power_plant",
+        "capacity_mw": 552.564,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          92.517,
+          29.18
+        ]
+      },
+      "properties": {
+        "name": "Zangmu",
+        "type": "power_plant",
+        "capacity_mw": 540.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.097,
+          -15.596
+        ]
+      },
+      "properties": {
+        "name": "Cuiab\u00e1 (Antga M\u00e1rio Covas)",
+        "type": "power_plant",
+        "capacity_mw": 529.2,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.2675,
+          20.6931
+        ]
+      },
+      "properties": {
+        "name": "Valladolid III",
+        "type": "power_plant",
+        "capacity_mw": 525.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.4672,
+          -9.7955
+        ]
+      },
+      "properties": {
+        "name": "Capanda",
+        "type": "power_plant",
+        "capacity_mw": 520.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -44.355,
+          -4.8221
+        ]
+      },
+      "properties": {
+        "name": "Maranh\u00e3o III",
+        "type": "power_plant",
+        "capacity_mw": 518.8,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.15,
+          -37.5444
+        ]
+      },
+      "properties": {
+        "name": "Huntly (steam)",
+        "type": "power_plant",
+        "capacity_mw": 500.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          147.0483,
+          -19.733
+        ]
+      },
+      "properties": {
+        "name": "Haughton River Solar Farm",
+        "type": "power_plant",
+        "capacity_mw": 500.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -75.655,
+          20.7408
+        ]
+      },
+      "properties": {
+        "name": "Lidio Perez (felton) Powerplant",
+        "type": "power_plant",
+        "capacity_mw": 500.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -49.3464,
+          -25.5843
+        ]
+      },
+      "properties": {
+        "name": "Arauc\u00e1ria",
+        "type": "power_plant",
+        "capacity_mw": 484.15,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          36.9181,
+          11.8196
+        ]
+      },
+      "properties": {
+        "name": "Beles",
+        "type": "power_plant",
+        "capacity_mw": 460.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -39.5206,
+          -15.9403
+        ]
+      },
+      "properties": {
+        "name": "Itapebi",
+        "type": "power_plant",
+        "capacity_mw": 456.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.159,
+          -21.0767
+        ]
+      },
+      "properties": {
+        "name": "Cape Preston",
+        "type": "power_plant",
+        "capacity_mw": 450.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.1121,
+          60.6566
+        ]
+      },
+      "properties": {
+        "name": "Evanger",
+        "type": "power_plant",
+        "capacity_mw": 446.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.9214,
+          26.446
+        ]
+      },
+      "properties": {
+        "name": "Kin power station",
+        "type": "power_plant",
+        "capacity_mw": 440.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          87.951,
+          69.323
+        ]
+      },
+      "properties": {
+        "name": "Norilsk TPP-3",
+        "type": "power_plant",
+        "capacity_mw": 440.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.9828,
+          -42.7405
+        ]
+      },
+      "properties": {
+        "name": "Gordon",
+        "type": "power_plant",
+        "capacity_mw": 432.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.7287,
+          53.1249
+        ]
+      },
+      "properties": {
+        "name": "Hafen power station",
+        "type": "power_plant",
+        "capacity_mw": 427.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.4144,
+          45.4538
+        ]
+      },
+      "properties": {
+        "name": "Sisak Thermal Power Plant Croatia",
+        "type": "power_plant",
+        "capacity_mw": 420.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          41.056,
+          30.93
+        ]
+      },
+      "properties": {
+        "name": "ARAR",
+        "type": "power_plant",
+        "capacity_mw": 408.6,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.7465,
+          8.5601
+        ]
+      },
+      "properties": {
+        "name": "Misamis Oriental power station",
+        "type": "power_plant",
+        "capacity_mw": 405.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          69.1874,
+          54.8979
+        ]
+      },
+      "properties": {
+        "name": "Petropavlovsk-2 power station",
+        "type": "power_plant",
+        "capacity_mw": 401.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -45.2592,
+          -18.215
+        ]
+      },
+      "properties": {
+        "name": "Tr\u00eas Marias",
+        "type": "power_plant",
+        "capacity_mw": 396.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.4552,
+          22.1589
+        ]
+      },
+      "properties": {
+        "name": "Carlos De Cespedes Powerplant",
+        "type": "power_plant",
+        "capacity_mw": 382.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.9369,
+          15.5971
+        ]
+      },
+      "properties": {
+        "name": "ENERSA Choloma",
+        "type": "power_plant",
+        "capacity_mw": 371.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.7743,
+          62.0598
+        ]
+      },
+      "properties": {
+        "name": "Yakutsk SDPP",
+        "type": "power_plant",
+        "capacity_mw": 368.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -38.8661,
+          -3.5918
+        ]
+      },
+      "properties": {
+        "name": "Porto do Pec\u00e9m II",
+        "type": "power_plant",
+        "capacity_mw": 365.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.504,
+          -30.624
+        ]
+      },
+      "properties": {
+        "name": "Gariep",
+        "type": "power_plant",
+        "capacity_mw": 360.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.9492,
+          43.4202
+        ]
+      },
+      "properties": {
+        "name": "Adler Thermal Power Station",
+        "type": "power_plant",
+        "capacity_mw": 351.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -63.1521,
+          -17.7875
+        ]
+      },
+      "properties": {
+        "name": "Guaracachi CCGT Power Plant Bolivia",
+        "type": "power_plant",
+        "capacity_mw": 350.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.567,
+          49.8822
+        ]
+      },
+      "properties": {
+        "name": "Abitibi Canyon",
+        "type": "power_plant",
+        "capacity_mw": 349.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -149.7167,
+          61.2297
+        ]
+      },
+      "properties": {
+        "name": "George M Sullivan Generation Plant 2",
+        "type": "power_plant",
+        "capacity_mw": 346.9,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.2996,
+          17.7197
+        ]
+      },
+      "properties": {
+        "name": "Cap Des Biches",
+        "type": "power_plant",
+        "capacity_mw": 327.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.4906,
+          -20.7776
+        ]
+      },
+      "properties": {
+        "name": "Mica Creek",
+        "type": "power_plant",
+        "capacity_mw": 325.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          47.1207,
+          61.3032
+        ]
+      },
+      "properties": {
+        "name": "CHP-1 of Kotlas PPM",
+        "type": "power_plant",
+        "capacity_mw": 320.0,
+        "primary_fuel": "Biomass"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          130.8666,
+          -12.555
+        ]
+      },
+      "properties": {
+        "name": "Channel Island",
+        "type": "power_plant",
+        "capacity_mw": 310.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.9422,
+          47.0818
+        ]
+      },
+      "properties": {
+        "name": "Atyrau",
+        "type": "power_plant",
+        "capacity_mw": 300.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.2626,
+          8.679
+        ]
+      },
+      "properties": {
+        "name": "Edwin Fabrega (Fortuna)  Hydroelectric Power Plant Panama",
+        "type": "power_plant",
+        "capacity_mw": 300.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.1553,
+          -2.8274
+        ]
+      },
+      "properties": {
+        "name": "Sulawesi Mining power station",
+        "type": "power_plant",
+        "capacity_mw": 280.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.333,
+          19.78
+        ]
+      },
+      "properties": {
+        "name": "Paunglaung",
+        "type": "power_plant",
+        "capacity_mw": 280.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          80.5727,
+          29.8783
+        ]
+      },
+      "properties": {
+        "name": "DHAULI GANGA",
+        "type": "power_plant",
+        "capacity_mw": 280.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -125.2815,
+          50.0694
+        ]
+      },
+      "properties": {
+        "name": "Island Generation",
+        "type": "power_plant",
+        "capacity_mw": 275.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.7343,
+          43.1792
+        ]
+      },
+      "properties": {
+        "name": "Evander Andrews Power Complex",
+        "type": "power_plant",
+        "capacity_mw": 270.9,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.3239,
+          2.9685
+        ]
+      },
+      "properties": {
+        "name": "Mukah Coal power station",
+        "type": "power_plant",
+        "capacity_mw": 270.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.4068,
+          -10.3044
+        ]
+      },
+      "properties": {
+        "name": "Nseke",
+        "type": "power_plant",
+        "capacity_mw": 260.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.2,
+          0.852
+        ]
+      },
+      "properties": {
+        "name": "Ferreira Gomes",
+        "type": "power_plant",
+        "capacity_mw": 252.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -103.6781,
+          39.4218
+        ]
+      },
+      "properties": {
+        "name": "Cedar Point Wind",
+        "type": "power_plant",
+        "capacity_mw": 252.0,
+        "primary_fuel": "Wind"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.2975,
+          -30.1293
+        ]
+      },
+      "properties": {
+        "name": "CMPC (Antiga Aracruz Unidade Gua\u00edba)",
+        "type": "power_plant",
+        "capacity_mw": 250.994,
+        "primary_fuel": "Biomass"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          33.1374,
+          0.4982
+        ]
+      },
+      "properties": {
+        "name": "Bujagali Falls",
+        "type": "power_plant",
+        "capacity_mw": 250.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.025,
+          29.0806
+        ]
+      },
+      "properties": {
+        "name": "Fuerza y Energ\u00eda de Hermosillo",
+        "type": "power_plant",
+        "capacity_mw": 250.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          99.2418,
+          9.0723
+        ]
+      },
+      "properties": {
+        "name": "Surat Thani",
+        "type": "power_plant",
+        "capacity_mw": 244.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          14.2137,
+          -17.3861
+        ]
+      },
+      "properties": {
+        "name": "Ruacana",
+        "type": "power_plant",
+        "capacity_mw": 240.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -13.2765,
+          10.4627
+        ]
+      },
+      "properties": {
+        "name": "Kaleta",
+        "type": "power_plant",
+        "capacity_mw": 240.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          92.216,
+          22.495
+        ]
+      },
+      "properties": {
+        "name": "Kaptai Hydro:Unit-1 2 3 4 5",
+        "type": "power_plant",
+        "capacity_mw": 230.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          158.6806,
+          52.9699
+        ]
+      },
+      "properties": {
+        "name": "Kamchatka CHPP-1",
+        "type": "power_plant",
+        "capacity_mw": 229.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          67.7444,
+          47.7853
+        ]
+      },
+      "properties": {
+        "name": "Zhezkazgan power station",
+        "type": "power_plant",
+        "capacity_mw": 227.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          37.7497,
+          -0.7967
+        ]
+      },
+      "properties": {
+        "name": "Gitaru",
+        "type": "power_plant",
+        "capacity_mw": 225.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.7887,
+          -1.1704
+        ]
+      },
+      "properties": {
+        "name": "Kaltim Teluk Balikpapan power station",
+        "type": "power_plant",
+        "capacity_mw": 220.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.6862,
+          13.4638
+        ]
+      },
+      "properties": {
+        "name": "Cabras 1",
+        "type": "power_plant",
+        "capacity_mw": 212.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.2086,
+          -6.7945
+        ]
+      },
+      "properties": {
+        "name": "Ubungo Gas (Songas)",
+        "type": "power_plant",
+        "capacity_mw": 207.5,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.7535,
+          -0.6094
+        ]
+      },
+      "properties": {
+        "name": "PLTU Ombilin - Sijantang - Sawahlunto",
+        "type": "power_plant",
+        "capacity_mw": 200.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -130.6866,
+          56.7172
+        ]
+      },
+      "properties": {
+        "name": "Forrest Kerr",
+        "type": "power_plant",
+        "capacity_mw": 195.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          136.8391,
+          -4.8278
+        ]
+      },
+      "properties": {
+        "name": "Amamapare Port power station",
+        "type": "power_plant",
+        "capacity_mw": 195.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.163,
+          6.0918
+        ]
+      },
+      "properties": {
+        "name": "Ranhill Powertron (IPP)",
+        "type": "power_plant",
+        "capacity_mw": 190.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -112.1033,
+          48.8203
+        ]
+      },
+      "properties": {
+        "name": "NaturEner Rim Rock Energy",
+        "type": "power_plant",
+        "capacity_mw": 189.0,
+        "primary_fuel": "Wind"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -40.4293,
+          -20.374
+        ]
+      },
+      "properties": {
+        "name": "Viana",
+        "type": "power_plant",
+        "capacity_mw": 174.6,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.473,
+          7.0304
+        ]
+      },
+      "properties": {
+        "name": "Kossou Hydroelectric Power Plant Cote dIvoire",
+        "type": "power_plant",
+        "capacity_mw": 174.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          178.0498,
+          -17.7569
+        ]
+      },
+      "properties": {
+        "name": "Wailoa",
+        "type": "power_plant",
+        "capacity_mw": 160.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.2091,
+          -21.7129
+        ]
+      },
+      "properties": {
+        "name": "Telfer Gold Mine",
+        "type": "power_plant",
+        "capacity_mw": 159.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.3864,
+          -27.4876
+        ]
+      },
+      "properties": {
+        "name": "CARDONES",
+        "type": "power_plant",
+        "capacity_mw": 152.2748,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          57.4783,
+          -20.1522
+        ]
+      },
+      "properties": {
+        "name": "Fort William Ceb",
+        "type": "power_plant",
+        "capacity_mw": 150.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.3472,
+          -16.2457
+        ]
+      },
+      "properties": {
+        "name": "Charcani V",
+        "type": "power_plant",
+        "capacity_mw": 145.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.9752,
+          12.8536
+        ]
+      },
+      "properties": {
+        "name": "Al Mansoura",
+        "type": "power_plant",
+        "capacity_mw": 139.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.0095,
+          50.4616
+        ]
+      },
+      "properties": {
+        "name": "Great Falls",
+        "type": "power_plant",
+        "capacity_mw": 129.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.5145,
+          -45.7934
+        ]
+      },
+      "properties": {
+        "name": "PATAGONIA",
+        "type": "power_plant",
+        "capacity_mw": 123.7,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.0789,
+          -22.514
+        ]
+      },
+      "properties": {
+        "name": "Van Eck",
+        "type": "power_plant",
+        "capacity_mw": 120.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          48.3125,
+          -18.8356
+        ]
+      },
+      "properties": {
+        "name": "Ambatovy",
+        "type": "power_plant",
+        "capacity_mw": 120.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.4687,
+          1.5758
+        ]
+      },
+      "properties": {
+        "name": "Djibloho",
+        "type": "power_plant",
+        "capacity_mw": 120.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.4952,
+          62.4165
+        ]
+      },
+      "properties": {
+        "name": "Torpshammar",
+        "type": "power_plant",
+        "capacity_mw": 119.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -11.339,
+          28.469
+        ]
+      },
+      "properties": {
+        "name": "Centrale Diesel de Tantan",
+        "type": "power_plant",
+        "capacity_mw": 116.9,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.0476,
+          5.0627
+        ]
+      },
+      "properties": {
+        "name": "Petit Saut",
+        "type": "power_plant",
+        "capacity_mw": 113.6,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -110.3093,
+          24.2233
+        ]
+      },
+      "properties": {
+        "name": "Punta Prieta II",
+        "type": "power_plant",
+        "capacity_mw": 112.5,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.548,
+          -27.2146
+        ]
+      },
+      "properties": {
+        "name": "Mount Keith Nickel Mine",
+        "type": "power_plant",
+        "capacity_mw": 112.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.4672,
+          14.0724
+        ]
+      },
+      "properties": {
+        "name": "White Nile State",
+        "type": "power_plant",
+        "capacity_mw": 100.0,
+        "primary_fuel": "Biomass"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.592,
+          -28.895
+        ]
+      },
+      "properties": {
+        "name": "Xina One",
+        "type": "power_plant",
+        "capacity_mw": 100.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -88.7667,
+          48.7606
+        ]
+      },
+      "properties": {
+        "name": "Greenwich",
+        "type": "power_plant",
+        "capacity_mw": 98.9,
+        "primary_fuel": "Wind"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.7085,
+          3.1219
+        ]
+      },
+      "properties": {
+        "name": "Monte Cristo",
+        "type": "power_plant",
+        "capacity_mw": 97.2,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          74.9493,
+          46.829
+        ]
+      },
+      "properties": {
+        "name": "Kazakhmys Balkhash power station",
+        "type": "power_plant",
+        "capacity_mw": 90.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.0322,
+          57.8092
+        ]
+      },
+      "properties": {
+        "name": "Mamakanskaya HPP",
+        "type": "power_plant",
+        "capacity_mw": 86.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.01,
+          18.9228
+        ]
+      },
+      "properties": {
+        "name": "Palomino 1",
+        "type": "power_plant",
+        "capacity_mw": 81.6,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.9027,
+          -2.6334
+        ]
+      },
+      "properties": {
+        "name": "Ruzizi I",
+        "type": "power_plant",
+        "capacity_mw": 81.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.8225,
+          1.2542
+        ]
+      },
+      "properties": {
+        "name": "Lahendong IV",
+        "type": "power_plant",
+        "capacity_mw": 80.0,
+        "primary_fuel": "Geothermal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.1573,
+          -2.3662
+        ]
+      },
+      "properties": {
+        "name": "Ketapang Smelter power station",
+        "type": "power_plant",
+        "capacity_mw": 80.0,
+        "primary_fuel": "Coal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.1335,
+          -9.1941
+        ]
+      },
+      "properties": {
+        "name": "Pedro Afonso",
+        "type": "power_plant",
+        "capacity_mw": 80.0,
+        "primary_fuel": "Biomass"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.6882,
+          9.0594
+        ]
+      },
+      "properties": {
+        "name": "Lagdo",
+        "type": "power_plant",
+        "capacity_mw": 80.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          136.0935,
+          -16.4335
+        ]
+      },
+      "properties": {
+        "name": "McArthur River Mine",
+        "type": "power_plant",
+        "capacity_mw": 78.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.9805,
+          -6.2505
+        ]
+      },
+      "properties": {
+        "name": "Ramu",
+        "type": "power_plant",
+        "capacity_mw": 75.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -60.6972,
+          -11.9975
+        ]
+      },
+      "properties": {
+        "name": "Rondon II",
+        "type": "power_plant",
+        "capacity_mw": 73.5,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -12.302,
+          22.8767
+        ]
+      },
+      "properties": {
+        "name": "Guelbs El Rhein",
+        "type": "power_plant",
+        "capacity_mw": 66.6,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -23.55,
+          14.9
+        ]
+      },
+      "properties": {
+        "name": "Palmarejo",
+        "type": "power_plant",
+        "capacity_mw": 66.23,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          22.4472,
+          -6.3581
+        ]
+      },
+      "properties": {
+        "name": "Katende",
+        "type": "power_plant",
+        "capacity_mw": 64.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.5247,
+          12.3703
+        ]
+      },
+      "properties": {
+        "name": "Kossodo",
+        "type": "power_plant",
+        "capacity_mw": 64.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -10.6767,
+          6.5119
+        ]
+      },
+      "properties": {
+        "name": "Mount Coffee",
+        "type": "power_plant",
+        "capacity_mw": 60.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.25,
+          41.0333
+        ]
+      },
+      "properties": {
+        "name": "MUDEFER",
+        "type": "power_plant",
+        "capacity_mw": 57.6,
+        "primary_fuel": "Wind"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.7859,
+          14.1888
+        ]
+      },
+      "properties": {
+        "name": "Soraz",
+        "type": "power_plant",
+        "capacity_mw": 54.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          177.4995,
+          64.7305
+        ]
+      },
+      "properties": {
+        "name": "Anadyr CHPP",
+        "type": "power_plant",
+        "capacity_mw": 50.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          166.5389,
+          68.0503
+        ]
+      },
+      "properties": {
+        "name": "Bilibino",
+        "type": "power_plant",
+        "capacity_mw": 48.0,
+        "primary_fuel": "Nuclear"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          133.8912,
+          -23.7091
+        ]
+      },
+      "properties": {
+        "name": "Ron Goodin",
+        "type": "power_plant",
+        "capacity_mw": 44.6,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.23,
+          11.6383
+        ]
+      },
+      "properties": {
+        "name": "Selingue Hydroelectric Power Plant Mali",
+        "type": "power_plant",
+        "capacity_mw": 44.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.317,
+          27.908
+        ]
+      },
+      "properties": {
+        "name": "Algerie Sud-Ouest",
+        "type": "power_plant",
+        "capacity_mw": 43.5,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          80.846,
+          36.975
+        ]
+      },
+      "properties": {
+        "name": "Qira A",
+        "type": "power_plant",
+        "capacity_mw": 40.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          88.21,
+          38.946
+        ]
+      },
+      "properties": {
+        "name": "Ruoqiang C",
+        "type": "power_plant",
+        "capacity_mw": 40.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -135.0435,
+          60.6984
+        ]
+      },
+      "properties": {
+        "name": "Whitehorse",
+        "type": "power_plant",
+        "capacity_mw": 40.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          84.895,
+          19.43
+        ]
+      },
+      "properties": {
+        "name": "Bhatakumarada",
+        "type": "power_plant",
+        "capacity_mw": 40.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.7155,
+          -42.1482
+        ]
+      },
+      "properties": {
+        "name": "DEGAN",
+        "type": "power_plant",
+        "capacity_mw": 36.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -42.3385,
+          -12.3512
+        ]
+      },
+      "properties": {
+        "name": "Maca\u00fabas",
+        "type": "power_plant",
+        "capacity_mw": 35.07,
+        "primary_fuel": "Wind"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.5833,
+          -10.1667
+        ]
+      },
+      "properties": {
+        "name": "Tenau Kupang",
+        "type": "power_plant",
+        "capacity_mw": 34.73,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.67,
+          -7.6308
+        ]
+      },
+      "properties": {
+        "name": "Cruzeiro do Sul \u0096 CEA",
+        "type": "power_plant",
+        "capacity_mw": 33.12,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.7275,
+          18.5658
+        ]
+      },
+      "properties": {
+        "name": "BANGUI WIND POWER",
+        "type": "power_plant",
+        "capacity_mw": 33.0,
+        "primary_fuel": "Wind"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.8998,
+          -33.8762
+        ]
+      },
+      "properties": {
+        "name": "Esperance",
+        "type": "power_plant",
+        "capacity_mw": 33.0,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          65.119,
+          32.322
+        ]
+      },
+      "properties": {
+        "name": "Kajaki Hydroelectric Power Plant Afghanistan",
+        "type": "power_plant",
+        "capacity_mw": 33.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.4031,
+          -16.7162
+        ]
+      },
+      "properties": {
+        "name": "Argyle Diamond Mine",
+        "type": "power_plant",
+        "capacity_mw": 32.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.2989,
+          -2.8117
+        ]
+      },
+      "properties": {
+        "name": "Curu\u00e1-Una",
+        "type": "power_plant",
+        "capacity_mw": 30.3,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.4341,
+          -28.3138
+        ]
+      },
+      "properties": {
+        "name": "Condong Sugar Mill",
+        "type": "power_plant",
+        "capacity_mw": 30.0,
+        "primary_fuel": "Biomass"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          152.6464,
+          -3.1245
+        ]
+      },
+      "properties": {
+        "name": "Lihir",
+        "type": "power_plant",
+        "capacity_mw": 30.0,
+        "primary_fuel": "Geothermal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.2028,
+          -4.5655
+        ]
+      },
+      "properties": {
+        "name": "Talara",
+        "type": "power_plant",
+        "capacity_mw": 30.0,
+        "primary_fuel": "Wind"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -148.3836,
+          70.2353
+        ]
+      },
+      "properties": {
+        "name": "TNSG North Plant",
+        "type": "power_plant",
+        "capacity_mw": 25.7,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.9274,
+          45.967
+        ]
+      },
+      "properties": {
+        "name": "Pierre-De Saurel",
+        "type": "power_plant",
+        "capacity_mw": 24.6,
+        "primary_fuel": "Wind"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.9601,
+          32.6632
+        ]
+      },
+      "properties": {
+        "name": "Socorridos",
+        "type": "power_plant",
+        "capacity_mw": 24.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.6856,
+          5.8864
+        ]
+      },
+      "properties": {
+        "name": "Kuku",
+        "type": "power_plant",
+        "capacity_mw": 23.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.9382,
+          34.663
+        ]
+      },
+      "properties": {
+        "name": "MOHAMED V",
+        "type": "power_plant",
+        "capacity_mw": 23.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -166.5382,
+          53.8925
+        ]
+      },
+      "properties": {
+        "name": "Dutch Harbor",
+        "type": "power_plant",
+        "capacity_mw": 21.9,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          98.53,
+          28.24
+        ]
+      },
+      "properties": {
+        "name": "Sancha River Phase 1",
+        "type": "power_plant",
+        "capacity_mw": 20.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.0341,
+          4.8811
+        ]
+      },
+      "properties": {
+        "name": "Boali",
+        "type": "power_plant",
+        "capacity_mw": 19.3,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -165.4298,
+          64.5053
+        ]
+      },
+      "properties": {
+        "name": "Snake River",
+        "type": "power_plant",
+        "capacity_mw": 19.2,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3949,
+          60.4186
+        ]
+      },
+      "properties": {
+        "name": "Taltson",
+        "type": "power_plant",
+        "capacity_mw": 18.3,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.5922,
+          16.2516
+        ]
+      },
+      "properties": {
+        "name": "Baie-Mahault",
+        "type": "power_plant",
+        "capacity_mw": 16.98945,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -25.5053,
+          37.8011
+        ]
+      },
+      "properties": {
+        "name": "Ribeira Grande",
+        "type": "power_plant",
+        "capacity_mw": 15.8,
+        "primary_fuel": "Geothermal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.8833,
+          12.05
+        ]
+      },
+      "properties": {
+        "name": "Nyala",
+        "type": "power_plant",
+        "capacity_mw": 15.5,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.8025,
+          0.7046
+        ]
+      },
+      "properties": {
+        "name": "GARONA VERDA",
+        "type": "power_plant",
+        "capacity_mw": 14.95,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.3333,
+          18.8167
+        ]
+      },
+      "properties": {
+        "name": "Arlit Mine",
+        "type": "power_plant",
+        "capacity_mw": 14.52,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          43.6667,
+          -23.35
+        ]
+      },
+      "properties": {
+        "name": "Toliary (Tulear)",
+        "type": "power_plant",
+        "capacity_mw": 12.98,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6441,
+          -17.3141
+        ]
+      },
+      "properties": {
+        "name": "Derby",
+        "type": "power_plant",
+        "capacity_mw": 12.53,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -158.4686,
+          59.0429
+        ]
+      },
+      "properties": {
+        "name": "Dillingham",
+        "type": "power_plant",
+        "capacity_mw": 11.0,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          108.415,
+          46.44
+        ]
+      },
+      "properties": {
+        "name": "Sumber Soum",
+        "type": "power_plant",
+        "capacity_mw": 10.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.516,
+          29.178
+        ]
+      },
+      "properties": {
+        "name": "Siwa",
+        "type": "power_plant",
+        "capacity_mw": 10.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.72,
+          37.216
+        ]
+      },
+      "properties": {
+        "name": "Fattoria Bancina A",
+        "type": "power_plant",
+        "capacity_mw": 8.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          94.7894,
+          35.9286
+        ]
+      },
+      "properties": {
+        "name": "Qinghai Golmud Yixiantian Small Scale",
+        "type": "power_plant",
+        "capacity_mw": 8.0,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9745,
+          69.3051
+        ]
+      },
+      "properties": {
+        "name": "Deputy TPP",
+        "type": "power_plant",
+        "capacity_mw": 7.5,
+        "primary_fuel": "Gas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          166.6605,
+          -77.847
+        ]
+      },
+      "properties": {
+        "name": "McMurdo Station Generator",
+        "type": "power_plant",
+        "capacity_mw": 6.6,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.1939,
+          -12.79
+        ]
+      },
+      "properties": {
+        "name": "Mamoudzou",
+        "type": "power_plant",
+        "capacity_mw": 6.46794,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.3281,
+          -5.1149
+        ]
+      },
+      "properties": {
+        "name": "Carauari",
+        "type": "power_plant",
+        "capacity_mw": 5.456,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          92.7109,
+          11.6117
+        ]
+      },
+      "properties": {
+        "name": "Garacharma Solar Power Plant",
+        "type": "power_plant",
+        "capacity_mw": 5.0,
+        "primary_fuel": "Solar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.6762,
+          61.7028
+        ]
+      },
+      "properties": {
+        "name": "Raglan Mine",
+        "type": "power_plant",
+        "capacity_mw": 3.0,
+        "primary_fuel": "Wind"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -163.0058,
+          69.7408
+        ]
+      },
+      "properties": {
+        "name": "NSB Point Lay Utility",
+        "type": "power_plant",
+        "capacity_mw": 2.4,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.5747,
+          -10.9428
+        ]
+      },
+      "properties": {
+        "name": "Assis Brasil - TECG",
+        "type": "power_plant",
+        "capacity_mw": 2.2,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.534,
+          -25.9167
+        ]
+      },
+      "properties": {
+        "name": "Denham Diesel Backup",
+        "type": "power_plant",
+        "capacity_mw": 1.6,
+        "primary_fuel": "Oil"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -31.1415,
+          39.4699
+        ]
+      },
+      "properties": {
+        "name": "Al\u00e9m-Fazenda",
+        "type": "power_plant",
+        "capacity_mw": 1.5,
+        "primary_fuel": "Hydro"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.9041,
+          52.3676
+        ]
+      },
+      "properties": {
+        "name": "AWS - Amsterdam",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          23.7275,
+          37.9838
+        ]
+      },
+      "properties": {
+        "name": "AWS - Athens",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.38633,
+          33.753746
+        ]
+      },
+      "properties": {
+        "name": "AWS - Atlanta",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          174.76,
+          -36.85
+        ]
+      },
+      "properties": {
+        "name": "AWS - Auckland",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.5018,
+          13.7563
+        ]
+      },
+      "properties": {
+        "name": "AWS - Bangkok",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.4074,
+          39.9042
+        ]
+      },
+      "properties": {
+        "name": "AWS - Beijing",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.405,
+          52.52
+        ]
+      },
+      "properties": {
+        "name": "AWS - Berlin",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0721,
+          4.711
+        ]
+      },
+      "properties": {
+        "name": "AWS - Bogot\u00e1",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.0589,
+          42.3601
+        ]
+      },
+      "properties": {
+        "name": "AWS - Boston",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -58.3816,
+          -34.6037
+        ]
+      },
+      "properties": {
+        "name": "AWS - Buenos Aires",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.5898,
+          33.5731
+        ]
+      },
+      "properties": {
+        "name": "AWS - Casablanca",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.6298,
+          41.8781
+        ]
+      },
+      "properties": {
+        "name": "AWS - Chicago",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.3845,
+          36.3504
+        ]
+      },
+      "properties": {
+        "name": "AWS - Daejeon",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4677,
+          14.7167
+        ]
+      },
+      "properties": {
+        "name": "AWS - Dakar",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -96.797,
+          32.7767
+        ]
+      },
+      "properties": {
+        "name": "AWS - Dallas",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.1025,
+          28.7041
+        ]
+      },
+      "properties": {
+        "name": "AWS - Delhi",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -104.9903,
+          39.7392
+        ]
+      },
+      "properties": {
+        "name": "AWS - Denver",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8342,
+          21.0278
+        ]
+      },
+      "properties": {
+        "name": "AWS - Hanoi",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.9384,
+          60.1699
+        ]
+      },
+      "properties": {
+        "name": "AWS - Helsinki",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -157.8583,
+          21.3069
+        ]
+      },
+      "properties": {
+        "name": "AWS - Honolulu",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.0473,
+          -26.2041
+        ]
+      },
+      "properties": {
+        "name": "AWS - Johannesburg",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -94.5786,
+          39.0997
+        ]
+      },
+      "properties": {
+        "name": "AWS - Kansas City",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          88.3639,
+          22.5726
+        ]
+      },
+      "properties": {
+        "name": "AWS - Kolkata",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.3792,
+          6.5244
+        ]
+      },
+      "properties": {
+        "name": "AWS - Lagos",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.1398,
+          36.1699
+        ]
+      },
+      "properties": {
+        "name": "AWS - Las Vegas",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0428,
+          -12.0464
+        ]
+      },
+      "properties": {
+        "name": "AWS - Lima",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.1393,
+          38.7223
+        ]
+      },
+      "properties": {
+        "name": "AWS - Lisbon",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9842,
+          14.5995
+        ]
+      },
+      "properties": {
+        "name": "AWS - Manila",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.1918,
+          25.7617
+        ]
+      },
+      "properties": {
+        "name": "AWS - Miami",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -93.265,
+          44.9778
+        ]
+      },
+      "properties": {
+        "name": "AWS - Minneapolis",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.582,
+          48.1351
+        ]
+      },
+      "properties": {
+        "name": "AWS - Munich",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          58.3829,
+          23.588
+        ]
+      },
+      "properties": {
+        "name": "AWS - Muscat",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          36.8172,
+          -1.2864
+        ]
+      },
+      "properties": {
+        "name": "AWS - Nairobi",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          135.5023,
+          34.6937
+        ]
+      },
+      "properties": {
+        "name": "AWS - Osaka",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.7522,
+          59.9139
+        ]
+      },
+      "properties": {
+        "name": "AWS - Oslo",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.8613,
+          -31.9523
+        ]
+      },
+      "properties": {
+        "name": "AWS - Perth",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6784,
+          45.5152
+        ]
+      },
+      "properties": {
+        "name": "AWS - Portland",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -100.3899,
+          20.5888
+        ]
+      },
+      "properties": {
+        "name": "AWS - Quer\u00e9taro",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -43.1729,
+          -22.9068
+        ]
+      },
+      "properties": {
+        "name": "AWS - Rio de Janeiro",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4194,
+          37.7749
+        ]
+      },
+      "properties": {
+        "name": "AWS - San Francisco",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.6693,
+          -33.4489
+        ]
+      },
+      "properties": {
+        "name": "AWS - Santiago",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5654,
+          25.033
+        ]
+      },
+      "properties": {
+        "name": "AWS - Taipei",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -79.3832,
+          43.6532
+        ]
+      },
+      "properties": {
+        "name": "AWS - Toronto",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0122,
+          52.2297
+        ]
+      },
+      "properties": {
+        "name": "AWS - Warsaw",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0369,
+          38.9072
+        ]
+      },
+      "properties": {
+        "name": "AWS - Washington DC",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.4241,
+          -33.9249
+        ]
+      },
+      "properties": {
+        "name": "AWS (Amazon Luna) - Cape Town",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2597,
+          53.3478
+        ]
+      },
+      "properties": {
+        "name": "AWS (Amazon Luna) - Dublin",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7038,
+          40.4168
+        ]
+      },
+      "properties": {
+        "name": "AWS (Amazon Luna) - Madrid",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          50.5876,
+          26.2235
+        ]
+      },
+      "properties": {
+        "name": "AWS (Amazon Luna) - Manama",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.8777,
+          19.076
+        ]
+      },
+      "properties": {
+        "name": "AWS (Amazon Luna) - Mumbai",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8198,
+          1.3521
+        ]
+      },
+      "properties": {
+        "name": "AWS (Amazon Luna) - Singapore",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.2093,
+          -33.8688
+        ]
+      },
+      "properties": {
+        "name": "AWS (Amazon Luna) - Sydney",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.1694,
+          22.3193
+        ]
+      },
+      "properties": {
+        "name": "AirGPU - Hong Kong",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8456,
+          -6.2088
+        ]
+      },
+      "properties": {
+        "name": "AirGPU - Jakarta",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.5,
+          -0.19
+        ]
+      },
+      "properties": {
+        "name": "Amazon - Quito",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.4489,
+          44.7866
+        ]
+      },
+      "properties": {
+        "name": "Boosteroid - Belgrade",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.5234,
+          50.4501
+        ]
+      },
+      "properties": {
+        "name": "Boosteroid - Kyiv",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.78,
+          32.08
+        ]
+      },
+      "properties": {
+        "name": "Google Cloud - Tel Aviv",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.1734,
+          41.3851
+        ]
+      },
+      "properties": {
+        "name": "Microsoft Azure - Barcelona",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.0251,
+          -27.4698
+        ]
+      },
+      "properties": {
+        "name": "Microsoft Azure - Brisbane",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          80.2707,
+          13.0827
+        ]
+      },
+      "properties": {
+        "name": "Microsoft Azure - Chennai",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.62965,
+          10.82302
+        ]
+      },
+      "properties": {
+        "name": "Microsoft Azure - Ho Chi Minh City",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          78.4867,
+          17.385
+        ]
+      },
+      "properties": {
+        "name": "Microsoft Azure - Hyderabad",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.9784,
+          41.0082
+        ]
+      },
+      "properties": {
+        "name": "Microsoft Azure - Istanbul",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.9631,
+          -37.8136
+        ]
+      },
+      "properties": {
+        "name": "Microsoft Azure - Melbourne",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -90.049,
+          35.1495
+        ]
+      },
+      "properties": {
+        "name": "Microsoft Azure - Memphis",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4964,
+          41.9028
+        ]
+      },
+      "properties": {
+        "name": "Microsoft Azure - Rome",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.891,
+          40.7608
+        ]
+      },
+      "properties": {
+        "name": "Microsoft Azure - Salt Lake City",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.20833,
+          -6.79235
+        ]
+      },
+      "properties": {
+        "name": "NVIDIA GFN Alliance - Dar es Salaam",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.4991,
+          40.1792
+        ]
+      },
+      "properties": {
+        "name": "NVIDIA GeForce NOW - Yerevan",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.1551,
+          30.2741
+        ]
+      },
+      "properties": {
+        "name": "NetEase Cloud Gaming - Hangzhou",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.0668,
+          30.5728
+        ]
+      },
+      "properties": {
+        "name": "Tencent START - Chengdu",
+        "type": "datacenter",
+        "capacity_mw": null,
+        "primary_fuel": null
+      }
+    }
+  ]
+}

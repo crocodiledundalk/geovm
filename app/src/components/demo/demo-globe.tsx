@@ -46,6 +46,24 @@ const DEFAULT_STROKE_WIDTH = 1;
 const FLASH_DURATION = 500; // ms
 const MAX_MAP_ZOOM = 6; // Define max zoom based on map config
 
+// New constants for map points
+const MAP_POINTS_SOURCE_ID = 'map-points-source';
+const DATA_CENTERS_LAYER_ID = 'data-centers-layer';
+const POWER_PLANTS_LAYER_ID = 'power-plants-layer';
+const ICON_SIZE = 0.035; // Further adjusted icon size globally
+
+const ICON_MANIFEST: Record<string, string> = {
+  datacenter: '/icons/datacenter.png',
+  Hydro:      '/icons/hydro.png',
+  Coal:       '/icons/coal.png',
+  Gas:        '/icons/gas.png',
+  Oil:        '/icons/oil.png',
+  Nuclear:    '/icons/nuclear.png',
+  Solar:      '/icons/solar.png',
+  Wind:       '/icons/wind.png',
+  default:    '/icons/default.png' // A default icon for unknown types
+};
+
 // Helper to get resolution from trixel ID
 // const getResolutionForTrixelId = (trixelId: number): number => {
 //   if (trixelId < 4) return 0; // Base resolution
@@ -190,6 +208,46 @@ interface DemoGlobeProps {
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 // ------------------------
 
+// Helper to load icons into the map – modern MapLibre API
+async function loadIcons(map: maplibregl.Map): Promise<void[]> {
+  return Promise.all(
+    Object.entries(ICON_MANIFEST).map(async ([name, url]) => {
+      console.log(`[DemoGlobe loadIcons] Attempting to load icon: ${name} from ${url}`);
+      try {
+        if (map.hasImage(name)) {
+          console.log(`[DemoGlobe loadIcons] Icon ${name} already exists on map. Skipping.`);
+          return; // avoid duplicates
+        }
+
+        const { data } = await map.loadImage(url); // ← new API
+        map.addImage(name, data);
+        console.log(`[DemoGlobe loadIcons] Successfully loaded and added icon: ${name}`);
+      } catch (err) {
+        console.error(`[DemoGlobe loadIcons] Failed to load icon ${name} from ${url}`, err);
+        throw err; // surfaces in Promise.all
+      }
+    })
+  );
+}
+
+// Helper to fetch GeoJSON data
+async function fetchMapPointsGeoJSON(): Promise<FeatureCollection> {
+  console.log("[DemoGlobe fetchMapPointsGeoJSON] Attempting to fetch /data/map_points.geojson");
+  try {
+    const response = await fetch('/data/map_points.geojson');
+    if (!response.ok) {
+      console.error(`[DemoGlobe fetchMapPointsGeoJSON] HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const geojsonData = await response.json();
+    console.log("[DemoGlobe fetchMapPointsGeoJSON] Successfully fetched GeoJSON data:", geojsonData);
+    return geojsonData;
+  } catch (error) {
+    console.error("[DemoGlobe fetchMapPointsGeoJSON] Failed to fetch map points GeoJSON:", error);
+    return { type: 'FeatureCollection', features: [] };
+  }
+}
+
 export default function DemoGlobe({ 
   jumpToTrixelData = null, 
   onJumpComplete, 
@@ -215,7 +273,9 @@ export default function DemoGlobe({
   const addActiveTrixel = useGlobeStore((state) => state.addActiveTrixel);
 
   const [showTrixels, setShowTrixels] = useState(true);
-  const [showRippleTrixelContext, setShowRippleTrixelContext] = useState(true); // New state for context toggle
+  const [showRippleTrixelContext, setShowRippleTrixelContext] = useState(true);
+  const [showDataCenters, setShowDataCenters] = useState(false);
+  const [showPowerPlants, setShowPowerPlants] = useState(false);
   const [clickedTrixelInfo, setClickedTrixelInfo] = useState<ClickedTrixelInfo | null>(null);
   const [detailedTrixelInfo, setDetailedTrixelInfo] = useState<HookTrixelData | null>(null);
 
@@ -228,6 +288,12 @@ export default function DemoGlobe({
 
   const showRippleTrixelContextRef = useRef(showRippleTrixelContext);
   useEffect(() => { showRippleTrixelContextRef.current = showRippleTrixelContext; }, [showRippleTrixelContext]);
+
+  const showDataCentersRef = useRef(showDataCenters);
+  useEffect(() => { showDataCentersRef.current = showDataCenters; }, [showDataCenters]);
+
+  const showPowerPlantsRef = useRef(showPowerPlants);
+  useEffect(() => { showPowerPlantsRef.current = showPowerPlants; }, [showPowerPlants]);
 
   // useEffects to keep program and provider refs updated
   useEffect(() => { programRef.current = program; }, [program]);
@@ -495,11 +561,91 @@ export default function DemoGlobe({
     // console.log('[DEBUG] world copies after construction?', map.getRenderWorldCopies());
     // console.log("[DemoGlobe Minimal] Map object created");
 
-    map.on('load', () => {
+    map.on('load', async () => { // Make the load callback async
       map.setRenderWorldCopies(false); // <-- AND SET IT HERE AGAIN FOR ROBUSTNESS
-      // console.log('[DEBUG] world copies on load?', map.getRenderWorldCopies());
-      // console.log("[DemoGlobe Minimal] map.on('load') event fired");
-      if (mapRef.current) {
+      console.log("[DemoGlobe map.on('load')] Map load event fired.");
+
+      // Load custom icons
+      try {
+        console.log("[DemoGlobe map.on('load')] Starting icon loading...");
+        await loadIcons(map);
+        console.log("[DemoGlobe map.on('load')] Custom icons loading process completed.");
+      } catch (error) {
+        console.error("[DemoGlobe map.on('load')] Error during custom icon loading:", error);
+      }
+
+      // Fetch and add map points GeoJSON
+      try {
+        console.log("[DemoGlobe map.on('load')] Starting map points GeoJSON fetching...");
+        const mapPointsData = await fetchMapPointsGeoJSON();
+        console.log(`[DemoGlobe map.on('load')] Map points GeoJSON fetched. Number of features: ${mapPointsData.features.length}`);
+        
+        if (mapPointsData.features.length > 0) {
+          if (!map.getSource(MAP_POINTS_SOURCE_ID)) {
+            map.addSource(MAP_POINTS_SOURCE_ID, {
+              type: 'geojson',
+              data: mapPointsData
+            });
+            console.log(`[DemoGlobe map.on('load')] Added source: ${MAP_POINTS_SOURCE_ID}`);
+          } else {
+            console.log(`[DemoGlobe map.on('load')] Source ${MAP_POINTS_SOURCE_ID} already exists. Updating data.`);
+            (map.getSource(MAP_POINTS_SOURCE_ID) as maplibregl.GeoJSONSource).setData(mapPointsData);
+          }
+
+          // Add Data Centers Layer
+          if (!map.getLayer(DATA_CENTERS_LAYER_ID)) {
+            map.addLayer({
+              id: DATA_CENTERS_LAYER_ID,
+              type: 'symbol',
+              source: MAP_POINTS_SOURCE_ID,
+              filter: ['==', ['get', 'type'], 'datacenter'], // Restore filter
+              layout: {
+                'icon-image': 'datacenter', // Restore original icon
+                'icon-size': ICON_SIZE, // Use the ICON_SIZE constant
+                'icon-allow-overlap': true,
+                'visibility': showDataCentersRef.current ? 'visible' : 'none'
+              }
+            });
+            console.log(`[DemoGlobe map.on('load')] Added layer: ${DATA_CENTERS_LAYER_ID}. Initial visibility: ${showDataCentersRef.current ? 'visible' : 'none'}`);
+          } else {
+            console.log(`[DemoGlobe map.on('load')] Layer ${DATA_CENTERS_LAYER_ID} already exists.`);
+          }
+
+          // Add Power Plants Layer
+          if (!map.getLayer(POWER_PLANTS_LAYER_ID)) {
+            map.addLayer({
+              id: POWER_PLANTS_LAYER_ID,
+              type: 'symbol',
+              source: MAP_POINTS_SOURCE_ID,
+              filter: ['==', ['get', 'type'], 'power_plant'],
+              layout: {
+                'icon-image': [
+                  'match',
+                  ['get', 'primary_fuel'],
+                  'Hydro',   'Hydro',
+                  'Coal',    'Coal',
+                  'Gas',     'Gas',
+                  'Oil',     'Oil',
+                  'Nuclear', 'Nuclear',
+                  'Solar',   'Solar',
+                  'Wind',    'Wind',
+                  /* default */ 'default'
+                ],
+                'icon-size': ICON_SIZE,
+                'icon-allow-overlap': true,
+                'visibility': showPowerPlantsRef.current ? 'visible' : 'none'
+              }
+            });
+            console.log(`[DemoGlobe map.on('load')] Added layer: ${POWER_PLANTS_LAYER_ID}. Initial visibility: ${showPowerPlantsRef.current ? 'visible' : 'none'}`);
+          }
+        } else {
+          console.warn("[DemoGlobe Minimal] No features found in map points GeoJSON data. Layers not added.");
+        }
+      } catch (error) {
+        console.error("[DemoGlobe Minimal] Error processing map points GeoJSON or adding layers:", error);
+      }
+
+      if (mapRef.current) { // mapRef might have been nulled by cleanup if component unmounted quickly
         const initialRawZoom = mapRef.current.getZoom();
         const initialLat = mapRef.current.getCenter().lat;
         const initialLatRad = initialLat * Math.PI / 180;
@@ -789,6 +935,32 @@ export default function DemoGlobe({
     }
   }, [showTrixels, setClickedTrixelInfo, program, provider]);
 
+  // useEffect for toggling Data Centers visibility
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map && map.isStyleLoaded() && map.getLayer(DATA_CENTERS_LAYER_ID)) {
+      const visibility = showDataCenters ? 'visible' : 'none';
+      console.log(`[DemoGlobe useEffect showDataCenters] Setting ${DATA_CENTERS_LAYER_ID} visibility to: ${visibility}`);
+      map.setLayoutProperty(DATA_CENTERS_LAYER_ID, 'visibility', visibility);
+    } else {
+      console.log(`[DemoGlobe useEffect showDataCenters] Conditions not met for visibility change. Map ready: ${!!(map && map.isStyleLoaded())}, Layer exists: ${!!(map && map.getLayer(DATA_CENTERS_LAYER_ID))}`);
+    }
+    // showDataCentersRef is already updated by its own useEffect
+  }, [showDataCenters]);
+
+  // useEffect for toggling Power Plants visibility
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map && map.isStyleLoaded() && map.getLayer(POWER_PLANTS_LAYER_ID)) {
+      const visibility = showPowerPlants ? 'visible' : 'none';
+      console.log(`[DemoGlobe useEffect showPowerPlants] Setting ${POWER_PLANTS_LAYER_ID} visibility to: ${visibility}`);
+      map.setLayoutProperty(POWER_PLANTS_LAYER_ID, 'visibility', visibility);
+    } else {
+      console.log(`[DemoGlobe useEffect showPowerPlants] Conditions not met for visibility change. Map ready: ${!!(map && map.isStyleLoaded())}, Layer exists: ${!!(map && map.getLayer(POWER_PLANTS_LAYER_ID))}`);
+    }
+    // showPowerPlantsRef is already updated by its own useEffect
+  }, [showPowerPlants]);
+
   // --- Modified performJump ---
   const performJump = useCallback(async (targetTrixelFullData: HookTrixelData) => { 
       const targetTrixelId = targetTrixelFullData.id;
@@ -962,14 +1134,14 @@ export default function DemoGlobe({
   return (
     <div className="w-full h-full relative">
         <div ref={mapContainerRef} className="w-full h-full" />
-        <div className="absolute top-2 left-2 bg-white/80 p-2 rounded shadow-md flex flex-col space-y-2 z-10">
+        <div className="absolute top-2 left-2 bg-gray-100/90 dark:bg-gray-900/90 backdrop-blur-sm p-3 rounded-md shadow-lg border border-gray-300 dark:border-gray-700 flex flex-col space-y-2 z-10">
             <div className="flex items-center space-x-2">
                 <Switch 
                     id="show-trixels-toggle"
                     checked={showTrixels}
                     onCheckedChange={setShowTrixels}
                 />
-                <Label htmlFor="show-trixels-toggle">Show Trixels</Label>
+                <Label htmlFor="show-trixels-toggle" className="text-sm text-gray-700 dark:text-gray-200">Show Trixels</Label>
             </div>
             <div className="flex items-center space-x-2">
                 <Switch 
@@ -977,12 +1149,24 @@ export default function DemoGlobe({
                     checked={showRippleTrixelContext}
                     onCheckedChange={setShowRippleTrixelContext}
                 />
-                <Label htmlFor="show-trixel-ripple-context-toggle">Show Ripple Trixel Context</Label>
+                <Label htmlFor="show-trixel-ripple-context-toggle" className="text-sm text-gray-700 dark:text-gray-200">Show Ripple Trixel Context</Label>
             </div>
-            {/* Remove the old simple clickedTrixelInfo display if detailedTrixelInfo is shown by the overlay */}
-            {/* {clickedTrixelInfo && !detailedTrixelInfo && (
-                <p className="text-sm">Clicked Trixel: <span className="font-bold">{clickedTrixelInfo.displayId}</span> (Details loading...)</p>
-            )} */}
+            <div className="flex items-center space-x-2">
+                <Switch 
+                    id="show-data-centers-toggle"
+                    checked={showDataCenters}
+                    onCheckedChange={setShowDataCenters}
+                />
+                <Label htmlFor="show-data-centers-toggle" className="text-sm text-gray-700 dark:text-gray-200">Display Data Centers</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+                <Switch 
+                    id="show-power-plants-toggle"
+                    checked={showPowerPlants}
+                    onCheckedChange={setShowPowerPlants}
+                />
+                <Label htmlFor="show-power-plants-toggle" className="text-sm text-gray-700 dark:text-gray-200">Display Power Plants</Label>
+            </div>
         </div>
 
         {/* Use the TrixelInfoOverlay component */}
