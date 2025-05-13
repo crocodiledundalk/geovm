@@ -16,7 +16,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/tabs';
-import { useWorldTrixels } from '@/hooks/useTrixels';
+import { useWorldTrixels, TrixelData as HookTrixelData } from '@/hooks/useTrixels';
 import { IdlAccounts } from '@coral-xyz/anchor';
 import { Geovm } from '@/idl/geovm';
 import { useQueryClient } from '@tanstack/react-query';
@@ -24,13 +24,20 @@ import { useQueryClient } from '@tanstack/react-query';
 // Define the type for the World account data based on the IDL
 type WorldAccountData = IdlAccounts<Geovm>['world'];
 
+// Define the props for ResolutionTabs
 interface ResolutionTabsProps {
   worldPubkey: PublicKey;
   canonicalResolution: number;
   worldAccount: WorldAccountData;
+  onJumpToTrixel?: (trixelData: HookTrixelData) => void; // MODIFIED - Add optional callback prop
 }
 
-export function ResolutionTabs({ worldPubkey, canonicalResolution, worldAccount }: ResolutionTabsProps) {
+export function ResolutionTabs({
+  worldPubkey,
+  canonicalResolution,
+  worldAccount,
+  onJumpToTrixel, // Receive the prop
+}: ResolutionTabsProps) {
   const [selectedResolution, setSelectedResolution] = useState(canonicalResolution);
   const resolutions = [0, ...Array.from({ length: canonicalResolution }, (_, i) => i + 1)];
   const queryClient = useQueryClient();
@@ -45,14 +52,15 @@ export function ResolutionTabs({ worldPubkey, canonicalResolution, worldAccount 
   }, [selectedResolution]);
   // DEBUG LOGS END
 
-  const { 
-    onChainTrixels, 
-    isLoadingOnChain, 
+  const {
+    onChainTrixelsQuery, 
     trixelStats, 
     prefetchResolutionTrixels
   } = useWorldTrixels(worldPubkey, {
     canonicalResolution
   });
+
+  const isLoadingOnChain = onChainTrixelsQuery.isLoading;
 
   useEffect(() => {
     if (!isLoadingOnChain) {
@@ -78,97 +86,96 @@ export function ResolutionTabs({ worldPubkey, canonicalResolution, worldAccount 
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold">Trixels</h2>
-        <div className="text-sm text-muted-foreground">
-          {isLoadingOnChain ? (
-            "Loading on-chain trixels..."
-          ) : (
-            <>
-              <span className="font-medium">{trixelStats.totalOnChain}</span> trixels on-chain
-              {selectedResolution > 0 && trixelStats.byResolution[selectedResolution - 1] && (
-                <> • <span className="font-medium">
-                  {trixelStats.byResolution[selectedResolution - 1].onChainCount}
-                </span> at resolution {selectedResolution}</>
-              )}
-              {selectedResolution === 0 && (
-                <> • <span className="font-medium">
-                  {trixelStats.byResolution[0]?.onChainCount || 0}
-                </span> at resolution 0</>
-              )}
-            </>
-          )}
+    <div className="flex flex-col h-full min-h-0">
+      <div className="flex-shrink-0 px-4 pt-2 pb-1 space-y-3">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-semibold">Trixels</h2>
+          <div className="text-sm text-muted-foreground">
+            {isLoadingOnChain ? (
+              "Loading on-chain trixels..."
+            ) : (
+              <>
+                <span className="font-medium">{trixelStats.totalOnChain}</span> trixels on-chain
+                {selectedResolution > 0 && trixelStats.byResolution[selectedResolution - 1] && (
+                  <> • <span className="font-medium">
+                    {trixelStats.byResolution[selectedResolution - 1].onChainCount}
+                  </span> at resolution {selectedResolution}</>
+                )}
+                {selectedResolution === 0 && (
+                  <> • <span className="font-medium">
+                    {trixelStats.byResolution[0]?.onChainCount || 0}
+                  </span> at resolution 0</>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
       
-      {/* Mobile view */}
-      <div className="md:hidden">
+      <div className="md:hidden flex flex-col flex-grow px-4 pb-4 overflow-hidden">
         <Tabs
           value={selectedResolution.toString()}
           onValueChange={handleResolutionChange}
+          className="flex flex-col flex-grow overflow-hidden"
         >
-          <Select
-            value={selectedResolution.toString()}
-            onValueChange={handleResolutionChange}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select resolution" />
-            </SelectTrigger>
-            <SelectContent>
-              {resolutions.map((resolution) => (
-                <SelectItem key={resolution} value={resolution.toString()}>
-                  Resolution {resolution}
-                  {resolution === canonicalResolution && ' (Canonical)'}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <TabsContent value={selectedResolution.toString()}>
+          <div className="flex-shrink-0 pb-1">
+            <Select
+              value={selectedResolution.toString()}
+              onValueChange={handleResolutionChange}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select resolution" />
+              </SelectTrigger>
+              <SelectContent>
+                {resolutions.map((resolution) => (
+                  <SelectItem key={resolution} value={resolution.toString()}>
+                    Resolution {resolution}
+                    {resolution === canonicalResolution && ' (Canonical)'}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <TabsContent value={selectedResolution.toString()} className="flex-grow overflow-y-auto min-h-0">
             <TrixelTable
               worldPubkey={worldPubkey}
               resolution={selectedResolution}
               canonicalResolution={canonicalResolution}
               worldAccount={worldAccount}
               onTrixelUpdate={handleTrixelUpdate}
+              onJumpToTrixel={onJumpToTrixel}
             />
           </TabsContent>
         </Tabs>
       </div>
 
-      {/* Desktop view */}
-      <div className="hidden md:block">
+      <div className="hidden md:flex flex-col flex-grow px-4 pb-4 overflow-hidden">
         <Tabs
           value={selectedResolution.toString()}
           onValueChange={handleResolutionChange}
+          className="flex flex-col flex-grow overflow-hidden"
         >
-          <TabsList className="grid w-full" style={{ gridTemplateColumns: `repeat(${resolutions.length > 0 ? resolutions.length : 1}, minmax(0, 1fr))` }}>
-            {resolutions.map((resolution) => (
-              <TabsTrigger
-                key={resolution}
-                value={resolution.toString()}
-                className="relative"
-              >
-                {resolution}
-                {/* {resolution === canonicalResolution && (
-                  <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-primary" />
-                )}
-                {resolution > 0 && trixelStats.byResolution[resolution - 1]?.onChainCount > 0 && (
-                  <span className="absolute -bottom-1 -right-1 h-2 w-2 rounded-full bg-green-500" />
-                )}
-                {resolution === 0 && trixelStats.byResolution[0]?.onChainCount > 0 && (
-                  <span className="absolute -bottom-1 -right-1 h-2 w-2 rounded-full bg-green-500" />
-                )} */}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          <TabsContent value={selectedResolution.toString()}>
+          <div className="flex-shrink-0 pb-1">
+            <TabsList className="grid w-full" style={{ gridTemplateColumns: `repeat(${resolutions.length > 0 ? resolutions.length : 1}, minmax(0, 1fr))` }}>
+              {resolutions.map((resolution) => (
+                <TabsTrigger
+                  key={resolution}
+                  value={resolution.toString()}
+                  className="relative"
+                >
+                  {resolution}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
+          <TabsContent value={selectedResolution.toString()} className="flex-grow overflow-y-auto min-h-0">
             <TrixelTable
               worldPubkey={worldPubkey}
               resolution={selectedResolution}
               canonicalResolution={canonicalResolution}
               worldAccount={worldAccount}
               onTrixelUpdate={handleTrixelUpdate}
+              onJumpToTrixel={onJumpToTrixel}
             />
           </TabsContent>
         </Tabs>

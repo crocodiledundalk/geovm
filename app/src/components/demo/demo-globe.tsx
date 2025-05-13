@@ -1,6 +1,6 @@
 'use client';
 import {useEffect, useRef, useState, useCallback} from 'react';
-import maplibregl, {Map as MaplibreMap, StyleSpecification} from 'maplibre-gl';
+import maplibregl, {Map as MaplibreMap, StyleSpecification, GeoJSONFeature} from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { Feature } from 'geojson';
 import {trixelsToFC, getTriResolutionForZoom, getTrixelsForView, getTrixelBoundaryLngLat } from 'htm-trixel';
@@ -10,11 +10,15 @@ import { useGeoVmProgram } from '@/contexts/ProgramContext';
 import { useGlobeStore } from '@/lib/demo/globe-store';
 import * as anchor from '@coral-xyz/anchor';
 import { PublicKey, SystemProgram } from '@solana/web3.js';
+import { TrixelData as HookTrixelData } from '@/hooks/useTrixels';
+import { cartesianToSpherical, getTrixelPDA } from '@/sdk/utils';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {globeStyle} from '../map/map-style';
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { startRippleAnimation } from '../map/ripple-effect';
+import { TrixelInfoOverlay } from '../TrixelInfoOverlay';
 
 const HTM_SOURCE_ID = 'htm-trixels-source';
 const HTM_INTERACTIVE_FILL_LAYER_ID = 'htm-interactive-fill-layer';
@@ -39,6 +43,55 @@ const SELECTED_STROKE_WIDTH = 2;
 const DEFAULT_STROKE_COLOR = '#088';
 const DEFAULT_STROKE_WIDTH = 1;
 const FLASH_DURATION = 500; // ms
+const MAX_MAP_ZOOM = 6; // Define max zoom based on map config
+
+// Helper to get resolution from trixel ID
+const getResolutionForTrixelId = (trixelId: number): number => {
+  if (trixelId < 4) return 0; // Base resolution
+  const R = Math.floor(Math.log2(trixelId / 4) / 2);
+  return R;
+};
+
+// Helper to get a suitable zoom level for a given resolution,
+// ALIGNED with getTriResolutionForZoom in htm-utils.ts
+// REVERTED: Target zoom for the actual resolution again
+const getZoomForResolution = (resolution: number): number => {
+  let targetZoom: number;
+  // Revert back to using the direct resolution
+  const effectiveResolution = resolution; 
+
+  // console.log(`[DemoGlobe] getZoomForResolution: Input Res ${resolution}, Effective Target Res ${effectiveResolution}`);
+
+  switch (effectiveResolution) { // Use effectiveResolution for switch
+    case 0: targetZoom = 0.9; break; 
+    case 1: targetZoom = 1.0; break;
+    case 2: targetZoom = 1.5; break;
+    case 3: targetZoom = 2.0; break;
+    case 4: targetZoom = 2.5; break; 
+    case 5: targetZoom = 3.0; break;
+    case 6: targetZoom = 4.0; break;
+    case 7: targetZoom = 5.0; break;
+    case 8: targetZoom = 6.0; break; // Will be capped by MAX_MAP_ZOOM if it's lower
+    case 9: targetZoom = 7.0; break; // Will be capped
+    case 10: targetZoom = 8.0; break; // Will be capped
+    // For resolutions greater than 10, map them to a zoom that results in HTM res 10
+    // or simply cap at MAX_MAP_ZOOM if that implies a lower HTM res.
+    default: 
+      // If resolution is high, aim for a zoom that htm-utils would interpret as max practical res (e.g., 10)
+      // or just hit MAX_MAP_ZOOM.
+      if (effectiveResolution > 10) targetZoom = 8.0; // Aim for zoom that gives HTM res 10
+      else targetZoom = 6.0; // Default for unexpected high resolutions within typical HTM range
+      break;
+  }
+  return Math.min(targetZoom, MAX_MAP_ZOOM);
+};
+
+// Helper function to check if map is in viewport
+// --- TODO: Implement this check if necessary ---
+// const isLatLngInViewport = (map: MaplibreMap, lat: number, lng: number): boolean => {
+//   const bounds = map.getBounds();
+//   return bounds.contains([lng, lat]);
+// };
 
 const getTrixelIdForPoint = (map: MaplibreMap | null, clickLng: number, clickLat: number): number | null => {
   if (!map || !map.isStyleLoaded()) return null;
@@ -104,13 +157,32 @@ interface ClickedTrixelInfo {
   mapFeatureId: string | number; // The ID used by MapLibre feature state (after promoteId)
 }
 
-export default function DemoGlobe() {
+// Define props interface
+interface DemoGlobeProps {
+  jumpToTrixelData?: HookTrixelData | null;
+  onJumpComplete?: () => void;
+  worldAccount?: any;
+  worldPubkey?: PublicKey;
+}
+
+// --- Utility for delay ---
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+// ------------------------
+
+export default function DemoGlobe({ 
+  jumpToTrixelData = null, 
+  onJumpComplete, 
+  worldAccount = null,
+  worldPubkey = undefined
+}: DemoGlobeProps) {
   // console.log("[DemoGlobe Minimal] Component rendering START");
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MaplibreMap | null>(null);
   const lastHtmResolutionRef = useRef<number | null>(null);
   const flashingTrixelRef = useRef<{ id: string | number | null, timeoutId: NodeJS.Timeout | null }>({ id: null, timeoutId: null });
   const rippleContextTrixelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isJumpingRef = useRef<boolean>(false); // Flag to track jump state
+  const queryClient = useQueryClient(); // Get queryClient instance
 
   const { program, provider } = useGeoVmProgram();
   const programRef = useRef(program);
@@ -124,6 +196,7 @@ export default function DemoGlobe() {
   const [showTrixels, setShowTrixels] = useState(true);
   const [showRippleTrixelContext, setShowRippleTrixelContext] = useState(true);
   const [clickedTrixelInfo, setClickedTrixelInfo] = useState<ClickedTrixelInfo | null>(null);
+  const [detailedTrixelInfo, setDetailedTrixelInfo] = useState<HookTrixelData | null>(null);
 
   // Refs for event handlers to access current state/functions
   const showTrixelsRef = useRef(showTrixels);
@@ -139,9 +212,171 @@ export default function DemoGlobe() {
   useEffect(() => { programRef.current = program; }, [program]);
   useEffect(() => { providerRef.current = provider; }, [provider]);
 
-  const updateHtmVisualization = useCallback((currentMap: MaplibreMap, newResolution: number) => {
-    // console.log(`[DemoGlobe Minimal] Updating HTM Visualization to Res: ${newResolution}`);
-    const trixelIds = getTrixelsForView(null, newResolution);
+  // --- Clear detailed info when selection is cleared by general map click ---
+  useEffect(() => {
+    if (!clickedTrixelInfo && detailedTrixelInfo) {
+      // This can happen if a map click clears clickedTrixelInfo
+      // setDetailedTrixelInfo(null); // Re-evaluate if this is the best place
+    }
+  }, [clickedTrixelInfo, detailedTrixelInfo]);
+
+  // --- Modified selectTrixelOnMap ---
+  const selectTrixelOnMap = useCallback(async (trixelId: number, trixelFullData?: HookTrixelData ): Promise<boolean> => { // Accept full data
+    const currentMap = mapRef.current;
+    if (!currentMap || !currentMap.isStyleLoaded()) {
+      console.warn(`[DemoGlobe] selectTrixelOnMap: Map not ready for trixel ${trixelId}`);
+      return false; // Indicate failure
+    }
+  
+    const MAX_ATTEMPTS = 5;
+    const RETRY_DELAY = 100; // ms
+  
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      let features: GeoJSONFeature[] = [];
+      try {
+        features = currentMap.querySourceFeatures(HTM_SOURCE_ID);
+      } catch (err) {
+        console.error(`[DemoGlobe] selectTrixelOnMap (Attempt ${attempt}): Error querying source features:`, err);
+        if (attempt === MAX_ATTEMPTS) return false; // Fail after last attempt error
+        await delay(RETRY_DELAY);
+        continue; // Try next attempt
+      }
+  
+      const targetFeature = features.find(f =>
+        f.id?.toString() === trixelId.toString() ||
+        f.properties?.id?.toString() === trixelId.toString()
+      );
+  
+      if (targetFeature && targetFeature.id !== undefined) {
+        const mapFeatureId = targetFeature.id !== undefined ? targetFeature.id : targetFeature.properties?.id;
+        if (mapFeatureId === undefined) {
+            console.error(`[DemoGlobe] selectTrixelOnMap (Attempt ${attempt}): Found feature for ${trixelId}, but could not extract mapFeatureId!`, targetFeature);
+            // Consider this a failure for this attempt
+        } else {
+            const displayId = trixelId.toString();
+            console.log(`[DemoGlobe] selectTrixelOnMap (Attempt ${attempt}): Found feature for ${trixelId}. MapFeatureID: ${mapFeatureId}`);
+  
+            const currentClickedInfo = clickedTrixelInfoRef.current;
+            if (currentClickedInfo && currentClickedInfo.mapFeatureId !== mapFeatureId) {
+              currentMap.removeFeatureState({ source: HTM_SOURCE_ID, id: currentClickedInfo.mapFeatureId }, 'selected');
+            }
+  
+            currentMap.setFeatureState(
+              { source: HTM_SOURCE_ID, id: mapFeatureId },
+              { selected: true }
+            );
+            setClickedTrixelInfo({ displayId, mapFeatureId });
+            // --- Set detailed info for overlay ---
+            if (trixelFullData) {
+              setDetailedTrixelInfo(trixelFullData);
+            } else {
+              // Handle fetching/constructing full data for direct clicks
+              let foundOnChainData: HookTrixelData | undefined = undefined;
+              if (worldPubkey) {
+                const cachedOnChainTrixels = queryClient.getQueryData<HookTrixelData[]>(['onChainTrixels', worldPubkey.toString()]);
+                if (cachedOnChainTrixels) {
+                  foundOnChainData = cachedOnChainTrixels.find(t => t.id === trixelId);
+                }
+              }
+
+              if (foundOnChainData) {
+                console.log(`[DemoGlobe] selectTrixelOnMap: Found cached on-chain data for trixel ${trixelId}`);
+                setDetailedTrixelInfo(foundOnChainData);
+              } else {
+                console.warn(`[DemoGlobe] selectTrixelOnMap: Full trixel data not provided or found in cache for ID ${trixelId}. Overlay will be partial.`);
+                const boundary = getTrixelBoundaryLngLat(trixelId);
+                const currentProgram = programRef.current;
+                let pdaString: string | undefined = undefined;
+                if (currentProgram && worldPubkey) { 
+                  try {
+                      const [pdaKey, /* bump */] = getTrixelPDA(worldPubkey, trixelId, currentProgram.programId);
+                      pdaString = pdaKey.toBase58(); 
+                  } catch (pdaError) {
+                      console.error(`[DemoGlobe] Error generating PDA for trixel ${trixelId}:`, pdaError);
+                  }
+                }
+                const minimalData: Partial<HookTrixelData> = {
+                  id: trixelId,
+                  resolution: getResolutionForTrixelId(trixelId), 
+                  vertices: boundary ? boundary.map(b => ({x: b[0], y: b[1], z: 0})) : [], 
+                  sphericalCoords: boundary ? boundary.map(b => cartesianToSpherical({x: b[0], y: b[1], z: 0})) : [],
+                  exists: false, 
+                  pda: pdaString ? new PublicKey(pdaString) : undefined 
+                };
+                setDetailedTrixelInfo(minimalData as HookTrixelData); 
+              }
+            }
+            // -------------------------------------
+            return true; // Indicate success
+        }
+      }
+  
+      // Feature not found on this attempt
+      if (attempt === MAX_ATTEMPTS) {
+        console.error(`[DemoGlobe] selectTrixelOnMap: Feature not found for trixel ID ${trixelId} after ${MAX_ATTEMPTS} attempts.`);
+        // Clear previous selection if target not found after all attempts
+        if (clickedTrixelInfoRef.current) {
+            const currentClickedInfo = clickedTrixelInfoRef.current; // Need to capture ref value here
+            // Check map state again before removing feature state
+            if (currentMap.getSource(HTM_SOURCE_ID) && currentMap.isStyleLoaded()) {
+                 currentMap.removeFeatureState({ source: HTM_SOURCE_ID, id: currentClickedInfo.mapFeatureId }, 'selected');
+            }
+           setClickedTrixelInfo(null);
+           setDetailedTrixelInfo(null); // Clear detailed info too
+        }
+        return false; // Indicate failure
+      }
+  
+      // Wait before retrying
+      // console.log(`[DemoGlobe] selectTrixelOnMap: Feature ${trixelId} not found on attempt ${attempt}. Retrying...`);
+      await delay(RETRY_DELAY);
+    } // End of retry loop
+  
+    return false; // Should not be reached, but return false just in case
+  // Add setClickedTrixelInfo to dependencies
+  }, [setClickedTrixelInfo]); 
+  // ----------------------------- 
+
+  // --- Flash effect helper ---
+  const applyFlashEffect = useCallback((mapFeatureIdToFlash: string | number) => {
+      const currentMap = mapRef.current;
+      if (!currentMap || !mapFeatureIdToFlash) return;
+
+      if (flashingTrixelRef.current.timeoutId) clearTimeout(flashingTrixelRef.current.timeoutId);
+      if (flashingTrixelRef.current.id !== null && flashingTrixelRef.current.id !== mapFeatureIdToFlash) {
+        if (currentMap.getSource(HTM_SOURCE_ID) && currentMap.isStyleLoaded()) {
+          currentMap.setFeatureState({ source: HTM_SOURCE_ID, id: flashingTrixelRef.current.id }, { flash: false });
+        }
+      }
+
+      if (currentMap.getSource(HTM_SOURCE_ID) && currentMap.isStyleLoaded()) {
+        currentMap.setFeatureState({ source: HTM_SOURCE_ID, id: mapFeatureIdToFlash }, { flash: true });
+      }
+
+      flashingTrixelRef.current = {
+        id: mapFeatureIdToFlash,
+        timeoutId: setTimeout(() => {
+          // Check again if map exists and source exists before setting state
+          if (mapRef.current && mapRef.current.getSource(HTM_SOURCE_ID) && mapRef.current.isStyleLoaded()) {
+            mapRef.current.setFeatureState({ source: HTM_SOURCE_ID, id: mapFeatureIdToFlash }, { flash: false });
+          }
+          flashingTrixelRef.current = { id: null, timeoutId: null };
+        }, FLASH_DURATION)
+      };
+  }, []); // No dependencies needed if it only uses refs and constants
+  // -------------------------
+
+  const updateHtmVisualization = useCallback((currentMap: MaplibreMap, newResolution: number, ensureTrixelId?: number | null) => {
+    // console.log(`[DemoGlobe Minimal] Updating HTM Visualization to Res: ${newResolution}, Ensuring ID: ${ensureTrixelId}`);
+    let trixelIds = getTrixelsForView(null, newResolution);
+
+    // --- Ensure the target trixel ID is included ---
+    if (ensureTrixelId !== null && ensureTrixelId !== undefined && !trixelIds.includes(ensureTrixelId)) {
+        console.log(`[DemoGlobe updateHtmVisualization] Target trixel ${ensureTrixelId} was not in view for res ${newResolution}. Adding it explicitly.`);
+        trixelIds.push(ensureTrixelId);
+    }
+    // ---------------------------------------------
+
     if (trixelIds.length === 0) {
       // console.warn(`[DemoGlobe Minimal] No trixel IDs returned for HTM Res ${newResolution}.`);
       const source = currentMap.getSource(HTM_SOURCE_ID) as maplibregl.GeoJSONSource;
@@ -201,9 +436,9 @@ export default function DemoGlobe() {
     // console.log(`[DemoGlobe Minimal] Displayed ${featureCollection.features.length} trixels for HTM Res ${newResolution}.`);
   }, [setClickedTrixelInfo]);
 
-  const applyHtmUpdate = useCallback((currentMap: MaplibreMap, newRes: number) => {
-    // console.log(`[DemoGlobe Minimal] Applying HTM update. NewRes: ${newRes}, PrevRes: ${lastHtmResolutionRef.current}`);
-    updateHtmVisualization(currentMap, newRes);
+  const applyHtmUpdate = useCallback((currentMap: MaplibreMap, newRes: number, ensureTrixelId?: number | null) => {
+    // console.log(`[DemoGlobe Minimal] Applying HTM update. NewRes: ${newRes}, PrevRes: ${lastHtmResolutionRef.current}, Ensuring ID: ${ensureTrixelId}`);
+    updateHtmVisualization(currentMap, newRes, ensureTrixelId); // Pass ensureTrixelId along
     lastHtmResolutionRef.current = newRes;
   }, [updateHtmVisualization]);
 
@@ -259,30 +494,20 @@ export default function DemoGlobe() {
 
       map.on('click', HTM_INTERACTIVE_FILL_LAYER_ID, (e: maplibregl.MapLayerMouseEvent) => {
         if (!showTrixelsRef.current || !e.features || e.features.length === 0 || !mapRef.current) return;
-        const clickedFeature = e.features[0];
-        const displayId = clickedFeature.properties?.id as string;
-        const mapFeatureVal = clickedFeature.id;
-        if (!displayId || mapFeatureVal === undefined) {
-          console.error("[DemoGlobe Minimal] Clicked feature is missing ID property or mapFeatureVal is undefined.", clickedFeature);
-          return;
-        }
 
         const mapInstance = mapRef.current;
+        // const clickedFeature = e.features[0]; // We'll rely on getTrixelIdForPoint
 
         // Determine the actual trixel ID from the click point for higher accuracy
-        const clickedTrixelId = getTrixelIdForPoint(mapInstance, e.lngLat.lng, e.lngLat.lat);
+        const numericTrixelId = getTrixelIdForPoint(mapInstance, e.lngLat.lng, e.lngLat.lat);
 
-        if (clickedTrixelId === null) {
-            // console.warn(\`[DemoGlobe Minimal] Click at (\${e.lngLat.lng.toFixed(5)}, \${e.lngLat.lat.toFixed(5)}) did not resolve to a trixel ID using getTrixelIdForPoint. Using feature ID \${displayId} as fallback if needed, but likely indicates an issue.\`);
-            // Optionally, you could fall back to displayId or mapFeatureVal here,
-            // but it\'s better to understand why getTrixelIdForPoint failed.
-            // For now, we\'ll proceed if displayId is available, but flag it.
-            if(!displayId) return; // If no fallback, exit.
+        if (numericTrixelId === null) {
+          console.warn(`[DemoGlobe Click] Click at (${e.lngLat.lng.toFixed(5)}, ${e.lngLat.lat.toFixed(5)}) did not resolve to a trixel ID. Overlay will not show.`);
+          // If we can't get a numeric ID, we don't proceed to select/show overlay for this click.
+          // The general map click handler might clear existing selections if e.defaultPrevented is not called.
+          return; 
         }
         
-        const trixelToInteractWith = clickedTrixelId !== null ? clickedTrixelId.toString() : displayId;
-
-        // Increment registered clicks immediately
         incrementClicksRegistered();
 
         // -------- Solana Interaction Placeholder START --------
@@ -290,7 +515,7 @@ export default function DemoGlobe() {
         const currentProvider = providerRef.current;
 
         if (currentProgram && currentProvider && currentProvider.wallet && currentProvider.wallet.publicKey) {
-          // console.log('[DemoGlobe] Solana interaction triggered for trixel:', trixelToInteractWith);
+          // console.log('[DemoGlobe] Solana interaction triggered for trixel:', numericTrixelId);
           // console.log('[DemoGlobe] Program ID:', currentProgram.programId.toBase58());
           // console.log('[DemoGlobe] Wallet Public Key:', currentProvider.wallet.publicKey.toBase58());
 
@@ -299,30 +524,8 @@ export default function DemoGlobe() {
 
           (async () => {
             try {
-              const trixelIdNumber = parseInt(trixelToInteractWith, 10);
-              if (isNaN(trixelIdNumber)) {
-                console.error("[DemoGlobe] Invalid trixel ID for transaction:", trixelToInteractWith);
-                return;
-              }
-
-              // Placeholder: This simulates an updateTrixel call for a 'COUNT' type world.
-              // This will need to be adapted based on the actual program methods and world data type.
-              // For a 'COUNT' type, the 'value' could be a new count or an increment.
-              // For this example, let's assume the program has an 'updateTrixel' method
-              // that takes the trixel_id and a value (e.g., new count = 1 for simplicity).
-              // The accounts will depend on your program's instruction.
-
-              console.log(`[DemoGlobe] Attempting transaction for trixel ID: ${trixelIdNumber} in world ${WORLD_PUBKEY.toBase58()}`);
-              
-              // Example: program.methods.updateTrixel(new anchor.BN(trixelIdNumber), new anchor.BN(1) /* value */)
-              //   .accounts({
-              //     world: WORLD_PUBKEY,
-              //     trixel: /* PDA for the trixel */,
-              //     authority: currentProvider.wallet.publicKey,
-              //     payer: currentProvider.wallet.publicKey,
-              //     systemProgram: SystemProgram.programId,
-              //   })
-              //   .rpc();
+              // numericTrixelId is already a number
+              console.log(`[DemoGlobe] Attempting transaction for trixel ID: ${numericTrixelId} in world ${WORLD_PUBKEY.toBase58()}`);
               
               // SIMULATE TRANSACTION DELAY AND SUCCESS FOR NOW
               await new Promise(resolve => setTimeout(resolve, 1500));
@@ -331,11 +534,10 @@ export default function DemoGlobe() {
               // END SIMULATION
 
               incrementClicksConfirmed();
-              addActiveTrixel(trixelToInteractWith);
+              addActiveTrixel(numericTrixelId.toString()); // Ensure this matches expected type
 
             } catch (error) {
               console.error("[DemoGlobe] Solana transaction error:", error);
-              // Potentially decrement registered clicks or set an error state here
             }
           })();
         } else {
@@ -343,29 +545,34 @@ export default function DemoGlobe() {
         }
         // -------- Solana Interaction Placeholder END --------
 
-        if (flashingTrixelRef.current.timeoutId) clearTimeout(flashingTrixelRef.current.timeoutId);
-        if (flashingTrixelRef.current.id !== null && mapRef.current.getSource(HTM_SOURCE_ID) && mapRef.current.isStyleLoaded()) {
-          mapRef.current.setFeatureState({ source: HTM_SOURCE_ID, id: flashingTrixelRef.current.id }, { flash: false });
-        }
-        const currentClickedTrixelInfo = clickedTrixelInfoRef.current;
-        if (currentClickedTrixelInfo && currentClickedTrixelInfo.mapFeatureId !== mapFeatureVal) {
-          if (mapRef.current.getSource(HTM_SOURCE_ID) && mapRef.current.isStyleLoaded()){
-            mapRef.current.setFeatureState({ source: HTM_SOURCE_ID, id: currentClickedTrixelInfo.mapFeatureId }, { selected: false });
-          }
-        }
-        if (mapRef.current.getSource(HTM_SOURCE_ID) && mapRef.current.isStyleLoaded()) {
-            mapRef.current.setFeatureState({ source: HTM_SOURCE_ID, id: mapFeatureVal }, { selected: true, flash: true });
-        }
-        setClickedTrixelInfo({ displayId: displayId, mapFeatureId: mapFeatureVal });
-        flashingTrixelRef.current = {
-          id: mapFeatureVal,
-          timeoutId: setTimeout(() => {
-            if (mapRef.current && mapRef.current.getSource(HTM_SOURCE_ID) && mapRef.current.isStyleLoaded()) {
-              mapRef.current.setFeatureState({ source: HTM_SOURCE_ID, id: mapFeatureVal }, { flash: false });
+        // --- Select the trixel, show overlay, and apply flash ---
+        (async () => {
+          const selectionSuccess = await selectTrixelOnMap(numericTrixelId /*, no full data for direct click */);
+          if (selectionSuccess) {
+            // selectTrixelOnMap has handled:
+            // 1. Clearing previous 'selected' state (if any)
+            // 2. Setting new 'selected' state on the map feature
+            // 3. Updating clickedTrixelInfoRef.current
+            // 4. Updating detailedTrixelInfo (which triggers the overlay)
+
+            // Now, apply flash effect to the newly selected trixel
+            const currentSelectedInfo = clickedTrixelInfoRef.current;
+            if (currentSelectedInfo && currentSelectedInfo.mapFeatureId !== undefined) {
+              if (mapRef.current && mapRef.current.getSource(HTM_SOURCE_ID) && mapRef.current.isStyleLoaded()) {
+                 applyFlashEffect(currentSelectedInfo.mapFeatureId);
+              } else {
+                console.warn("[DemoGlobe Click] Map not ready for flash effect even after successful selection.");
+              }
+            } else {
+              console.warn("[DemoGlobe Click] Selection reported success, but clickedTrixelInfo not updated for flash effect.");
             }
-            flashingTrixelRef.current = { id: null, timeoutId: null };
-          }, FLASH_DURATION)
-        };
+          } else {
+            console.warn(`[DemoGlobe Click] Failed to select trixel ${numericTrixelId} on map. Overlay may not show or may be cleared.`);
+            // selectTrixelOnMap should handle clearing detailedTrixelInfo if selection fails.
+          }
+        })();
+        // ----------------------------------------------------
+        
         e.preventDefault(); 
       });
 
@@ -417,6 +624,7 @@ export default function DemoGlobe() {
                 flashingTrixelRef.current = { id: null, timeoutId: null };
             }
             setClickedTrixelInfo(null);
+            setDetailedTrixelInfo(null); // Clear detailed info on general map click
         }
       });
 
@@ -464,7 +672,12 @@ export default function DemoGlobe() {
 
         const potentialNewHtmResolution = getTriResolutionForZoom(normalizedCurrentZoom);
 
-        // console.log(\`[DemoGlobe Minimal] map.on('zoomend') fired. Source(s): [\${eventSourceInfo.join(', ')}]. UserIntent: \${userInitiatedZoomIntent}. RawZoom: \${currentRawZoom.toFixed(2)}, Lat: \${currentLat.toFixed(2)}, NormZoom: \${normalizedCurrentZoom.toFixed(2)}, PotentialNewHTMRes: \${potentialNewHtmResolution}, LastAppliedHTMRes: \${lastHtmResolutionRef.current}\`);
+        // --- Check isJumpingRef flag before processing zoom ---
+        if (isJumpingRef.current) {
+          // console.log("[DemoGlobe Minimal] map.on('zoomend'): Jump in progress, skipping resolution update.");
+          return; // Skip update if a jump is happening
+        }
+        // -----------------------------------------------------
 
         if (userInitiatedZoomIntent) {
           if (e.originalEvent instanceof WheelEvent) {
@@ -517,8 +730,9 @@ export default function DemoGlobe() {
       }
       mapRef.current?.remove();
       mapRef.current = null;
+      isJumpingRef.current = false; // Ensure flag is reset on unmount
     };
-  }, [applyHtmUpdateRef, programRef, providerRef]);
+  }, [applyHtmUpdateRef, programRef, providerRef, setClickedTrixelInfo]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -541,13 +755,182 @@ export default function DemoGlobe() {
         setClickedTrixelInfo(null);
       }
     }
-  }, [showTrixels, clickedTrixelInfo, setClickedTrixelInfo, program, provider]);
+  }, [showTrixels, setClickedTrixelInfo, program, provider]);
+
+  // --- Modified performJump ---
+  const performJump = useCallback(async (targetTrixelFullData: HookTrixelData) => { 
+      const targetTrixelId = targetTrixelFullData.id;
+      console.log(`[DemoGlobe] Initiating jump animation for trixel ID: ${targetTrixelId}`);
+      const currentMap = mapRef.current;
+      if (!currentMap) return;
+
+      // --- Set jump flag ---
+      isJumpingRef.current = true;
+      // --------------------
+
+      // --- FlyTo logic (happens first now) ---
+      try {
+          const boundary = getTrixelBoundaryLngLat(targetTrixelId);
+          if (boundary && boundary.length > 0) {
+            const centerLng = boundary[0][0];
+            const centerLat = boundary[0][1];
+            const targetResolution = getResolutionForTrixelId(targetTrixelId);
+            const targetZoom = getZoomForResolution(targetResolution);
+            console.log(`[DemoGlobe] Jump: Target Res ${targetResolution}, Target Zoom ${targetZoom.toFixed(2)}`);
+
+            const flyToOptions: maplibregl.FlyToOptions = {
+              center: [centerLng, centerLat],
+              zoom: targetZoom,
+              speed: 1.2,
+              curve: 1.4,
+              essential: true
+            };
+
+            // --- Define moveend handler (now includes selection and flash) ---
+            const handleMoveEnd = async () => { // Make handler async
+              console.log(`[DemoGlobe] Fly-to animation completed for trixel ID: ${targetTrixelId}. Initial lastHtmResolutionRef: ${lastHtmResolutionRef.current}`);
+              currentMap.off('moveend', handleMoveEnd); // Important: Remove listener
+
+              // --- Determine the grid resolution to display --- 
+              // Display the grid for the resolution level ABOVE the target trixel
+              const gridResolutionToShow = Math.max(0, targetResolution - 1); 
+              console.log(`[DemoGlobe handleMoveEnd] Target Trixel Res: ${targetResolution}. Grid Resolution to Show: ${gridResolutionToShow}.`);
+              // ---------------------------------------------
+
+              console.log(`[DemoGlobe handleMoveEnd] Forcing HTM update to gridRes: ${gridResolutionToShow} (while ensuring target ${targetTrixelId}).`);
+              
+              // Define promises for sourcedata and idle AFTER initiating the update
+              const sourceDataLoadedPromise = new Promise<void>((resolve, reject) => {
+                const listener = (e: maplibregl.MapSourceDataEvent) => {
+                  if (e.sourceId === HTM_SOURCE_ID && e.isSourceLoaded === true && e.sourceDataType !== 'metadata' && e.dataType === 'source') {
+                    console.log(`[DemoGlobe handleMoveEnd] 'sourcedata' event: Source ${HTM_SOURCE_ID} fully loaded for targetRes ${targetResolution}.`);
+                    currentMap.off('sourcedata', listener);
+                    resolve();
+                  } else if (e.sourceId === HTM_SOURCE_ID && (e as any).error) {
+                    console.error(`[DemoGlobe handleMoveEnd] 'sourcedata' event: Error loading source ${HTM_SOURCE_ID}.`, (e as any).error);
+                    currentMap.off('sourcedata', listener);
+                    reject((e as any).error);
+                  } else if (e.sourceId === HTM_SOURCE_ID) {
+                    // console.log(`[DemoGlobe handleMoveEnd] 'sourcedata' event for ${HTM_SOURCE_ID} (isSourceLoaded: ${e.isSourceLoaded}, type: ${e.sourceDataType}, dataType: ${e.dataType}) - waiting for full load.`);
+                  }
+                };
+                currentMap.on('sourcedata', listener);
+                setTimeout(() => { // Timeout for the promise
+                    currentMap.off('sourcedata', listener);
+                    reject(new Error(`Timeout waiting for sourcedata on ${HTM_SOURCE_ID} for res ${targetResolution}`));
+                }, 5000); // 5 second timeout
+              });
+
+              const mapIdlePromise = new Promise<void>((resolve, reject) => {
+                console.log(`[DemoGlobe handleMoveEnd] Setting up 'idle' listener.`);
+                const idleListener = () => {
+                    currentMap.off('idle', idleListener); // Ensure listener is removed
+                    console.log(`[DemoGlobe handleMoveEnd] Map 'idle' after HTM update for targetRes ${targetResolution}.`);
+                    resolve();
+                };
+                currentMap.on('idle', idleListener);
+                 setTimeout(() => { // Timeout for the promise
+                    currentMap.off('idle', idleListener);
+                    console.warn(`[DemoGlobe handleMoveEnd] Timeout waiting for map 'idle' for res ${targetResolution}. Proceeding cautiously.`);
+                    resolve(); // Resolve anyway to not block indefinitely, but log it.
+                }, 5000); // 5 second timeout
+              });
+
+              // Initiate the update, using gridResolutionToShow but ensuring the target trixel is included
+              applyHtmUpdateRef.current(currentMap, gridResolutionToShow, targetTrixelId); 
+              // Note: lastHtmResolutionRef will be set to gridResolutionToShow inside applyHtmUpdate
+              console.log(`[DemoGlobe handleMoveEnd] HTM update to grid ${gridResolutionToShow} (ensuring ${targetTrixelId}) initiated. lastHtmResolutionRef is now: ${lastHtmResolutionRef.current}.`);
+              console.log(`[DemoGlobe handleMoveEnd] Waiting for source data to load and map to become idle for grid resolution ${gridResolutionToShow}...`);
+              
+              try {
+                await Promise.all([sourceDataLoadedPromise, mapIdlePromise]);
+                console.log(`[DemoGlobe handleMoveEnd] Source data loaded and map idle confirmed for grid resolution ${gridResolutionToShow}.`);
+                
+                if (!currentMap.isStyleLoaded()) {
+                    console.warn(`[DemoGlobe handleMoveEnd] Map style not fully loaded even after source and idle. Waiting a bit more.`);
+                    await delay(200); 
+                }
+              } catch (error) {
+                console.error(`[DemoGlobe handleMoveEnd] Error waiting for source data or map idle for res ${targetResolution}:`, error);
+                // Even if waiting fails, we might still try to select as a last resort.
+              }
+              
+              console.log(`[DemoGlobe handleMoveEnd] Proceeding to selectTrixelOnMap for ${targetTrixelId}. Current lastHtmResolutionRef: ${lastHtmResolutionRef.current} (Grid Res was ${gridResolutionToShow})`);
+              const selectionSuccess = await selectTrixelOnMap(targetTrixelId, targetTrixelFullData); // Pass full data
+              // ---------------------------------------------
+
+              // --- Add Flash effect only if selection succeeded ---
+              if (selectionSuccess) {
+                  const selectedInfo = clickedTrixelInfoRef.current; // Ref should be updated by selectTrixelOnMap
+                  if (selectedInfo && selectedInfo.displayId === targetTrixelId.toString()) {
+                      console.log(`[DemoGlobe] Jump: Selection successful for ${targetTrixelId}. Applying flash.`);
+                      applyFlashEffect(selectedInfo.mapFeatureId);
+                  } else {
+                      // This case might happen if selectTrixelOnMap returned true but state update hasn't happened somehow?
+                      console.warn(`[DemoGlobe] Jump: Flash skipped. Trixel ${targetTrixelId} selection state mismatch after successful select.`);
+                  }
+              } else {
+                  console.warn(`[DemoGlobe] Jump: Selection failed for trixel ${targetTrixelId} after fly-to and retries. Flash skipped.`);
+                  // Optional: Clear any previous selection if the target couldn't be selected
+                  if (clickedTrixelInfoRef.current) {
+                    if (currentMap.getSource(HTM_SOURCE_ID) && currentMap.isStyleLoaded()) {
+                       currentMap.removeFeatureState({ source: HTM_SOURCE_ID, id: clickedTrixelInfoRef.current.mapFeatureId }, 'selected');
+                    }
+                    setClickedTrixelInfo(null);
+                  }
+              }
+              // -----------------------------------------------
+
+              // --- Reset jump flag ---
+              isJumpingRef.current = false;
+              // -----------------------
+
+              if (onJumpComplete) {
+                onJumpComplete(); // Call completion callback
+              }
+            };
+            // ---------------------------------------------------------------
+
+            currentMap.once('moveend', handleMoveEnd); // Attach the enhanced handler
+            currentMap.flyTo(flyToOptions); // Start the animation
+
+          } else {
+            console.warn(`[DemoGlobe] Could not get boundary for jump target trixel ID: ${targetTrixelId}`);
+            isJumpingRef.current = false; // Reset flag if boundary fails
+            if (onJumpComplete) onJumpComplete();
+          }
+      } catch (error) {
+          console.error(`[DemoGlobe] Error during jump initiation for trixel ID ${targetTrixelId}:`, error);
+          isJumpingRef.current = false; // Reset flag on error
+          if (onJumpComplete) onJumpComplete();
+      }
+  // Add selectTrixelOnMap, onJumpComplete, applyFlashEffect, setClickedTrixelInfo as dependencies
+  }, [selectTrixelOnMap, onJumpComplete, applyFlashEffect, setClickedTrixelInfo]);
+  // -----------------------------
+
+  // --- Modified useEffect for jumpToTrixelId ---
+  useEffect(() => {
+      const runJumpLogic = async () => {
+          if (jumpToTrixelData !== null && mapRef.current) {
+              console.log(`[DemoGlobe] Received jump request for trixel ID: ${jumpToTrixelData.id}. Will call performJump directly.`);
+              // Directly call performJump. 
+              // performJump's moveend handler is responsible for setting the correct resolution grid before selection.
+              await performJump(jumpToTrixelData); 
+          }
+      };
+      runJumpLogic(); // Execute the async logic
+  // performJump is a useCallback. Its dependencies are managed there.
+  // applyHtmUpdateRef is a dependency of performJump, so it's indirectly covered.
+  }, [jumpToTrixelData, performJump]);
+  // --- END JUMP TO TRIXEL LOGIC ---
+
+  // ... rest of useEffects and component return ...
 
   // console.log("[DemoGlobe Minimal] Component rendering END");
   return (
     <div className="w-full h-full relative">
         <div ref={mapContainerRef} className="w-full h-full" />
-        <div className="absolute top-2 left-2 bg-white/80 p-2 rounded shadow-md flex flex-col space-y-2">
+        <div className="absolute top-2 left-2 bg-white/80 p-2 rounded shadow-md flex flex-col space-y-2 z-10">
             <div className="flex items-center space-x-2">
                 <Switch 
                     id="show-trixels-toggle"
@@ -564,10 +947,18 @@ export default function DemoGlobe() {
                 />
                 <Label htmlFor="show-trixel-ripple-context-toggle">Show Ripple Trixel Context</Label>
             </div>
-            {clickedTrixelInfo && (
-                <p className="text-sm">Clicked Trixel: <span className="font-bold">{clickedTrixelInfo.displayId}</span></p>
-            )}
+            {/* Remove the old simple clickedTrixelInfo display if detailedTrixelInfo is shown by the overlay */}
+            {/* {clickedTrixelInfo && !detailedTrixelInfo && (
+                <p className="text-sm">Clicked Trixel: <span className="font-bold">{clickedTrixelInfo.displayId}</span> (Details loading...)</p>
+            )} */}
         </div>
+
+        {/* Use the TrixelInfoOverlay component */}
+        <TrixelInfoOverlay 
+            trixelInfo={detailedTrixelInfo} 
+            worldAccount={worldAccount} 
+            onClose={() => setDetailedTrixelInfo(null)} // Add a way to close the overlay
+        />
     </div>
   );
 }

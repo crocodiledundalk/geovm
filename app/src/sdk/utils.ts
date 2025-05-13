@@ -43,37 +43,48 @@ const INITIAL_TRIANGLES = [
 
 // Trixel Calculation Utilities
 export function getTrixelCountAtResolution(resolution: number): number {
+    if (resolution < 0) throw new Error("Resolution cannot be negative");
+    // Base level 0 has 8 trixels (octahedron faces)
     if (resolution === 0) return 8;
-    return 8 * Math.pow(4, resolution);
-}
-
-export function getTotalTrixelCount(maxResolution: number): number {
-    let total = 0;
-    for (let r = 0; r <= maxResolution; r++) {
-        total += getTrixelCountAtResolution(r);
-    }
-    return total;
+    // CORRECT FORMULA: 8 * 4^(resolution - 1)
+    return 8 * Math.pow(4, resolution - 1);
 }
 
 export function getTrixelAreaAtResolution(resolution: number): number {
-    return TOTAL_SURFACE_AREA_SQKM / getTrixelCountAtResolution(resolution);
+    // Uses the corrected count function now
+    const count = getTrixelCountAtResolution(resolution);
+    if (count === 0) return TOTAL_SURFACE_AREA_SQKM; // Avoid division by zero, although count should be > 0 for res >= 0
+    return TOTAL_SURFACE_AREA_SQKM / count;
 }
 
-export function getTrixelStats(maxResolution: number) {
-    const stats = {
-        totalTrixels: getTotalTrixelCount(maxResolution),
-        byResolution: [] as { resolution: number; count: number; area: number }[],
-        smallestTrixelArea: getTrixelAreaAtResolution(maxResolution),
-        largestTrixelArea: getTrixelAreaAtResolution(0),
-    };
+export function getTrixelStats(resolution: number) {
+    // Calculate stats AT the specified resolution, not cumulative
+    const countAtRes = getTrixelCountAtResolution(resolution);
+    const areaAtRes = getTrixelAreaAtResolution(resolution);
+    // The largest area is always at resolution 0
+    const largestArea = getTrixelAreaAtResolution(0); 
+    // The smallest area is at the selected resolution
+    const smallestArea = areaAtRes;
 
-    for (let r = 0; r <= maxResolution; r++) {
-        stats.byResolution.push({
-            resolution: r,
-            count: getTrixelCountAtResolution(r),
-            area: getTrixelAreaAtResolution(r),
-        });
-    }
+    const stats = {
+        // Display the count AT this resolution
+        totalTrixels: countAtRes, 
+        // Smallest area IS the area at this resolution
+        smallestTrixelArea: smallestArea, 
+        // Largest area is always the area at resolution 0
+        largestTrixelArea: largestArea, 
+        // (Optional: Keep byResolution if needed elsewhere, but remove for clarity if not)
+        // byResolution: [] // Simplified for now
+    };
+    
+    // (Optional: Populate byResolution if needed)
+    // for (let r = 0; r <= resolution; r++) {
+    //     stats.byResolution.push({
+    //         resolution: r,
+    //         count: getTrixelCountAtResolution(r),
+    //         area: getTrixelAreaAtResolution(r),
+    //     });
+    // }
 
     return stats;
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useProgram } from '@/contexts/ProgramContext';
+import { useGeoVmProgram } from '@/contexts/ProgramContext';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { BN } from '@coral-xyz/anchor';
 import { Keypair, PublicKey, SystemProgram } from '@solana/web3.js';
@@ -31,7 +31,7 @@ interface CreateWorldModalProps {
 
 export function CreateWorldModal({ isOpen, onClose }: CreateWorldModalProps) {
   const router = useRouter();
-  const { program, provider } = useProgram();
+  const { program, provider } = useGeoVmProgram();
   const { publicKey } = useWallet();
 
   const [worldName, setWorldName] = useState<string>('');

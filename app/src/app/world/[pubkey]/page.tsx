@@ -2,22 +2,23 @@
 
 import { useParams } from 'next/navigation';
 import { useEffect, useState, useMemo } from 'react';
-import { useProgram } from '@/contexts/ProgramContext';
+import { useGeoVmProgram } from '@/contexts/ProgramContext';
 import { PublicKey } from '@solana/web3.js';
 import { ResolutionTabs } from '@/components/ResolutionTabs';
 import { Navbar } from '@/components/Navbar';
-import { WorldGlobe } from '@/components/WorldGlobe';
 import DemoGlobe from '@/components/demo/demo-globe';
 import { Copy, Check } from 'lucide-react';
+import { TrixelData as HookTrixelData } from '@/hooks/useTrixels';
 
 export default function WorldPage() {
   const params = useParams();
-  const { program } = useProgram();
+  const { program } = useGeoVmProgram();
   const [world, setWorld] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showDetails, setShowDetails] = useState(true);
   const [copied, setCopied] = useState<{[key: string]: boolean}>({});
+  const [jumpToTrixelData, setJumpToTrixelData] = useState<HookTrixelData | null>(null);
 
   const worldPubkey = useMemo(() => {
     if (!params.pubkey || typeof params.pubkey !== 'string') {
@@ -96,39 +97,50 @@ export default function WorldPage() {
     </div>
   );
 
+  // Handler to trigger the jump in DemoGlobe
+  const handleJumpRequest = (trixelData: HookTrixelData) => {
+    console.log(`[WorldPage] Received jump request for trixel ID: ${trixelData.id}`);
+    setJumpToTrixelData(trixelData);
+  };
+
+  // Handler for DemoGlobe to call when jump animation finishes
+  const handleJumpComplete = () => {
+    console.log("[WorldPage] Jump complete, resetting target.");
+    setJumpToTrixelData(null);
+  };
+
   return (
-    <main className="min-h-screen">
+    <main className="flex flex-col h-[calc(100vh_-_4rem)] overflow-hidden">
       <Navbar />
       {loading ? (
-        <div className="container mx-auto px-4 py-8">
-          <div className="mx-auto px-4 flex items-center justify-center min-h-[50vh]">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-              <p className="text-muted-foreground">Loading world details...</p>
-            </div>
+        <div className="flex-grow flex items-center justify-center container mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading world details...</p>
           </div>
         </div>
       ) : error ? (
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-center min-h-[50vh]">
-            <div className="text-center text-red-500">
-              <p>{error}</p>
-            </div>
+        <div className="flex-grow flex items-center justify-center container mx-auto px-4">
+          <div className="text-center text-red-500">
+            <p>{error}</p>
           </div>
         </div>
-      ) : !world || !worldPubkey ? ( // Ensure world and worldPubkey are available
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-center min-h-[50vh]">
-            <div className="text-center">
-              <p className="text-muted-foreground">World data not available or invalid public key.</p>
-            </div>
+      ) : !world || !worldPubkey ? (
+        <div className="flex-grow flex items-center justify-center container mx-auto px-4">
+          <div className="text-center">
+            <p className="text-muted-foreground">World data not available or invalid public key.</p>
           </div>
         </div>
       ) : (
-        <>
-          {/* Full width globe component with theme-aware background */}
-          <div className="relative w-full h-[70vh] bg-gray-100 dark:bg-gray-900">
-            <DemoGlobe maxResolution={Number(world.canonicalResolution)} />
+        <div className="flex flex-col flex-grow overflow-hidden min-h-0">
+          {/* Full width globe component with theme-aware background - Fixed Height */}
+          <div className="relative w-full h-[60vh] bg-gray-100 dark:bg-gray-900 flex-shrink-0">
+            <DemoGlobe 
+              jumpToTrixelData={jumpToTrixelData}
+              onJumpComplete={handleJumpComplete}
+              worldAccount={world}
+              worldPubkey={worldPubkey}
+            />
             
             {/* Overlay card with world details */}
             <div className="absolute top-4 right-4 w-80 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-4 rounded-lg shadow-lg border dark:border-gray-700">
@@ -163,16 +175,24 @@ export default function WorldPage() {
             </div>
           </div>
           
-          {/* Regular container for the resolution tabs */}
-          <div className="container mx-auto px-4 py-8">
-            <h2 className="text-2xl font-bold mb-4">Resolution Details</h2>
-            <ResolutionTabs
-              worldPubkey={worldPubkey}
-              canonicalResolution={Number(world.canonicalResolution)}
-              worldAccount={world}
-            />
+          {/* Container for fixed "Resolution Details" title and scrollable ResolutionTabs */}
+          <div className="container mx-auto px-4 pt-2 pb-2 flex flex-col flex-grow overflow-hidden min-h-0">
+            {/* Fixed Title Part */}
+            <div className="flex-shrink-0 pb-2">
+              <h2 className="text-2xl font-bold">Resolution Details</h2>
+            </div>
+            
+            {/* Scrollable ResolutionTabs Part */}
+            <div className="flex-grow overflow-y-auto min-h-0">
+              <ResolutionTabs
+                worldPubkey={worldPubkey}
+                canonicalResolution={Number(world.canonicalResolution)}
+                worldAccount={world}
+                onJumpToTrixel={handleJumpRequest}
+              />
+            </div>
           </div>
-        </>
+        </div>
       )}
     </main>
   );

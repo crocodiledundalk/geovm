@@ -1,9 +1,14 @@
 import Link from "next/link"
 import Image from 'next/image';
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, PlusCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export function HeroSection() {
+// Define props for the component
+interface HeroSectionProps {
+  onOpenCreateModal: () => void;
+}
+
+export function HeroSection({ onOpenCreateModal }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden py-20 md:py-32">
       {/* Background gradient */}
@@ -27,7 +32,7 @@ export function HeroSection() {
                 data for DePINs, smart contracts, and digital assets.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4">
               <Button asChild size="lg" className="bg-teal-600 hover:bg-teal-700">
                 <Link href="/demo">
                   Try the Demo
@@ -36,6 +41,14 @@ export function HeroSection() {
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link href="/marketplace">Explore the Marketplace</Link>
+              </Button>
+              <Button 
+                size="lg" 
+                variant="secondary" 
+                onClick={onOpenCreateModal}
+              >
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Create Devnet World
               </Button>
             </div>
           </div>

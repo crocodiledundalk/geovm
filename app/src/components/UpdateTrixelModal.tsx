@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { useProgram } from '@/contexts/ProgramContext';
+import { useGeoVmProgram } from '@/contexts/ProgramContext';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { BN } from '@coral-xyz/anchor';
 import { PublicKey, SystemProgram, AccountMeta, Transaction as Web3Transaction } from '@solana/web3.js';
@@ -11,7 +11,7 @@ import { Geovm } from '@/idl/geovm'; // Your IDL types
 import { IdlAccounts } from '@coral-xyz/anchor';
 // Assuming these are client-side utility functions
 import { getTrixelAncestors, getTrixelPDA } from '@/sdk/utils'; 
-import { useQueryClient } from '@tanstack/react-query';
+import { createOrUpdateTrixelTransaction } from '@/lib/solana/transactions'; // Import the new utility
 import { useWorldTrixels } from '@/hooks/useTrixels';
 
 // Define bytesToString locally if not available globally or from utils
@@ -30,7 +30,7 @@ const TRIXEL_DATA_TYPES_DISPLAY: { [key: string]: string } = {
   aggregateOverwrite: 'Aggregate Overwrite (Set New Value)',
   aggregateAccumulate: 'Aggregate Accumulate (Add to Value)',
   meanOverwrite: 'Mean Overwrite (Set New Numerator, Denom -> 1)',
-  meanAccumulate: 'Mean Accumulate (Add to Numerator, Denom -> 1)',
+  meanAccumulate: 'Mean Accumulate (Add to Numerator, Denom -> 1 if new)',
 };
 
 function getDataTypeEnumKey(dataEnum: any): keyof typeof TRIXEL_DATA_TYPES_DISPLAY | null {
@@ -62,9 +62,8 @@ export function UpdateTrixelModal({
   trixelExists, // Destructure new prop
   onUpdateSuccess
 }: UpdateTrixelModalProps) {
-  const { program, provider } = useProgram();
-  const { publicKey: walletPublicKey, sendTransaction } = useWallet();
-  const queryClient = useQueryClient();
+  const { program, provider } = useGeoVmProgram();
+  const { publicKey: walletPublicKey } = useWallet(); // Only need publicKey here now
   const { refreshTrixelWithAncestors } = useWorldTrixels(worldPubkey, { canonicalResolution: 8 });
 
   const [inputValue, setInputValue] = useState<string>('');
@@ -94,8 +93,9 @@ export function UpdateTrixelModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!program || !provider || !walletPublicKey || !sendTransaction || !worldDataTypeKey) {
-      setError('Required information missing, connect wallet, or wallet adapter lacks sendTransaction.');
+    // Provider now comes from useProgram, walletPublicKey from useWallet
+    if (!program || !provider || !walletPublicKey || !worldDataTypeKey) {
+      setError('Required program/provider/wallet information missing.');
       return;
     }
 
@@ -104,118 +104,66 @@ export function UpdateTrixelModal({
       return;
     }
 
-    let numericValue = 0;
+    let numericValue = new BN(0);
     if (worldDataTypeKey !== 'count') {
-      numericValue = parseInt(inputValue, 10);
-      if (isNaN(numericValue)) {
+      const parsedValue = parseInt(inputValue, 10);
+      if (isNaN(parsedValue)) {
         setError('Please enter a valid integer value.');
         return;
       }
-      if ((worldDataTypeKey === 'aggregateOverwrite' || worldDataTypeKey === 'meanOverwrite') && numericValue < 0) {
+      numericValue = new BN(parsedValue); // Convert to BN
+      if ((worldDataTypeKey === 'aggregateOverwrite' || worldDataTypeKey === 'meanOverwrite') && numericValue.isNeg()) {
         setError('For Overwrite types, value must be non-negative.');
         return;
       }
+    } else {
+      numericValue = new BN(1); // Count always uses value 1 for update logic (even if program ignores it)
     }
 
     setIsLoading(true);
     setError(null);
 
-    try {
-      const ancestorIds = getTrixelAncestors(trixelId.toNumber()); 
-      const ancestorAccountsMetas: AccountMeta[] = [];
-      for (const id of ancestorIds) {
-        const pdaTuple = await getTrixelPDA(worldPubkey, new BN(id).toNumber(), program.programId);
-        ancestorAccountsMetas.push({ pubkey: pdaTuple[0], isSigner: false, isWritable: true });
-      }
-      
-      const targetTrixelPda = (await getTrixelPDA(worldPubkey, trixelId.toNumber(), program.programId))[0];
+    const toastMessage = trixelExists ? 'Updating trixel...' : 'Creating and updating trixel...';
+    const operationType = trixelExists ? 'updated' : 'created and updated';
 
-      // Use web3.Transaction for flexibility with multiple program instructions
-      const transaction = new Web3Transaction(); 
-      let toastMessage = 'Updating trixel...';
-      let operationType = 'update';
-
-      if (!trixelExists) {
-        toastMessage = 'Creating and updating trixel...';
-        operationType = 'create_and_update';
-        console.log(`Trixel ${trixelId.toString()} (PDA: ${targetTrixelPda.toBase58()}) does not exist. Adding create instruction.`);
-        
-        const createIx = await program.methods
-          .createTrixelAndAncestors({ id: trixelId })
-          .accountsStrict({
-            world: worldPubkey, 
-            trixel: targetTrixelPda,
-            payer: walletPublicKey,
-            systemProgram: SystemProgram.programId,
-          })
-          .remainingAccounts(ancestorAccountsMetas)
-          .instruction();
-        transaction.add(createIx);
-      }
-
-      console.log(`Adding update instruction for trixel ${trixelId.toString()} (PDA: ${targetTrixelPda.toBase58()}) with value ${numericValue}.`);
-      const updateIx = await program.methods
-        .updateTrixel({ id: trixelId, value: numericValue, coords: null })
-        .accountsStrict({
-          world: worldPubkey, 
-          trixel: targetTrixelPda,
-          payer: walletPublicKey,
-          systemProgram: SystemProgram.programId,
-        })
-        .remainingAccounts(ancestorAccountsMetas)
-        .instruction();
-      transaction.add(updateIx);
-      
-      // Set recent blockhash for the transaction
-      transaction.recentBlockhash = (await provider.connection.getLatestBlockhash()).blockhash;
-      transaction.feePayer = walletPublicKey;
-
-      toast.promise(
-        // sendTransaction usually expects a fully signed or partially signed transaction
-        // depending on the adapter. Here we send it to the provider after building it.
-        // If sendTransaction from useWallet is used, it often handles signing.
-        // For this explicit build, provider.sendAndConfirm might be more direct
-        // OR ensure sendTransaction can handle this raw Web3Transaction.
-        // Let's assume sendTransaction is robust or switch to provider.sendAndConfirm for clarity.
-        provider.sendAndConfirm(transaction, [], {commitment: 'confirmed'}), // Simpler for fully built client-side tx
-        {
-          loading: toastMessage,
-          success: async (signature: string) => {
-            // After successful transaction, refresh data
-            try {
-              if (onUpdateSuccess) {
-                await onUpdateSuccess(trixelId.toNumber());
-              } else {
-                // Refresh the trixel, its ancestors, and world data
-                await refreshTrixelWithAncestors(trixelId.toNumber());
-                
-                // Also invalidate world data query
-                queryClient.invalidateQueries({ queryKey: ['world', worldPubkey.toString()] });
-              }
-            } catch (refreshError) {
-              console.error('Error refreshing data after trixel update:', refreshError);
-              // Don't fail the operation if refresh fails
+    toast.promise(
+      // Call the reusable utility function
+      createOrUpdateTrixelTransaction({
+        program,
+        provider,
+        worldPubkey,
+        trixelId,
+        value: numericValue,
+        trixelExists,
+        payerPubkey: walletPublicKey
+      }),
+      {
+        loading: toastMessage,
+        success: async (signature: string) => {
+          try {
+            if (onUpdateSuccess) {
+              await onUpdateSuccess(trixelId.toNumber());
+            } else {
+              await refreshTrixelWithAncestors(trixelId.toNumber());
             }
-            
-            onClose();
-            return `Trixel ${operationType === 'create_and_update' ? 'created and' : ''} updated! Sig: ${signature.substring(0,10)}...`;
-          },
-          error: (err: unknown) => {
-            console.error('Error sending trixel transaction:', err);
-            let message = 'Failed to process trixel.';
-            if (err instanceof Error) message = err.message;
-            setError(message);
-            return message;
+          } catch (refreshError) {
+            console.error('Error refreshing data after trixel update:', refreshError);
           }
+          onClose();
+          return `Trixel ${operationType}! Sig: ${signature.substring(0,10)}...`;
+        },
+        error: (err: unknown) => {
+          console.error('Error sending trixel transaction:', err);
+          let message = 'Failed to process trixel.';
+          if (err instanceof Error) message = err.message;
+          setError(message);
+          return message; // Return message for toast
+        },
+        finally: () => {
+          setIsLoading(false);
         }
-      );
-    } catch (err) {
-      console.error('Client-side error in handleSubmit:', err);
-      if (err instanceof Error) setError(err.message);
-      else setError('An unexpected client-side error occurred during setup.');
-    } finally {
-      setIsLoading(false);
-    }
+      }
+    );
   };
 
   if (!isOpen) return null;
@@ -249,50 +197,54 @@ export function UpdateTrixelModal({
         <div className="mb-4 space-y-1 text-sm">
           <p><span className="font-semibold">World:</span> {bytesToString(world.name)}</p>
           <p><span className="font-semibold">Trixel ID:</span> {trixelId.toString()}</p>
-          <p><span className="font-semibold">Exists On-Chain:</span> <span className={trixelExists ? 'text-green-600' : 'text-orange-600'}>{trixelExists ? 'Yes' : 'No (will be created)'}</span></p>
           <p><span className="font-semibold">Data Type:</span> {worldDataTypeDisplay}</p>
-          {world.permissionedUpdates && (
-            <p className={`font-semibold ${isUpdateAllowed ? 'text-green-600' : 'text-destructive'}`}>
-              {isUpdateAllowed ? 'Update allowed' : 'Update NOT allowed (permissioned)'}
-            </p>
-          )}
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {worldDataTypeKey !== 'count' && (
             <div>
-              <label htmlFor="updateValue" className="block text-sm font-medium mb-1">
+              <label htmlFor="trixelValue" className="block text-sm font-medium mb-1">
                 {getInputLabel()}
               </label>
               <input
-                id="updateValue"
-                type="number"
+                id="trixelValue"
+                type="number" // Use number type for better input
+                step="1" // Allow only integers
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                className="w-full p-2 border rounded-md bg-input text-foreground"
-                placeholder="Enter integer value"
-                disabled={isLoading || !isUpdateAllowed}
+                className="w-full rounded-md border border-input p-2 text-sm"
+                required // Ensure input is provided for non-count types
+                disabled={isLoading}
               />
             </div>
           )}
-           {worldDataTypeKey === 'count' && (
-             <p className="text-sm text-muted-foreground">For 'Count' type, update increments count by 1.</p>
-           )}
+
+          {!isUpdateAllowed && world.permissionedUpdates && (
+            <div className="text-sm text-yellow-600 dark:text-yellow-400 flex items-center gap-2 p-2 bg-yellow-50 dark:bg-yellow-900/30 rounded border border-yellow-200 dark:border-yellow-800/50">
+              <AlertCircle className="h-4 w-4 flex-shrink-0"/>
+              <span>Updates are permissioned and your wallet ({walletPublicKey?.toBase58().substring(0,6)}...) is not the authority.</span>
+            </div>
+          )}
 
           {error && (
-            <div className="flex items-center gap-2 rounded-md bg-destructive/15 p-3 text-sm text-destructive">
-              <AlertCircle className="h-4 w-4" />
+            <div className="text-sm text-red-600 dark:text-red-400 flex items-center gap-2 p-2 bg-red-50 dark:bg-red-900/30 rounded border border-red-200 dark:border-red-800/50">
+              <AlertCircle className="h-4 w-4 flex-shrink-0"/>
               <span>{error}</span>
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={isLoading || !isUpdateAllowed || !walletPublicKey}
-            className="w-full bg-primary text-primary-foreground p-2 rounded hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? (trixelExists ? 'Updating...' : 'Creating & Updating...') : (trixelExists ? 'Submit Update' : 'Create & Update Trixel')}
-          </button>
+          <div className="flex justify-end gap-2">
+            <button type="button" onClick={onClose} disabled={isLoading} className="px-4 py-2 rounded-md border text-sm hover:bg-accent">
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              disabled={isLoading || !isUpdateAllowed}
+              className={`px-4 py-2 rounded-md text-sm font-semibold text-white ${isLoading ? 'bg-gray-400' : isUpdateAllowed ? 'bg-teal-600 hover:bg-teal-700' : 'bg-gray-400 cursor-not-allowed'}`}
+            >
+              {isLoading ? 'Processing...' : 'Update Trixel'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
